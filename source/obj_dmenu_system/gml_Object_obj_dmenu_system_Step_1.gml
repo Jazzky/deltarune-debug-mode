@@ -832,187 +832,22 @@ function dmenu_state_interact()
             break;
         
         case "warp":
-            if (dvertical_index == 1)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                global.dreading_custom_flag = 1;
-                keyboard_string = "";
-                dkeyboard_input = "";
-                dmenu_state_update();
-            }
-            else
-            {
-                drooms_options.target_room = -1;
-                
-                if (dvertical_index != 0)
-                    drooms_options.target_room = dbutton_indices[dvertical_index];
-                
-                drooms_options.target_plot = global.plot;
-                drooms_options.target_is_darkzone = global.darkzone;
-                drooms_options.target_member_2 = global.char[1];
-                drooms_options.target_member_3 = global.char[2];
-                dmenu_state = "warp_options";
-                dkeyboard_input = "";
-            }
-            
+			scr_dmenu_interact_warp_setup();
             break;
         
         case "warp_options":
-            if (dvertical_index == 0)
-            {
-                dkeyboard_input = "";
-                dmenu_state = "warp";
-            }
-            else if (dvertical_index == 1)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                drooms_options.target_is_darkzone ^= 1;
-            }
-            else if (dvertical_index >= 2 && dvertical_index <= 4)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                
-                if (dvertical_index == 2)
-                {
-                    global.dreading_custom_flag = 1;
-                    keyboard_string = "";
-                }
-            }
-            else if (dvertical_index == 5)
-            {
-                new_room = drooms_options.target_room;
-                
-                if (new_room == -1)
-                    new_room = room;
-                
-                global.plot = drooms_options.target_plot;
-                global.darkzone = drooms_options.target_is_darkzone;
-                global.char[1] = drooms_options.target_member_2;
-                global.char[2] = drooms_options.target_member_3;
-                global.interact = 0;
-                dmenu_active = false;
-                room_goto(new_room);
-            }
-            
+			scr_dmenu_interact_warp();
             break;
         
         case "give":
-            if (dhorizontal_index == 0)
-                dmenu_state = "objects";
-            else if (dhorizontal_index == 1)
-                dmenu_state = "armors";
-            else if (dhorizontal_index == 2)
-                dmenu_state = "weapons";
-            else if (dhorizontal_index == 3)
-                dmenu_state = "keyitems";
-            
-            dhorizontal_page = !global.darkzone;
-            
-            if (dhorizontal_index == 3)
-                dhorizontal_page = 0;
-            
-            dvertical_index = 0;
-            dhorizontal_index = 0;
+			scr_dmenu_interact_set_itemgiver_type();
             break;
         
         case "objects":
-            if (dhorizontal_page == 0 && dvertical_index == 0)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                ditem_chap += 1;
-                
-                if (ditem_chap > global.chapter)
-                    ditem_chap = 1;
-            }
-            else
-            {
-                dgiver_menu_state = dmenu_state;
-                dvertical_index = clamp(dvertical_index, 0, array_length(dbutton_options));
-                dgiver_button_selected = dvertical_index;
-                dmenu_state = "givertab";
-                dvertical_index = 0;
-            }
-            
-            break;
-        
         case "armors":
-            if (dhorizontal_page == 1)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                global.larmor = dlight_armors[dvertical_index][0];
-                break;
-            }
-            
-            if (dhorizontal_page == 0 && dvertical_index == 0)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                ditem_chap += 1;
-                
-                if (ditem_chap > global.chapter)
-                    ditem_chap = 1;
-            }
-            else
-            {
-                dgiver_menu_state = dmenu_state;
-                dgiver_button_selected = dvertical_index;
-                dmenu_state = "givertab";
-                dvertical_index = 0;
-            }
-            
-            break;
-        
         case "weapons":
-            if (dhorizontal_page == 1)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                global.lweapon = dlight_weapons[dvertical_index][0];
-                break;
-            }
-            
-            if (dhorizontal_page == 0 && dvertical_index == 0)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                ditem_chap += 1;
-                
-                if (ditem_chap > global.chapter)
-                    ditem_chap = 1;
-            }
-            else
-            {
-                dgiver_menu_state = dmenu_state;
-                dgiver_button_selected = dvertical_index;
-                dmenu_state = "givertab";
-                dvertical_index = 0;
-            }
-            
-            break;
-        
         case "keyitems":
-            if (dvertical_index == 0)
-            {
-                dremove_false_history();
-                dmenu_skip_reindexing = true;
-                ditem_chap += 1;
-                
-                if (ditem_chap > global.chapter)
-                    ditem_chap = 1;
-            }
-            else
-            {
-                dgiver_menu_state = dmenu_state;
-                dgiver_button_selected = dvertical_index;
-                dmenu_state = "givertab";
-                dvertical_index = 0;
-            }
-            
+			scr_dmenu_interact_setup_givertab();
             break;
         
         case "givertab":

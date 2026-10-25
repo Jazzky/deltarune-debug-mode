@@ -1,12 +1,10 @@
 {
 	"mode": "replace",
 	"create_new": true,
-	"interact_logics/dmenu_dsave_export.gml": {
-		"gml_name": "gml_GlobalScript_scr_dmenu_interact_dsave_export"
-	},
-	"interact_logics/dmenu_dsave_options.gml": {
-		"gml_name": "gml_GlobalScript_scr_dmenu_interact_dsave_options"
-	},
+	"interact_logics/gml_GlobalScript_scr_dmenu_interact_dsave_export.gml": {},
+	"interact_logics/gml_GlobalScript_scr_dmenu_interact_dsave_options.gml": {},
+	"interact_logics/gml_GlobalScript_scr_dmenu_interact_give_item.gml": {},
+	"interact_logics/gml_GlobalScript_scr_dmenu_interact_warp.gml": {},
 	"gml_Object_obj_dmenu_system_Create_0.gml": {},
 	"gml_Object_obj_dmenu_system_Step_0.gml": {
 		"create_new": false

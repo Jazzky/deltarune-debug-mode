@@ -146,8 +146,7 @@ if (dconsole_active)
             array_push(dconsole_log, dconsole_prefix + dinput_text);
             array_push(dconsole_history, dinput_text);
             
-            if (string_char_at(dinput_text, 1) == "/")
-                scr_dconsole_command(dinput_text);
+			scr_dconsole_command(dinput_text);
             
             dinput_text = "";
             keyboard_string = "";

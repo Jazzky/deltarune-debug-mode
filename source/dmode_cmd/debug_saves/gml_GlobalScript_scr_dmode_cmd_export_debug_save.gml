@@ -16,8 +16,8 @@ function scr_dmode_cmd_export_debug_save(argc, argv)
 	}
 
 	var export_mode = "normal";
-	if (scr_dmode_flags_flag_used("mode"))
-		export_mode = scr_dmode_flags_get_value("mode");
+	if (scr_dmode_flags_flag_used(flags, "mode"))
+		export_mode = scr_dmode_flags_get_value(flags, "mode");
 
 
 	if (export_mode == "normal")

@@ -20,7 +20,7 @@ function scr_dmode_cmd_update_debug_save(argc, argv)
 		var target_flag = update_key_lst[i][0];
 		var target_ini_key = update_key_lst[i][1];
 		if (scr_dmode_flags_flag_used(target_flag))
-			array_push(update_lst, [target_ini_key, scr_dmode_flags_get_value(target_flag)]);
+			array_push(update_lst, [target_ini_key, scr_dmode_flags_get_value(flags, target_flag)]);
 	}
 	
 	var new_path = scr_debug_save_modify_info(target_sec, update_lst);
