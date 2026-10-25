@@ -41,6 +41,7 @@ Ex. pour le chapitre 2 : `"...\UndertaleModCli.exe" load ".../DELTARUNE/chapter2
 | <kbd>L</kbd> | Charger la dernière sauvegarde |
 | <kbd>R</kbd> | Recharger la salle actuelle |
 | <kbd>Retour arrière</kbd> + <kbd>R</kbd> | Relancer le jeu |
+| <kbd>Alt</kbd> + <kbd>Retour arrière</kbd> + <kbd>R</kbd> | Aller au sélecteur de chapitre |
 | <kbd>O</kbd> | Basculer entre 30, 60 et 120 FPS |
 | <kbd>`</kbd> | Mettre le jeu à 150 FPS |
 | <kbd>P</kbd> | Mettre le jeu à 1 FPS |

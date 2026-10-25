@@ -41,6 +41,7 @@ Ex. for chapter 2 : `"...\UndertaleModCli.exe" load ".../DELTARUNE/chapter2_wind
 | <kbd>L</kbd> | Load last save |
 | <kbd>R</kbd> | Reload current room |
 | <kbd>Backspace</kbd> + <kbd>R</kbd> | Restart game |
+| <kbd>Alt</kbd> + <kbd>Backspace</kbd> + <kbd>R</kbd> | Go to chapter select |
 | <kbd>O</kbd> | Toggle between 30, 60 and 120 FPS |
 | <kbd>`</kbd> | Set game to 150 FPS |
 | <kbd>P</kbd> | Set game to 1 FPS |
