@@ -22,9 +22,9 @@ Initially created for the french fan translation team [Deltarune FR](https://del
 ### Installation with UTMT CLI
 
 * With a terminal, execute this command:\
-`<UTMT CLI path> load <entry data.win path> -s <.csx script path> -o <output data.win path>`.
+`<UTMT CLI path> load <entry data.win path> -s <.csx script path> -o <output data.win path> -f`.
 
-Ex. for chapter 2 : `"...\UndertaleModCli.exe" load ".../DELTARUNE/chapter2_windows/data.win" -s ".../debug_mode_chap2.csx" -o ".../DELTARUNE/chapter2_windows/data.win"`
+Ex. for chapter 2 : `"...\UndertaleModCli.exe" load ".../DELTARUNE/chapter2_windows/data.win" -s ".../debug_mode_chap2.csx" -o ".../DELTARUNE/chapter2_windows/data.win" -f`
 
 * Repeat for each chapters.
 
