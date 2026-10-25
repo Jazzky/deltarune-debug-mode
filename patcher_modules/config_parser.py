@@ -147,7 +147,7 @@ def execute_actions(action_list, config, csx_lines):
             for i in range(len(call_variables)):
                 if (i != 0):
                     newline += ",\n"
-                newline += f'@"{call_variables[i]}"'
+                newline += f'@"{set_double_quote(call_variables[i])}"'
             newline += "\n);"
             csx_lines.append(newline)
 
