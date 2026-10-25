@@ -11,11 +11,11 @@ dscroll_delay = 15;
 dscroll_speed = 1;
 dbackspace_timer = 0;
 dmenu_title = dstr("Debug Menu", "Menu Debug");
-dbutton_options_original = [[dstr("Warps", "Sauts"), dstr("Items"), dstr("Recruits", "Recrues"), dstr("Flags")], [dstr("Globals"), dstr("Debug save")]];
+dbutton_options_original = [[dstr("Warps", "Sauts"), dstr("Items"), dstr("Recruits", "Recrues"), dstr("Flags")], [dstr("Globals"), dstr("Debug save"), dstr("Game Obj")]];
 dnumber_litems = [0, 11, 14, 14, 18, 23];
 dlight_weapons = [];
 dlight_armors = [[3, dstr("Bandage", "Pansement")], [14, dstr("Wristwatch", "Montre")]];
-dlight_objects = [[1, dstr("Hot Chocolate", "Chocolat Chaud")], [2, dstr("Pencil", "Crayon")], [3, dstr("Bandage", "Pansement")], [4, dstr("Bouquet")], [5, dstr("Ball of Junk", "Boule de Trucs")], [6, dstr("Halloween Pencil", "Crayon Halloween")], [7, dstr("Lucky Pencil", "Crayon Fétiche")], [8, dstr("Egg", "Œuf")], [9, dstr("Cards", "Cartes")], [10, dstr("Box of Heart Candy", "Boîte de ChocoCœurs")], [11, dstr("Glass", "Verre")], [12, dstr("Eraser", "Gomme")], [13, dstr("Mech. Pencil", "Critérium")], [14, dstr("Wristwatch", "Montre")], [15, dstr("Holiday Pencil", "Crayon de Noël")], [16, dstr("CactusNeedle", "Épine de Cactus")], [17, dstr("BlackShard", "ÉclatNoir")], [18, dstr("QuillPen", "Stylo-Plume")], [19, dstr("Honey Toast")], [20, dstr("Bread")], [21, dstr("Seeds")], [22, dstr("Pencil2")], [23, dstr("Petal")]];
+dlight_objects = [[1, dstr("Hot Chocolate", "Chocolat Chaud")], [2, dstr("Pencil", "Crayon")], [3, dstr("Bandage", "Pansement")], [4, dstr("Bouquet")], [5, dstr("Ball of Junk", "Boule de Trucs")], [6, dstr("Halloween Pencil", "Crayon Halloween")], [7, dstr("Lucky Pencil", "Crayon Fétiche")], [8, dstr("Egg", "Œuf")], [9, dstr("Cards", "Cartes")], [10, dstr("Box of Heart Candy", "Boîte de ChocoCœurs")], [11, dstr("Glass", "Verre")], [12, dstr("Eraser", "Gomme")], [13, dstr("Mech. Pencil", "Critérium")], [14, dstr("Wristwatch", "Montre")], [15, dstr("Holiday Pencil", "Crayon de Noël")], [16, dstr("CactusNeedle", "Épine de Cactus")], [17, dstr("BlackShard", "ÉclatNoir")], [18, dstr("QuillPen", "Stylo-Plume")], [19, dstr("Honey Toast", "Tartine de Miel")], [20, dstr("Bread", "Pain")], [21, dstr("Seeds", "Graines")], [22, dstr("Pencil2", "Crayon2")], [23, dstr("Petal", "Pétale")]];
 dhinter_active = false;
 itemdescb = "";
 armordesctemp = "";
@@ -354,6 +354,23 @@ dkeyboard_input = "";
 for (i = 0; i < array_length(drooms_id); i++)
     array_push(drooms, room_get_name(drooms_id[i].room_index));
 
+obj_list = [];
+all_obj_list = [];
+var index = 0;
+
+while (true)
+{
+    var obj_name = object_get_name(index);
+
+    if (obj_name == "<undefined>" || obj_name == "")
+    {
+        break;
+    }
+
+    array_push(all_obj_list, obj_name);
+    index++;
+}
+
 find_subarray_index = function(arg0, arg1)
 {
     value = global.flag[arg0];
@@ -450,17 +467,6 @@ set_keyboard_reader = function(arg0)
     dcustom_flag_text = ["", ""];
     global.dkeyboard_text = "";
 };
-
-function scr_array_contains(arg0, arg1)
-{
-    for (var i = 0; i < array_length(arg0); i++)
-    {
-        if (arg0[i] == arg1)
-            return true;
-    }
-    
-    return false;
-}
 
 dload_options = 
 {

@@ -6,6 +6,12 @@ function scr_debug_load(arg0)
     if (variable_global_exists("dload_cur_inv") && global.dload_cur_inv == 1)
         keep_inv = true;
     
+    var cache_truenname = global.truename;
+    var cache_othername [];
+    for (var i = 0; i < 6; i++)
+    {
+		cache_othername[i] = global.othername[i];
+    }
 	var option_flags = [8, 11, 15, 16, 17, 25, 1391];
 	var cache_option_flags = [];
 	for (var i = 0; i < array_length(option_flags); i++)
@@ -524,6 +530,11 @@ function scr_debug_load(arg0)
         }
     }
 
+	global.truename = cache_truenname;
+    for (var i = 0; i < 6; i++)
+    {
+		global.othername[i] = cache_othername[i];
+    }
 	for (var i = 0; i < array_length(option_flags); i++)
     {
 		_cur_flag = option_flags[i];

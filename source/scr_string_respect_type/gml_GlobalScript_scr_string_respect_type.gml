@@ -80,3 +80,14 @@ function scr_string_respect_type(arg0, arg1, arg2, arg3)
     
     return is_good;
 }
+
+function scr_array_contains(arg0, arg1)
+{
+    for (var i = 0; i < array_length(arg0); i++)
+    {
+        if (arg0[i] == arg1)
+            return true;
+    }
+    
+    return false;
+}

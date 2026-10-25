@@ -1,6 +1,6 @@
 {
     "order": [
-        "scr_gamestart",
+        "init",
         "scr_debug_print",
         "obj_debug_gui",
         "obj_debug_xy",

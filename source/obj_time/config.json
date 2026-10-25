@@ -6,15 +6,7 @@
 	"gml_Object_obj_time_Step_0.gml": {},
 	"chap2_mouse_debug": {
 		"chapters": [2],
-		"gml_name": "gml_Object_obj_time_Step_1",
-		"actions": [
-			{
-				"find_replace": {
-					"find": "if (scr_debug())",
-					"replace": "if (0)"
-				}
-			}
-		]
+		"gml_name": "gml_Object_obj_time_Step_1"
 	},
 	".remove_gif_frames": {
 		"chapters": [-1, -2],
