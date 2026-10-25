@@ -1,6 +1,7 @@
 {
 	"gml_name": "gml_Object_obj_writer_Draw_0",
 	".allow_cskip": {
+        "chapters": [-1, -2, -3],
 		"actions": [
 			{
 				"find_replace": {
