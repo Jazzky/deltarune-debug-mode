@@ -1,0 +1,19 @@
+{
+	"gml_name": "gml_Object_obj_writer_Draw_0",
+	".allow_cskip": {
+		"actions": [
+			{
+				"find_replace": {
+					"find": "var noskip = preventcskip;",
+					"replace": "var noskip = false;"
+				}
+			},
+			{
+				"find_replace": {
+					"find": "if (halt == 0 && button2 == 1 && pos < length && skippable == 1 && !runcheck)",
+					"replace": "if (halt == 0 && button2 == 1 && pos < length && !runcheck)"
+				}
+			}
+		]
+	}
+}

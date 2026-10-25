@@ -1,11 +1,6 @@
+from .setup import Context, ALL_CHAPTERS
+
 import os
-import sys
-
-ALL_CHAPTERS = list(range(1, 8))
-
-class Context:
-    OWD = os.path.abspath('.')
-    CWD = '.'
 
 def set_double_quote(gml_code):
     return gml_code.replace('"', '""')

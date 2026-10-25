@@ -1,16 +1,8 @@
-// TOP
 EnsureDataLoaded();
 
 if (!Data.IsVersionAtLeast(2023, 6))
 {
     ScriptError("Erreur 0 : Ce script fonctionne uniquement pour la version LTS de la démo et la version payante de Deltarune.");
-    return;
-}
-
-if (Data?.GeneralInfo?.DisplayName?.Content.ToLower() != "deltarune chapter 1" &&
-    Data?.GeneralInfo?.DisplayName?.Content.ToLower() != "deltarune chapitre 1")
-{
-    ScriptError("Erreur 1 : Ce script s'applique seulement au Chapitre 1.");
     return;
 }
 
@@ -55,7 +47,7 @@ if (isDemo)
     Data.GameObjects.Add(CREATE_obj_debug_gui);
 }
 
-// BOTTOM
+// SEPARATION
 importGroup.Import();
 
 ScriptMessage("Mode Debug du Chapitre 1 ajouté.\r\n" + "Pour activer le Mode Debug en jeu, appuyer sur F10.");

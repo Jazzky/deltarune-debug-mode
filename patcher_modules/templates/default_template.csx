@@ -1,4 +1,3 @@
-// TOP
 EnsureDataLoaded();
 
 if (!Data.IsVersionAtLeast(2023, 6))
@@ -37,5 +36,5 @@ UndertaleModLib.Compiler.CodeImportGroup importGroup = new(Data, globalDecompile
     ThrowOnNoOpFindReplace = true
 };
 
-// BOTTOM
+// SEPARATION
 importGroup.Import();

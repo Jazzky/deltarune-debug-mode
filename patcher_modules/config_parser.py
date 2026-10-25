@@ -1,7 +1,9 @@
+from .setup import Context, ALL_CHAPTERS
+
 import os
 import sys
 import json
-from patcher_modules.utils import Context, get_file_pos, parse_chapter_config, ALL_CHAPTERS, set_double_quote
+from patcher_modules.utils import get_file_pos, parse_chapter_config, set_double_quote
 
 def init_basic_json(foldername, json_name):
     if not os.path.exists(json_name):
@@ -123,14 +125,32 @@ def execute_actions(action_list, config, csx_lines):
                     with open(value, encoding="utf-8") as f:
                         params[key[:-len(file_suffix)]] = f.read()
             
+            gml_name = config["gml_name"]
+            call_variables = []
             if method == "find_replace":
-                csx_lines.append(f'importGroup.QueueFindReplace("{config["gml_name"]}",\n@"{set_double_quote(params["find"])}",\n@"{set_double_quote(params["replace"])}");')
+                call_name = "QueueFindReplace"
+                call_variables = [gml_name, params["find"], params["replace"]]
+
             elif method == "regex_find_replace":
-                csx_lines.append(f'importGroup.QueueRegexFindReplace("{config["gml_name"]}",\n@"{set_double_quote(params["find"])}",\n@"{set_double_quote(params["replace"])}");')
+                call_name = "QueueRegexFindReplace"
+                call_variables = [gml_name, params["find"], params["replace"]]
+
             elif method == "append":
-                csx_lines.append(f'importGroup.QueueAppend("{config["gml_name"]}",\n@"{set_double_quote(params["content"])}");')
+                call_name = "QueueAppend"
+                call_variables = [gml_name, params["content"]]
+
             elif method == "replace":
-                csx_lines.append(f'importGroup.QueueReplace("{config["gml_name"]}",\n@"{set_double_quote(params["content"])}");')
+                call_name = "QueueReplace"
+                call_variables = [gml_name, params["content"]]
+
+            newline = f"importGroup.{call_name}("
+            for i in range(len(call_variables)):
+                if (i != 0):
+                    newline += ",\n"
+                newline += f'@"{call_variables[i]}"'
+            newline += "\n);"
+            csx_lines.append(newline)
+
 
 def get_command_variable(config):
     elem_type = config['element_type']
@@ -140,13 +160,8 @@ def get_command_variable(config):
 
     elem_identifier = ""
     queue_op = ""
-    
-    if elem_type == 'scr':
-        elem_identifier = f'"{gml_name}"'
-    elif elem_type == 'obj':
-        obj_methods = gml_name.split("_")[-2:]
-        elem_identifier = f"{obj_name}.EventHandlerFor(EventType.{obj_methods[0]}, (uint){obj_methods[1]}, Data)"
 
+    elem_identifier = f'"{gml_name}"'
     if mode == "replace":
         queue_op = "QueueReplace"
     elif mode == "append":
