@@ -6,13 +6,13 @@
 			{
 				"find_replace": {
 					"find": "var noskip = preventcskip;",
-					"replace": "var noskip = false;"
+					"replace": "var noskip = scr_debug() ? false : preventcskip;"
 				}
 			},
 			{
 				"find_replace": {
 					"find": "if (halt == 0 && button2 == 1 && pos < length && skippable == 1 && !runcheck)",
-					"replace": "if (halt == 0 && button2 == 1 && pos < length && !runcheck)"
+					"replace": "if (halt == 0 && button2 == 1 && pos < length && !runcheck && (scr_debug() || skippable == 1))"
 				}
 			}
 		]
