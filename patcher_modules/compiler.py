@@ -1,17 +1,17 @@
+from . import setup
+
 import os
 import sys
 import json
 from patcher_modules import register
-from patcher_modules.utils import Context, update_cwd, get_file_pos, set_double_quote
+from patcher_modules.utils import update_cwd, get_file_pos, set_double_quote
 from patcher_modules.config_parser import init_basic_json, execute_actions, get_command_variable
 
-def parse_folder(declared_elements=None, current_chapter=0):
-    if declared_elements is None:
-        declared_elements = []
-        
+def parse_folder(current_chapter=1):
     csx_lines = []
     master_config_path = "config.json"
     folder_order = []
+    declared_elements = []
     
     if os.path.exists(master_config_path):
         with open(master_config_path, 'r', encoding='utf-8') as f:
@@ -58,13 +58,9 @@ def parse_folder(declared_elements=None, current_chapter=0):
             if config['obj_name'] not in declared_elements:
                 declared_elements.append(config['obj_name'])
                 if create_new:
-                    if config['element_type'] == 'scr':
-                        csx_lines.append(register.ADD_SCRIPT.replace("FILE_NAME", config['obj_name']))
-                    elif config['element_type'] == 'obj':
+                    if config['element_type'] == 'obj':
                         obj_options = [str(config['visible']).lower(), str(config['persistent']).lower(), str(config['awake']).lower()]
                         csx_lines.append(register.ADD_OBJECT.replace("FILE_NAME", config['obj_name']).format(*obj_options))
-                else:
-                    csx_lines.append(f'{config["variable_type"]} {config["obj_name"]} = Data.{config["class_id"]}.ByName("{config["obj_name"]}");')
 
             elem_identifier, queue_op = get_command_variable(config)
 
@@ -77,44 +73,32 @@ def parse_folder(declared_elements=None, current_chapter=0):
 
     return csx_lines
 
-def compile_utmt_mod(source_folder, template_file):
-    if not os.path.exists(source_folder) or not os.path.exists(template_file):
-        print("Error: 'source' folder or 'template.csx' missing.")
-        return
-
+def compile_utmt_mod(source_folder, template_file, chapter):
     with open(template_file, 'r', encoding='utf-8') as f:
         template_content = f.read()
 
-    if "// BOTTOM" not in template_content:
-        print("Error: '// BOTTOM' marker missing in template.csx.")
-        return
-        
-    template_parts = template_content.split("// BOTTOM")
-    template_top = template_parts[0].replace("// TOP", "").strip() 
-    template_bottom = template_parts[1].strip()
+    
+    template_parts = template_content.split("// SEPARATION")
+    if (len(template_parts) != 2):
+        print(f"Error: there should be only one '// SEPARATION' marker in {template_file}.")
+        return (None)
 
-    for i in range(1, 6):
-        element_memory = []
-        output_file = f"debug_mode_chap{i}.csx"
-        final_lines = []
-        
-        current_top = template_top.replace("CHAPTER_NUMBER", str(i))
-        current_bottom = template_bottom.replace("CHAPTER_NUMBER", str(i))
+    template_top = template_parts[0].replace("CHAPTER_NUMBER", str(chapter))
+    template_bottom = template_parts[1].replace("CHAPTER_NUMBER", str(chapter))
 
-        final_lines.append(current_top)
+    final_lines = []
+    final_lines.append(template_top)
         
-        update_cwd(source_folder)
-        print(f"Parsing common code for Chapter {i}...")
-        common_lines = parse_folder(element_memory, i)
+    update_cwd(source_folder)
+    print(f"Parsing common code for Chapter {chapter}...")
+    common_lines = parse_folder(chapter)
         
-        if common_lines:
-            final_lines.append(f"\n// --- COMMON CODE ---")
-            final_lines.extend(common_lines)
+    if common_lines:
+        final_lines.append(f"\n// --- COMMON CODE ---")
+        final_lines.extend(common_lines)
         
-        update_cwd(Context.OWD)
-        final_lines.append("\n" + current_bottom)
+    update_cwd(setup.Context.OWD)
+    final_lines.append("\n" + template_bottom)
 
-        with open(output_file, 'w', encoding='utf-8') as out_file:
-            out_file.write('\n'.join(final_lines))
-            
-        print(f"Success: '{output_file}' generated.\n")
+    final_code = "\n".join(final_lines)
+    return (final_code)
