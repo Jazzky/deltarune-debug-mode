@@ -783,11 +783,16 @@ function dmenu_state_interact()
             }
             else
             {
+                global.flag[7] = 1;
+                instance_create(0, 0, obj_dmode_xy);
                 var obj_id = asset_get_index(string(dbutton_indices[dvertical_index]));
                 var obj_new = instance_create(obj_mainchara.x, obj_mainchara.y, obj_id);
+
+                with (obj_dmode_xy)
+                    sel_obj = obj_new;
+
                 dpop_history();
                 dmenu_active = false;
-                global.interact = 0;
             }
             break;
         case "debug_save":

@@ -3043,6 +3043,233 @@ importGroup.QueueReplace("gml_GlobalScript_scr_debug_load",
 ");
 
 
+UndertaleGameObject obj_dmode_xy = new UndertaleGameObject();
+obj_dmode_xy.Name = Data.Strings.MakeString("obj_dmode_xy");
+obj_dmode_xy.Visible = true;
+obj_dmode_xy.Persistent = false;
+obj_dmode_xy.Awake = true;
+Data.GameObjects.Add(obj_dmode_xy);
+
+importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Create, (uint)0, Data),
+@"os = -1
+siner = 0;
+handmode = 0
+obj_spd = 5;
+
+hm_name[0] = dstr(""Absolute Transform"", ""Déplacement absolu"");
+hm_name[1] = dstr(""Relative Pointer"", ""Curseur relatif"");
+move_interact[0] = dstr(""Arrows"", ""Flèches"");
+move_interact[1] = dstr(""Mouse"", ""Souris"");
+");
+
+
+importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Step, (uint)1, Data),
+@"siner++;
+
+if (i_ex(sel_obj))
+{
+    if (sel_obj.sprite_index == -1 || sel_obj.visible == false)
+    {
+        scr_debug_print(dstr(""Invisible or no sprite#Created immediately"", ""Invisible ou sans sprite#Créé immédiatement""));
+        global.interact = 0;
+        global.flag[7] = 0;
+        instance_destroy();
+
+    }
+}
+
+if (keyboard_check_pressed(global.input_k[5]) || keyboard_check_pressed(global.input_k[8]))
+{
+    obj_spd = (obj_spd % 15) + 5;
+}
+
+if (handmode == 0)
+{
+    if (i_ex(sel_obj))
+    {
+        if (sel_obj.sprite_index != -1)
+        {
+            os = sel_obj;
+            var _moved = false;
+
+            if (keyboard_check(vk_up))
+            {
+                os.y -= obj_spd;
+                _moved = true;
+            }
+
+            if (keyboard_check(vk_left))
+            {
+                os.x -= obj_spd;
+                _moved = true;
+            }
+
+            if (keyboard_check(vk_down))
+            {
+                os.y += obj_spd;
+                _moved = true;
+            }
+
+            if (keyboard_check(vk_right))
+            {
+                os.x += obj_spd;
+                _moved = true;
+            }
+
+            if (_moved)
+            {
+                with (os.object_index)
+                {
+                    scr_depth();
+                }
+            }
+        }
+    }
+}
+if (handmode == 1)
+{
+    if (i_ex(sel_obj))
+    {
+        if (sel_obj.sprite_index != -1)
+        {
+            os = sel_obj;
+            var _moved = false;
+
+            os.x = mouse_x;
+            os.y = mouse_y;
+
+            with (os.object_index)
+            {
+                scr_depth();
+            }
+        }
+    }
+}
+
+// Confirm Z function
+if (keyboard_check_pressed(global.input_k[4]) || keyboard_check_pressed(global.input_k[7]))
+{
+    scr_debug_print(dstr(""Object created!"", ""Objet créé !""));
+    io_clear();
+    global.interact = 0;
+    global.flag[7] = 0;
+    instance_destroy();
+}
+
+// Switch mode C function
+if (keyboard_check_pressed(global.input_k[6]) || keyboard_check_pressed(global.input_k[9]))
+{
+    handmode = (handmode + 1) % 2;
+
+    if (handmode == 1)
+    {
+        global.interact = 0;
+    }
+    else
+    {
+        global.interact = 1;
+    }
+
+    scr_debug_print(dstr(""Mode switched to: "", ""Mode changé en : "") + string(hm_name[handmode]));
+    io_clear();
+}
+
+// Exit Backspace function
+if (keyboard_check_pressed(vk_backspace))
+{
+    scr_debug_print(dstr(""Object deleted!"", ""Objet supprimé !""));
+    io_clear();
+    global.interact = 0;
+    global.flag[7] = 0;
+    with (os)
+    {
+        instance_destroy();
+    }
+
+    instance_destroy();
+}
+
+var _data = """";
+if (handmode == 0)
+{
+    _data += ""#"" + dstr(""Move object with arrows"", ""Bouger l'objet avec les flèches"");
+}
+if (handmode == 1)
+{
+    _data += ""#"" + dstr(""Move object with mouse"", ""Bouger l'objet avec la souris"");
+    _data += ""#"" + dstr(""Move player with arrows"", ""Bouger le joueur avec les flèches"");
+}
+
+scr_debug_print_persistent(dstr(""Mode - "") + string(hm_name[handmode]), _data);
+");
+
+
+importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Draw, (uint)0, Data),
+@"var camx = camerax();
+var camy = cameray();
+mx = mouse_x - camx;
+my = mouse_y - camy;
+var space = 16;
+var margin = 10;
+
+linecount = 5;
+line[0] = ""["" + string(move_interact[handmode]) + ""] - "" + dstr(""Move object"", ""Bouger l'objet"");
+line[1] = dstr(""Confirm"", ""Confirmer"");
+line[2] = dstr(""Change move speed: "", ""Changer vitesse objet : "") + string(obj_spd) + "" px"";
+line[3] = dstr(""Switch mode"", ""Changer de mode"");
+line[4] = dstr(""[Backspace] - Cancel"", ""[Retour arr.] - Annuler"");
+but[0] = -1;
+but[1] = 4;
+but[2] = 5;
+but[3] = 6;
+but[4] = -1;
+
+var xloc = (camx + 640) - margin;
+var yloc = 480 - (space * linecount) - margin;
+draw_set_color(c_white);
+draw_set_halign(fa_right);
+draw_set_font(fnt_main);
+
+for (var i = 0; i < linecount; i++)
+{
+    if (but[i] != -1)
+    {
+        fullline = scr_get_input_name(but[i]) + "" - "" + line[i];
+    }
+    else
+    {
+        fullline = line[i];
+    }
+
+    scr_84_draw_text_outline(xloc, camy + yloc + (space * i), fullline);
+}
+
+draw_set_halign(fa_left);
+
+xloc = camx + margin;
+yloc = 480 - space - margin;
+fullline = dstr(""Object: "", ""Objet : "") + string(object_get_name(sel_obj.object_index));
+
+scr_84_draw_text_outline(xloc, camy + yloc, fullline);
+
+draw_set_font(fnt_mainbig);
+
+if (i_ex(sel_obj))
+{
+    if (sel_obj.sprite_index != -1)
+    {
+        os = sel_obj;
+        draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+    }
+}
+
+if (handmode == 2)
+{
+    draw_sprite(spr_maus_cursor, 0, mx, my);
+}
+");
+
+
 UndertaleScript scr_debug_fullheal = Data.Scripts.ByName("scr_debug_fullheal");
 importGroup.QueueReplace("gml_GlobalScript_scr_debug_fullheal",
 @"function scr_debug_fullheal()
@@ -6857,11 +7084,16 @@ function dmenu_state_interact()
             }
             else
             {
+                global.flag[7] = 1;
+                instance_create(0, 0, obj_dmode_xy);
                 var obj_id = asset_get_index(string(dbutton_indices[dvertical_index]));
                 var obj_new = instance_create(obj_mainchara.x, obj_mainchara.y, obj_id);
+
+                with (obj_dmode_xy)
+                    sel_obj = obj_new;
+
                 dpop_history();
                 dmenu_active = false;
-                global.interact = 0;
             }
             break;
         case ""debug_save"":

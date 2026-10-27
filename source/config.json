@@ -5,7 +5,8 @@
         "obj_debug_gui",
         "obj_debug_xy",
         "obj_debug_windows",
-        "debug_save",
+        "dmode_debug_save",
+        "dmode_obj_handler",
         "scr_debug_fullheal",
         "scr_turn_skip",
         "scr_dstr",
@@ -25,6 +26,6 @@
         "rhythmgame_debug_keys",
         "battle_dialog_pause",
         "obj_dconsole_system",
-        "obj_dmenu_system"
+        "dmenu_system"
     ]
 }

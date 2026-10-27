@@ -1,0 +1,9 @@
+{
+	"mode": "replace",
+	"gml_Object_obj_dmode_xy_Create_0": {
+		"create_new": true,
+		"persistent": false
+	},
+	"gml_Object_obj_dmode_xy_Step_1": {},
+	"gml_Object_obj_dmode_xy_Draw_0": {}
+}

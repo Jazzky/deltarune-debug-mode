@@ -1,0 +1,9 @@
+os = -1
+siner = 0;
+handmode = 0
+obj_spd = 5;
+
+hm_name[0] = dstr("Absolute Transform", "Déplacement absolu");
+hm_name[1] = dstr("Relative Pointer", "Curseur relatif");
+move_interact[0] = dstr("Arrows", "Flèches");
+move_interact[1] = dstr("Mouse", "Souris");

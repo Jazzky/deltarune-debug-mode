@@ -1,0 +1,62 @@
+var camx = camerax();
+var camy = cameray();
+mx = mouse_x - camx;
+my = mouse_y - camy;
+var space = 16;
+var margin = 10;
+
+linecount = 5;
+line[0] = "[" + string(move_interact[handmode]) + "] - " + dstr("Move object", "Bouger l'objet");
+line[1] = dstr("Confirm", "Confirmer");
+line[2] = dstr("Change move speed: ", "Changer vitesse objet : ") + string(obj_spd) + " px";
+line[3] = dstr("Switch mode", "Changer de mode");
+line[4] = dstr("[Backspace] - Cancel", "[Retour arr.] - Annuler");
+but[0] = -1;
+but[1] = 4;
+but[2] = 5;
+but[3] = 6;
+but[4] = -1;
+
+var xloc = (camx + 640) - margin;
+var yloc = 480 - (space * linecount) - margin;
+draw_set_color(c_white);
+draw_set_halign(fa_right);
+draw_set_font(fnt_main);
+
+for (var i = 0; i < linecount; i++)
+{
+    if (but[i] != -1)
+    {
+        fullline = scr_get_input_name(but[i]) + " - " + line[i];
+    }
+    else
+    {
+        fullline = line[i];
+    }
+
+    scr_84_draw_text_outline(xloc, camy + yloc + (space * i), fullline);
+}
+
+draw_set_halign(fa_left);
+
+xloc = camx + margin;
+yloc = 480 - space - margin;
+fullline = dstr("Object: ", "Objet : ") + string(object_get_name(sel_obj.object_index));
+
+scr_84_draw_text_outline(xloc, camy + yloc, fullline);
+
+draw_set_font(fnt_mainbig);
+
+if (i_ex(sel_obj))
+{
+    if (sel_obj.sprite_index != -1)
+    {
+        os = sel_obj;
+        draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+    }
+}
+
+if (handmode == 2)
+{
+    draw_sprite(spr_maus_cursor, 0, mx, my);
+}
