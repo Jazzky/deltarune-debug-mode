@@ -3473,13 +3473,13 @@ importGroup.QueueAppend(obj_darkcontroller.EventHandlerFor(EventType.Step, (uint
     if (keyboard_check_pressed(ord(""L"")) && !keyboard_check(vk_alt))
         scr_load();
 
-    if (sunkus_kb_check_pressed(ord(""R"")) && sunkus_kb_check(vk_backspace) && sunkus_kb_check(vk_alt))
+    if (keyboard_check_pressed(ord(""R"")) && keyboard_check(vk_backspace) && keyboard_check(vk_alt))
         scr_chapterswitch(0);
 
-    if (sunkus_kb_check_pressed(ord(""R"")) && sunkus_kb_check(vk_backspace) && !sunkus_kb_check(vk_alt))
+    if (keyboard_check_pressed(ord(""R"")) && keyboard_check(vk_backspace) && !keyboard_check(vk_alt))
         game_restart_true();
 
-    if (sunkus_kb_check_pressed(ord(""R"")) && !sunkus_kb_check(vk_backspace) && !sunkus_kb_check(vk_alt))
+    if (keyboard_check_pressed(ord(""R"")) && !keyboard_check(vk_backspace) && !keyboard_check(vk_alt))
     {
         snd_free_all();
         room_restart();

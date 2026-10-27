@@ -47,6 +47,9 @@ def init_basic_json(foldername, json_name):
     defaults['chapters'] = parse_chapter_config(defaults['chapters'])
     
     for filename, file_config in data.items():
+        if filename == "order":
+            continue
+
         real_filename = filename.split('|')[0]
         
         if defaults.get(filename) is not None:

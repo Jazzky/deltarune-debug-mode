@@ -3638,6 +3638,18 @@ importGroup.QueueAppend("gml_Object_obj_mainchara_Draw_0",
 }");
 
 
+UndertaleGameObject obj_spritecomparer = Data.GameObjects.ByName("obj_spritecomparer");
+importGroup.QueueFindReplace("gml_Object_obj_spritecomparer_Draw_0",
+@"if (keyboard_check_pressed(ord(""D"")))",
+@"if (keyboard_check_pressed(vk_f2))");
+
+
+UndertaleGameObject obj_dialoguer = Data.GameObjects.ByName("obj_dialoguer");
+importGroup.QueueFindReplace("gml_Object_obj_dialoguer_Draw_0",
+@"if (sunkus_kb_check_pressed(ord(""D"")))",
+@"if (sunkus_kb_check_pressed(vk_f2))");
+
+
 UndertaleScript scr_flag_set = Data.Scripts.ByName("scr_flag_set");
 importGroup.QueueReplace("gml_GlobalScript_scr_flag_set",
 @"function scr_flag_set(arg0, arg1)
@@ -3649,18 +3661,6 @@ function scr_setflag(arg0, arg1)
 {
     scr_flag_set(arg0, arg1);
 }");
-
-
-UndertaleGameObject obj_spritecomparer = Data.GameObjects.ByName("obj_spritecomparer");
-importGroup.QueueFindReplace("gml_Object_obj_spritecomparer_Draw_0",
-@"if (keyboard_check_pressed(ord(""D"")))",
-@"if (keyboard_check_pressed(vk_f2))");
-
-
-UndertaleGameObject obj_dialoguer = Data.GameObjects.ByName("obj_dialoguer");
-importGroup.QueueFindReplace("gml_Object_obj_dialoguer_Draw_0",
-@"if (sunkus_kb_check_pressed(ord(""D"")))",
-@"if (sunkus_kb_check_pressed(vk_f2))");
 
 
 UndertaleGameObject obj_rhythmgame = Data.GameObjects.ByName("obj_rhythmgame");

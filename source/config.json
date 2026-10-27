@@ -21,11 +21,9 @@
 		"legend_of_tenna_addons",
 		"chap1_room_changer",
 		"DEVICE_CONTACT",
-		"scr_flag_set_ch4_fix",
-        "conflict_fix",
+		"fixes",
         "rhythmgame_debug_keys",
         "battle_dialog_pause",
-        "chap5_fix",
         "obj_dconsole_system",
         "obj_dmenu_system"
     ]

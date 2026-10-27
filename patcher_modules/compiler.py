@@ -30,15 +30,27 @@ def parse_folder(declared_elements=None, current_chapter=0):
         else:
             folders.append(fold)
 
-    for fold in os.listdir('.'):
-        if fold[0] != '.' and os.path.isdir(fold) and fold not in folders:
-            print(f"Warning: `{fold}' module not used", file=sys.stderr)
+    sub_dirs = sorted([d for d in os.listdir('.') if d[0] != '.' and os.path.isdir(d)])
+    if folder_order:
+        for fold in sub_dirs:
+            if fold not in folders:
+                print(f"Warning: `{get_file_pos(fold)}' module not used", file=sys.stderr)
+    else:
+        folders = sub_dirs
 
     for folder in folders:
         if folder.startswith('.'):
             continue
 
         update_cwd(folder)
+
+        has_subdirs = any(d[0] != '.' and os.path.isdir(d) for d in os.listdir('.'))
+        if has_subdirs:
+            csx_lines.extend(parse_folder(declared_elements, current_chapter))
+            if not os.path.exists(master_config_path):
+                update_cwd('..')
+                continue
+
         folder_config = init_basic_json(folder, master_config_path)
 
         for filename, config in folder_config.items():
