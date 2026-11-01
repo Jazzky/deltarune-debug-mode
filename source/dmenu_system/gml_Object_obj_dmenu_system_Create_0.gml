@@ -16,12 +16,10 @@ dnumber_litems = [0, 11, 14, 14, 18, 23];
 dlight_weapons = [];
 dlight_armors = [[3, dstr("Bandage", "Pansement")], [14, dstr("Wristwatch", "Montre")]];
 dlight_objects = [[1, dstr("Hot Chocolate", "Chocolat Chaud")], [2, dstr("Pencil", "Crayon")], [3, dstr("Bandage", "Pansement")], [4, dstr("Bouquet")], [5, dstr("Ball of Junk", "Boule de Trucs")], [6, dstr("Halloween Pencil", "Crayon Halloween")], [7, dstr("Lucky Pencil", "Crayon Fétiche")], [8, dstr("Egg", "Œuf")], [9, dstr("Cards", "Cartes")], [10, dstr("Box of Heart Candy", "Boîte de ChocoCœurs")], [11, dstr("Glass", "Verre")], [12, dstr("Eraser", "Gomme")], [13, dstr("Mech. Pencil", "Critérium")], [14, dstr("Wristwatch", "Montre")], [15, dstr("Holiday Pencil", "Crayon de Noël")], [16, dstr("CactusNeedle", "Épine de Cactus")], [17, dstr("BlackShard", "ÉclatNoir")], [18, dstr("QuillPen", "Stylo-Plume")], [19, dstr("Honey Toast", "Tartine de Miel")], [20, dstr("Bread", "Pain")], [21, dstr("Seeds", "Graines")], [22, dstr("Pencil2", "Crayon2")], [23, dstr("Petal", "Pétale")]];
-dhinter_active = false;
 itemdescb = "";
 armordesctemp = "";
 weapondesctemp = "";
 tempkeyitemdesc = "";
-dhinter_text = "";
 global.dload_cur_inv = 0;
 dtemp_text = "";
 dtemp_num = 0;
@@ -57,6 +55,7 @@ if (global.chapter < 3)
 
 dbutton_options = [];
 dbutton_options_2d = dbutton_options_original;
+dbutton_desc = [];
 dmenu_state = "debug";
 dvertical_index = 0;
 dhorizontal_page = 0;
@@ -354,6 +353,8 @@ dkeyboard_input = "";
 for (i = 0; i < array_length(drooms_id); i++)
     array_push(drooms, room_get_name(drooms_id[i].room_index));
 
+sel_obj = "undefined";
+sel_inst = "undefined";
 obj_list = [];
 all_obj_list = [];
 var index = 0;

@@ -5,5 +5,6 @@
 		"persistent": false
 	},
 	"gml_Object_obj_dmode_xy_Step_1": {},
-	"gml_Object_obj_dmode_xy_Draw_0": {}
+	"gml_Object_obj_dmode_xy_Draw_0": {},
+	"gml_Object_obj_dmode_xy_Destroy_0": {}
 }

@@ -540,18 +540,20 @@ if (dmenu_active)
             draw_sprite_ext(heartsprite, 0, x_start + (108 * dhorizontal_index * d) + xx, heart_y, 1, 1, 0, c_white, 1);
         }
     }
-    
-    dhinter_active = true;
-    
-    if (dhinter_active && dhinter_text != "" && (scr_array_contains(ditem_types, dmenu_state) || dmenu_state == "warp_options" || dmenu_state == "debug_save" || dmenu_state == "debug_save_options"))
+
+    if (is_array(dbutton_desc) && dvertical_index >= 0 && dvertical_index < array_length(dbutton_desc))
     {
-        draw_set_color(c_white);
-        draw_rectangle(((xcenter - (menu_width / 2) - 3) * d) + xx, (2 * d) + yy, ((xcenter + (menu_width / 2) + 3) * d) + xx, (51 * d) + yy, false);
-        draw_set_color(c_black);
-        draw_rectangle(((xcenter - (menu_width / 2)) * d) + xx, (5 * d) + yy, ((xcenter + (menu_width / 2)) * d) + xx, (48 * d) + yy, false);
-        draw_set_color(c_white);
-        var x_start_desc = ((xcenter - (menu_width / 2)) + x_padding) * d;
-        draw_text_ext(x_start_desc + xx, (10 * d) + yy, string(dhinter_text), 18 * d, (menu_width - (x_padding * 2)) * d);
+        var _desc = dbutton_desc[dvertical_index];
+        if (is_string(_desc) && _desc != "")
+        {
+            draw_set_color(c_white);
+            draw_rectangle(((xcenter - (menu_width / 2) - 3) * d) + xx, (2 * d) + yy, ((xcenter + (menu_width / 2) + 3) * d) + xx, (51 * d) + yy, false);
+            draw_set_color(c_black);
+            draw_rectangle(((xcenter - (menu_width / 2)) * d) + xx, (5 * d) + yy, ((xcenter + (menu_width / 2)) * d) + xx, (48 * d) + yy, false);
+            draw_set_color(c_white);
+            var x_start_desc = ((xcenter - (menu_width / 2)) + x_padding) * d;
+            draw_text_ext(x_start_desc + xx, (10 * d) + yy, _desc, 18 * d, (menu_width - (x_padding * 2)) * d);
+        }
     }
 }
 

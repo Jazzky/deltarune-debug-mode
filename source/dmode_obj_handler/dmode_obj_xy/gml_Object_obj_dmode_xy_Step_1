@@ -1,14 +1,25 @@
 siner++;
 
-if (i_ex(sel_obj))
+if (destroy_timer >= 0)
 {
-    if (sel_obj.sprite_index == -1 || sel_obj.visible == false)
+    destroy_timer--;
+    if (destroy_timer <= 0)
     {
-        scr_debug_print(dstr("Invisible or no sprite#Created immediately", "Invisible ou sans sprite#Créé immédiatement"));
-        global.interact = 0;
-        global.flag[7] = 0;
         instance_destroy();
+    }
+    exit;
+}
 
+if (selmode == 0)
+{
+    if (i_ex(sel_obj))
+    {
+        if (sel_obj.sprite_index == -1 || sel_obj.visible == false)
+        {
+            scr_debug_print(dstr("Invisible or no sprite#Created immediately", "Invisible ou sans sprite#Créé immédiatement"));
+            instance_destroy();
+
+        }
     }
 }
 
@@ -17,41 +28,63 @@ if (keyboard_check_pressed(global.input_k[5]) || keyboard_check_pressed(global.i
     obj_spd = (obj_spd % 15) + 5;
 }
 
-if (handmode == 0)
+if (selmode == 0)
 {
-    if (i_ex(sel_obj))
+    if (handmode == 0)
     {
-        if (sel_obj.sprite_index != -1)
+        if (i_ex(sel_obj))
         {
-            os = sel_obj;
-            var _moved = false;
-
-            if (keyboard_check(vk_up))
+            if (sel_obj.sprite_index != -1)
             {
-                os.y -= obj_spd;
-                _moved = true;
+                os = sel_obj;
+                var _moved = false;
+
+                if (keyboard_check(vk_up))
+                {
+                    os.y -= obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_left))
+                {
+                    os.x -= obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_down))
+                {
+                    os.y += obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_right))
+                {
+                    os.x += obj_spd;
+                    _moved = true;
+                }
+
+                if (_moved)
+                {
+                    with (os.object_index)
+                    {
+                        scr_depth();
+                    }
+                }
             }
-
-            if (keyboard_check(vk_left))
+        }
+    }
+    if (handmode == 1)
+    {
+        if (i_ex(sel_obj))
+        {
+            if (sel_obj.sprite_index != -1)
             {
-                os.x -= obj_spd;
-                _moved = true;
-            }
+                os = sel_obj;
+                var _moved = false;
 
-            if (keyboard_check(vk_down))
-            {
-                os.y += obj_spd;
-                _moved = true;
-            }
+                os.x = mouse_x;
+                os.y = mouse_y;
 
-            if (keyboard_check(vk_right))
-            {
-                os.x += obj_spd;
-                _moved = true;
-            }
-
-            if (_moved)
-            {
                 with (os.object_index)
                 {
                     scr_depth();
@@ -60,34 +93,83 @@ if (handmode == 0)
         }
     }
 }
-if (handmode == 1)
+
+if (selmode == 1)
 {
-    if (i_ex(sel_obj))
+    if (handmode == 0)
     {
-        if (sel_obj.sprite_index != -1)
+        if (keyboard_check(vk_up))
         {
-            os = sel_obj;
-            var _moved = false;
-
-            os.x = mouse_x;
-            os.y = mouse_y;
-
-            with (os.object_index)
-            {
-                scr_depth();
-            }
+            mcy -= obj_spd;
         }
+        if (keyboard_check(vk_left))
+        {
+            mcx -= obj_spd;
+        }
+        if (keyboard_check(vk_down))
+        {
+            mcy += obj_spd;
+        }
+        if (keyboard_check(vk_right))
+        {
+            mcx += obj_spd;
+        }
+
+        mcx = clamp(mcx, 0, 640);
+        mcy = clamp(mcy, 0, 480);
     }
 }
 
 // Confirm Z function
 if (keyboard_check_pressed(global.input_k[4]) || keyboard_check_pressed(global.input_k[7]))
 {
-    scr_debug_print(dstr("Object created!", "Objet créé !"));
-    io_clear();
-    global.interact = 0;
-    global.flag[7] = 0;
-    instance_destroy();
+    if (selmode == 1)
+    {
+        var _cx = (handmode == 0) ? (camerax() + mcx) : mouse_x;
+        var _cy = (handmode == 0) ? (cameray() + mcy) : mouse_y;
+
+        var _inst = instance_nearest(_cx, _cy, sel_obj);
+        var _valid = false;
+
+        if (_inst != noone && _inst != id)
+        {
+            var _w = abs(_inst.sprite_width);
+            var _h = abs(_inst.sprite_height);
+
+            var _center_x = _inst.x - sprite_get_xoffset(_inst.sprite_index) * _inst.image_xscale + (_inst.sprite_width * 0.5);
+            var _center_y = _inst.y - sprite_get_yoffset(_inst.sprite_index) * _inst.image_yscale + (_inst.sprite_height * 0.5);
+
+            var _max_dist = max(32, (max(_w, _h) * 0.75) + 24);
+
+            if (point_distance(_cx, _cy, _center_x, _center_y) <= _max_dist)
+            {
+                _valid = true;
+            }
+        }
+
+        if (_valid)
+        {
+            sel_obj = _inst;
+            inst_valid = 1;
+            selmode = 0;
+            flashing = 1;
+            destroy_timer = 60;
+            scr_debug_print(dstr("Instance of ", "Instance de ") + object_get_name(sel_obj.object_index) + dstr(" selected!", " sélectionnée !"));
+            io_clear();
+            exit;
+        }
+        else
+        {
+            scr_debug_print(dstr("No instance found!", "Aucune instance trouvée !"));
+        }
+        io_clear();
+    }
+    else if (selmode == 0)
+    {
+        scr_debug_print(dstr("Object placed!", "Objet placé !"));
+        io_clear();
+        instance_destroy();
+    }
 }
 
 // Switch mode C function
@@ -111,15 +193,21 @@ if (keyboard_check_pressed(global.input_k[6]) || keyboard_check_pressed(global.i
 // Exit Backspace function
 if (keyboard_check_pressed(vk_backspace))
 {
-    scr_debug_print(dstr("Object deleted!", "Objet supprimé !"));
-    io_clear();
-    global.interact = 0;
-    global.flag[7] = 0;
-    with (os)
+    if (selmode == 0)
     {
-        instance_destroy();
+        scr_debug_print(dstr("Object deleted!", "Objet supprimé !"));
+
+        with (os)
+        {
+            instance_destroy();
+        }
+    }
+    else if (selmode == 1)
+    {
+        scr_debug_print(dstr("Selection cancelled!", "Sélection annulée !"));
     }
 
+    io_clear();
     instance_destroy();
 }
 

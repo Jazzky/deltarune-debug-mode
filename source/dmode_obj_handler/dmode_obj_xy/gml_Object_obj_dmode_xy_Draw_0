@@ -5,7 +5,6 @@ my = mouse_y - camy;
 var space = 16;
 var margin = 10;
 
-linecount = 5;
 line[0] = "[" + string(move_interact[handmode]) + "] - " + dstr("Move object", "Bouger l'objet");
 line[1] = dstr("Confirm", "Confirmer");
 line[2] = dstr("Change move speed: ", "Changer vitesse objet : ") + string(obj_spd) + " px";
@@ -16,6 +15,15 @@ but[1] = 4;
 but[2] = 5;
 but[3] = 6;
 but[4] = -1;
+
+if (selmode == 1)
+{
+    line[0] = "[" + string(move_interact[handmode]) + "] - " + dstr("Select object instance", "Sélectionner instance d'un objet");
+    line[4] = dstr("[Backspace] - Cancel", "[Retour arr.] - Annuler");
+
+}
+
+linecount = array_length(line);
 
 var xloc = (camx + 640) - margin;
 var yloc = 480 - (space * linecount) - margin;
@@ -41,22 +49,34 @@ draw_set_halign(fa_left);
 
 xloc = camx + margin;
 yloc = 480 - space - margin;
-fullline = dstr("Object: ", "Objet : ") + string(object_get_name(sel_obj.object_index));
+fullline = dstr("Object: ", "Objet : ") + object_get_name(sel_obj.object_index);
 
 scr_84_draw_text_outline(xloc, camy + yloc, fullline);
 
 draw_set_font(fnt_mainbig);
 
-if (i_ex(sel_obj))
+if (flashing == 1)
 {
-    if (sel_obj.sprite_index != -1)
+    if (i_ex(sel_obj))
     {
-        os = sel_obj;
-        draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+        if (sel_obj.sprite_index != -1)
+        {
+            os = sel_obj;
+            draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+        }
     }
 }
 
-if (handmode == 2)
+if (selmode == 1)
 {
-    draw_sprite(spr_maus_cursor, 0, mx, my);
+    var _ox = sprite_get_xoffset(spr_maus_cursor);
+    var _oy = sprite_get_yoffset(spr_maus_cursor);
+    if (handmode == 0)
+    {
+        draw_sprite(spr_maus_cursor, 0, camx + mcx + _ox, camy + mcy + _oy);
+    }
+    if (handmode == 1)
+    {
+        draw_sprite(spr_maus_cursor, 0, camx + mx + _ox, camy + my + _oy);
+    }
 }

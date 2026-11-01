@@ -789,7 +789,7 @@ else if (dmenu_active)
             dvertical_index = 0;
             dhorizontal_index = 0;
         }
-        
+
         dmenu_state_update();
     }
     
@@ -812,124 +812,6 @@ else if (dmenu_active)
         }
         
         dpop_history();
-    }
-    
-    if (dhinter_active)
-    {
-        if (dmenu_state == "warp_options")
-        {
-            new_room = drooms_options.target_room;
-            
-            if (new_room == -1)
-                new_room = room;
-            
-            dhinter_text = dstr("Selected room: ", "Salle sélectionnée : ") + room_get_name(new_room);
-        }
-        
-        if (dmenu_state == "debug_save")
-        {
-            if (dvertical_index == 0)
-            {
-                dhinter_text = dstr("[I] - Import individual\n[Alt+I] - Batch import", "[I] - Importation unique\n[Alt+I] - Importation par lot");
-            }
-            else if (dvertical_index > 0 && dvertical_index < array_length(dbutton_options))
-            {
-                var real_index = (dvertical_index < array_length(dbutton_indices)) ? dbutton_indices[dvertical_index] : -1;
-                
-                if (real_index >= 0 && real_index < array_length(debug_save_descriptions))
-                    dhinter_text = debug_save_descriptions[real_index];
-                else
-                    dhinter_text = "";
-            }
-        }
-        
-        if (dmenu_state == "debug_save_options")
-        {
-            var target_path = global.debug_selected_save_section;
-            var found_desc = "No description available.";
-            
-            for (var i = 0; i < array_length(debug_save_sections); i++)
-            {
-                if (debug_save_sections[i] == target_path)
-                {
-                    found_desc = debug_save_descriptions[i];
-                    break;
-                }
-            }
-            
-            dhinter_text = found_desc;
-        }
-        
-        if (scr_array_contains(ditem_types, dmenu_state))
-        {
-            if (dhorizontal_page == 0 && dvertical_index == 0)
-            {
-                dhinter_text = dstr("Press ", "Appuyez sur ") + scr_get_input_name(4) + dstr(" to change chapter", " pour changer de chapitre");
-            }
-            else if (dhorizontal_page == 0 && dvertical_index != 0)
-            {
-                var hover_id = dbutton_indices[dvertical_index];
-                
-                if (hover_id != -1)
-                {
-                    var raw_desc = "";
-                    
-                    switch (dmenu_state)
-                    {
-                        case "objects":
-                            scr_iteminfo(hover_id);
-                            raw_desc = itemdescb;
-                            break;
-                        
-                        case "armors":
-                            scr_armorinfo(hover_id);
-                            raw_desc = armordesctemp;
-                            break;
-                        
-                        case "weapons":
-                            scr_weaponinfo(hover_id);
-                            raw_desc = weapondesctemp;
-                            break;
-                        
-                        case "keyitems":
-                            scr_keyiteminfo(hover_id);
-                            raw_desc = tempkeyitemdesc;
-                            break;
-                    }
-                    
-                    dhinter_text = string_replace_all(raw_desc, "#", " ");
-                    var max_w = (menu_width - (x_padding * 2)) * d;
-                    var line_sep = 18 * d;
-                    var max_h = line_sep * 2;
-                    
-                    if (!variable_instance_exists(id, "dhinter_cached_raw") || dhinter_cached_raw != dhinter_text)
-                    {
-                        dhinter_cached_raw = dhinter_text;
-                        var temp_text = dhinter_text;
-                        
-                        if (string_height_ext(temp_text, line_sep, max_w) > max_h)
-                        {
-                            while (string_height_ext(temp_text + "...", line_sep, max_w) > max_h && string_length(temp_text) > 0)
-                                temp_text = string_delete(temp_text, string_length(temp_text), 1);
-                            
-                            temp_text += "...";
-                        }
-                        
-                        dhinter_cached_display = temp_text;
-                    }
-                    
-                    dhinter_text = dhinter_cached_display;
-                }
-                else
-                {
-                    dhinter_text = "---";
-                }
-            }
-            else
-            {
-                dhinter_text = "";
-            }
-        }
     }
 }
 

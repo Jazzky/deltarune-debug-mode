@@ -1921,6 +1921,17 @@ importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Create, (uint)0,
 siner = 0;
 handmode = 0
 obj_spd = 5;
+destroy_timer = -1;
+flashing = 1
+inst_valid = 0;
+
+mcx = 320;
+mcy = 240;
+
+if (!variable_instance_exists(id, ""selmode""))
+{
+    selmode = 0;
+}
 
 hm_name[0] = dstr(""Absolute Transform"", ""Déplacement absolu"");
 hm_name[1] = dstr(""Relative Pointer"", ""Curseur relatif"");
@@ -1932,15 +1943,26 @@ move_interact[1] = dstr(""Mouse"", ""Souris"");
 importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Step, (uint)1, Data),
 @"siner++;
 
-if (i_ex(sel_obj))
+if (destroy_timer >= 0)
 {
-    if (sel_obj.sprite_index == -1 || sel_obj.visible == false)
+    destroy_timer--;
+    if (destroy_timer <= 0)
     {
-        scr_debug_print(dstr(""Invisible or no sprite#Created immediately"", ""Invisible ou sans sprite#Créé immédiatement""));
-        global.interact = 0;
-        global.flag[7] = 0;
         instance_destroy();
+    }
+    exit;
+}
 
+if (selmode == 0)
+{
+    if (i_ex(sel_obj))
+    {
+        if (sel_obj.sprite_index == -1 || sel_obj.visible == false)
+        {
+            scr_debug_print(dstr(""Invisible or no sprite#Created immediately"", ""Invisible ou sans sprite#Créé immédiatement""));
+            instance_destroy();
+
+        }
     }
 }
 
@@ -1949,41 +1971,63 @@ if (keyboard_check_pressed(global.input_k[5]) || keyboard_check_pressed(global.i
     obj_spd = (obj_spd % 15) + 5;
 }
 
-if (handmode == 0)
+if (selmode == 0)
 {
-    if (i_ex(sel_obj))
+    if (handmode == 0)
     {
-        if (sel_obj.sprite_index != -1)
+        if (i_ex(sel_obj))
         {
-            os = sel_obj;
-            var _moved = false;
-
-            if (keyboard_check(vk_up))
+            if (sel_obj.sprite_index != -1)
             {
-                os.y -= obj_spd;
-                _moved = true;
+                os = sel_obj;
+                var _moved = false;
+
+                if (keyboard_check(vk_up))
+                {
+                    os.y -= obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_left))
+                {
+                    os.x -= obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_down))
+                {
+                    os.y += obj_spd;
+                    _moved = true;
+                }
+
+                if (keyboard_check(vk_right))
+                {
+                    os.x += obj_spd;
+                    _moved = true;
+                }
+
+                if (_moved)
+                {
+                    with (os.object_index)
+                    {
+                        scr_depth();
+                    }
+                }
             }
-
-            if (keyboard_check(vk_left))
+        }
+    }
+    if (handmode == 1)
+    {
+        if (i_ex(sel_obj))
+        {
+            if (sel_obj.sprite_index != -1)
             {
-                os.x -= obj_spd;
-                _moved = true;
-            }
+                os = sel_obj;
+                var _moved = false;
 
-            if (keyboard_check(vk_down))
-            {
-                os.y += obj_spd;
-                _moved = true;
-            }
+                os.x = mouse_x;
+                os.y = mouse_y;
 
-            if (keyboard_check(vk_right))
-            {
-                os.x += obj_spd;
-                _moved = true;
-            }
-
-            if (_moved)
-            {
                 with (os.object_index)
                 {
                     scr_depth();
@@ -1992,34 +2036,83 @@ if (handmode == 0)
         }
     }
 }
-if (handmode == 1)
+
+if (selmode == 1)
 {
-    if (i_ex(sel_obj))
+    if (handmode == 0)
     {
-        if (sel_obj.sprite_index != -1)
+        if (keyboard_check(vk_up))
         {
-            os = sel_obj;
-            var _moved = false;
-
-            os.x = mouse_x;
-            os.y = mouse_y;
-
-            with (os.object_index)
-            {
-                scr_depth();
-            }
+            mcy -= obj_spd;
         }
+        if (keyboard_check(vk_left))
+        {
+            mcx -= obj_spd;
+        }
+        if (keyboard_check(vk_down))
+        {
+            mcy += obj_spd;
+        }
+        if (keyboard_check(vk_right))
+        {
+            mcx += obj_spd;
+        }
+
+        mcx = clamp(mcx, 0, 640);
+        mcy = clamp(mcy, 0, 480);
     }
 }
 
 // Confirm Z function
 if (keyboard_check_pressed(global.input_k[4]) || keyboard_check_pressed(global.input_k[7]))
 {
-    scr_debug_print(dstr(""Object created!"", ""Objet créé !""));
-    io_clear();
-    global.interact = 0;
-    global.flag[7] = 0;
-    instance_destroy();
+    if (selmode == 1)
+    {
+        var _cx = (handmode == 0) ? (camerax() + mcx) : mouse_x;
+        var _cy = (handmode == 0) ? (cameray() + mcy) : mouse_y;
+
+        var _inst = instance_nearest(_cx, _cy, sel_obj);
+        var _valid = false;
+
+        if (_inst != noone && _inst != id)
+        {
+            var _w = abs(_inst.sprite_width);
+            var _h = abs(_inst.sprite_height);
+
+            var _center_x = _inst.x - sprite_get_xoffset(_inst.sprite_index) * _inst.image_xscale + (_inst.sprite_width * 0.5);
+            var _center_y = _inst.y - sprite_get_yoffset(_inst.sprite_index) * _inst.image_yscale + (_inst.sprite_height * 0.5);
+
+            var _max_dist = max(32, (max(_w, _h) * 0.75) + 24);
+
+            if (point_distance(_cx, _cy, _center_x, _center_y) <= _max_dist)
+            {
+                _valid = true;
+            }
+        }
+
+        if (_valid)
+        {
+            sel_obj = _inst;
+            inst_valid = 1;
+            selmode = 0;
+            flashing = 1;
+            destroy_timer = 60;
+            scr_debug_print(dstr(""Instance of "", ""Instance de "") + object_get_name(sel_obj.object_index) + dstr("" selected!"", "" sélectionnée !""));
+            io_clear();
+            exit;
+        }
+        else
+        {
+            scr_debug_print(dstr(""No instance found!"", ""Aucune instance trouvée !""));
+        }
+        io_clear();
+    }
+    else if (selmode == 0)
+    {
+        scr_debug_print(dstr(""Object placed!"", ""Objet placé !""));
+        io_clear();
+        instance_destroy();
+    }
 }
 
 // Switch mode C function
@@ -2043,15 +2136,21 @@ if (keyboard_check_pressed(global.input_k[6]) || keyboard_check_pressed(global.i
 // Exit Backspace function
 if (keyboard_check_pressed(vk_backspace))
 {
-    scr_debug_print(dstr(""Object deleted!"", ""Objet supprimé !""));
-    io_clear();
-    global.interact = 0;
-    global.flag[7] = 0;
-    with (os)
+    if (selmode == 0)
     {
-        instance_destroy();
+        scr_debug_print(dstr(""Object deleted!"", ""Objet supprimé !""));
+
+        with (os)
+        {
+            instance_destroy();
+        }
+    }
+    else if (selmode == 1)
+    {
+        scr_debug_print(dstr(""Selection cancelled!"", ""Sélection annulée !""));
     }
 
+    io_clear();
     instance_destroy();
 }
 
@@ -2078,7 +2177,6 @@ my = mouse_y - camy;
 var space = 16;
 var margin = 10;
 
-linecount = 5;
 line[0] = ""["" + string(move_interact[handmode]) + ""] - "" + dstr(""Move object"", ""Bouger l'objet"");
 line[1] = dstr(""Confirm"", ""Confirmer"");
 line[2] = dstr(""Change move speed: "", ""Changer vitesse objet : "") + string(obj_spd) + "" px"";
@@ -2089,6 +2187,15 @@ but[1] = 4;
 but[2] = 5;
 but[3] = 6;
 but[4] = -1;
+
+if (selmode == 1)
+{
+    line[0] = ""["" + string(move_interact[handmode]) + ""] - "" + dstr(""Select object instance"", ""Sélectionner instance d'un objet"");
+    line[4] = dstr(""[Backspace] - Cancel"", ""[Retour arr.] - Annuler"");
+
+}
+
+linecount = array_length(line);
 
 var xloc = (camx + 640) - margin;
 var yloc = 480 - (space * linecount) - margin;
@@ -2114,24 +2221,61 @@ draw_set_halign(fa_left);
 
 xloc = camx + margin;
 yloc = 480 - space - margin;
-fullline = dstr(""Object: "", ""Objet : "") + string(object_get_name(sel_obj.object_index));
+fullline = dstr(""Object: "", ""Objet : "") + object_get_name(sel_obj.object_index);
 
 scr_84_draw_text_outline(xloc, camy + yloc, fullline);
 
 draw_set_font(fnt_mainbig);
 
-if (i_ex(sel_obj))
+if (flashing == 1)
 {
-    if (sel_obj.sprite_index != -1)
+    if (i_ex(sel_obj))
     {
-        os = sel_obj;
-        draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+        if (sel_obj.sprite_index != -1)
+        {
+            os = sel_obj;
+            draw_sprite_ext_flash(os.sprite_index, os.image_index, os.x, os.y, os.image_xscale, os.image_yscale, os.image_angle, os.image_blend, (sin(siner / 8) * 0.5) + 0.5);
+        }
     }
 }
 
-if (handmode == 2)
+if (selmode == 1)
 {
-    draw_sprite(spr_maus_cursor, 0, mx, my);
+    var _ox = sprite_get_xoffset(spr_maus_cursor);
+    var _oy = sprite_get_yoffset(spr_maus_cursor);
+    if (handmode == 0)
+    {
+        draw_sprite(spr_maus_cursor, 0, camx + mcx + _ox, camy + mcy + _oy);
+    }
+    if (handmode == 1)
+    {
+        draw_sprite(spr_maus_cursor, 0, camx + mx + _ox, camy + my + _oy);
+    }
+}
+");
+
+
+importGroup.QueueReplace(obj_dmode_xy.EventHandlerFor(EventType.Destroy, (uint)0, Data),
+@"selmode = 0;
+global.flag[7] = 0;
+global.interact = 0;
+
+if (inst_valid == 1)
+{
+    var _inst = sel_obj;
+
+    with (obj_dmenu_system)
+    {
+        sel_inst = _inst;
+        global.interact = 1;
+        array_push(dmenu_state_history, dmenu_state);
+        array_push(dmenu_vertical_index_history, dvertical_index);
+        array_push(dmenu_horizontal_index_history, dhorizontal_index);
+        array_push(dmenu_page_index_history, dhorizontal_page);
+        dmenu_state = ""inst_manager"";
+        dmenu_state_update();
+        dmenu_active = 1;
+    }
 }
 ");
 
@@ -3396,12 +3540,10 @@ dnumber_litems = [0, 11, 14, 14, 18, 23];
 dlight_weapons = [];
 dlight_armors = [[3, dstr(""Bandage"", ""Pansement"")], [14, dstr(""Wristwatch"", ""Montre"")]];
 dlight_objects = [[1, dstr(""Hot Chocolate"", ""Chocolat Chaud"")], [2, dstr(""Pencil"", ""Crayon"")], [3, dstr(""Bandage"", ""Pansement"")], [4, dstr(""Bouquet"")], [5, dstr(""Ball of Junk"", ""Boule de Trucs"")], [6, dstr(""Halloween Pencil"", ""Crayon Halloween"")], [7, dstr(""Lucky Pencil"", ""Crayon Fétiche"")], [8, dstr(""Egg"", ""Œuf"")], [9, dstr(""Cards"", ""Cartes"")], [10, dstr(""Box of Heart Candy"", ""Boîte de ChocoCœurs"")], [11, dstr(""Glass"", ""Verre"")], [12, dstr(""Eraser"", ""Gomme"")], [13, dstr(""Mech. Pencil"", ""Critérium"")], [14, dstr(""Wristwatch"", ""Montre"")], [15, dstr(""Holiday Pencil"", ""Crayon de Noël"")], [16, dstr(""CactusNeedle"", ""Épine de Cactus"")], [17, dstr(""BlackShard"", ""ÉclatNoir"")], [18, dstr(""QuillPen"", ""Stylo-Plume"")], [19, dstr(""Honey Toast"", ""Tartine de Miel"")], [20, dstr(""Bread"", ""Pain"")], [21, dstr(""Seeds"", ""Graines"")], [22, dstr(""Pencil2"", ""Crayon2"")], [23, dstr(""Petal"", ""Pétale"")]];
-dhinter_active = false;
 itemdescb = """";
 armordesctemp = """";
 weapondesctemp = """";
 tempkeyitemdesc = """";
-dhinter_text = """";
 global.dload_cur_inv = 0;
 dtemp_text = """";
 dtemp_num = 0;
@@ -3437,6 +3579,7 @@ if (global.chapter < 3)
 
 dbutton_options = [];
 dbutton_options_2d = dbutton_options_original;
+dbutton_desc = [];
 dmenu_state = ""debug"";
 dvertical_index = 0;
 dhorizontal_page = 0;
@@ -3734,6 +3877,8 @@ dkeyboard_input = """";
 for (i = 0; i < array_length(drooms_id); i++)
     array_push(drooms, room_get_name(drooms_id[i].room_index));
 
+sel_obj = ""undefined"";
+sel_inst = ""undefined"";
 obj_list = [];
 all_obj_list = [];
 var index = 0;
@@ -4812,7 +4957,7 @@ else if (dmenu_active)
             dvertical_index = 0;
             dhorizontal_index = 0;
         }
-        
+
         dmenu_state_update();
     }
     
@@ -4835,124 +4980,6 @@ else if (dmenu_active)
         }
         
         dpop_history();
-    }
-    
-    if (dhinter_active)
-    {
-        if (dmenu_state == ""warp_options"")
-        {
-            new_room = drooms_options.target_room;
-            
-            if (new_room == -1)
-                new_room = room;
-            
-            dhinter_text = dstr(""Selected room: "", ""Salle sélectionnée : "") + room_get_name(new_room);
-        }
-        
-        if (dmenu_state == ""debug_save"")
-        {
-            if (dvertical_index == 0)
-            {
-                dhinter_text = dstr(""[I] - Import individual\n[Alt+I] - Batch import"", ""[I] - Importation unique\n[Alt+I] - Importation par lot"");
-            }
-            else if (dvertical_index > 0 && dvertical_index < array_length(dbutton_options))
-            {
-                var real_index = (dvertical_index < array_length(dbutton_indices)) ? dbutton_indices[dvertical_index] : -1;
-                
-                if (real_index >= 0 && real_index < array_length(debug_save_descriptions))
-                    dhinter_text = debug_save_descriptions[real_index];
-                else
-                    dhinter_text = """";
-            }
-        }
-        
-        if (dmenu_state == ""debug_save_options"")
-        {
-            var target_path = global.debug_selected_save_section;
-            var found_desc = ""No description available."";
-            
-            for (var i = 0; i < array_length(debug_save_sections); i++)
-            {
-                if (debug_save_sections[i] == target_path)
-                {
-                    found_desc = debug_save_descriptions[i];
-                    break;
-                }
-            }
-            
-            dhinter_text = found_desc;
-        }
-        
-        if (scr_array_contains(ditem_types, dmenu_state))
-        {
-            if (dhorizontal_page == 0 && dvertical_index == 0)
-            {
-                dhinter_text = dstr(""Press "", ""Appuyez sur "") + scr_get_input_name(4) + dstr("" to change chapter"", "" pour changer de chapitre"");
-            }
-            else if (dhorizontal_page == 0 && dvertical_index != 0)
-            {
-                var hover_id = dbutton_indices[dvertical_index];
-                
-                if (hover_id != -1)
-                {
-                    var raw_desc = """";
-                    
-                    switch (dmenu_state)
-                    {
-                        case ""objects"":
-                            scr_iteminfo(hover_id);
-                            raw_desc = itemdescb;
-                            break;
-                        
-                        case ""armors"":
-                            scr_armorinfo(hover_id);
-                            raw_desc = armordesctemp;
-                            break;
-                        
-                        case ""weapons"":
-                            scr_weaponinfo(hover_id);
-                            raw_desc = weapondesctemp;
-                            break;
-                        
-                        case ""keyitems"":
-                            scr_keyiteminfo(hover_id);
-                            raw_desc = tempkeyitemdesc;
-                            break;
-                    }
-                    
-                    dhinter_text = string_replace_all(raw_desc, ""#"", "" "");
-                    var max_w = (menu_width - (x_padding * 2)) * d;
-                    var line_sep = 18 * d;
-                    var max_h = line_sep * 2;
-                    
-                    if (!variable_instance_exists(id, ""dhinter_cached_raw"") || dhinter_cached_raw != dhinter_text)
-                    {
-                        dhinter_cached_raw = dhinter_text;
-                        var temp_text = dhinter_text;
-                        
-                        if (string_height_ext(temp_text, line_sep, max_w) > max_h)
-                        {
-                            while (string_height_ext(temp_text + ""..."", line_sep, max_w) > max_h && string_length(temp_text) > 0)
-                                temp_text = string_delete(temp_text, string_length(temp_text), 1);
-                            
-                            temp_text += ""..."";
-                        }
-                        
-                        dhinter_cached_display = temp_text;
-                    }
-                    
-                    dhinter_text = dhinter_cached_display;
-                }
-                else
-                {
-                    dhinter_text = ""---"";
-                }
-            }
-            else
-            {
-                dhinter_text = """";
-            }
-        }
     }
 }
 
@@ -4983,12 +5010,15 @@ if (dmenu_active == 1 && dmenu_state == ""debug"")
         scr_debug_print(dstr(""Debug menu now in English!"", ""Menu debug désormais en français !""));
         global.interact = 0;
     }
-}");
+}
+");
 
 
 importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)1, Data),
 @"function dmenu_state_update()
 {
+    dbutton_desc = [];
+
     switch (dmenu_state)
     {
         case ""debug"":
@@ -5049,10 +5079,33 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
             dbutton_layout = 1;
             dmenu_box = 1;
             break;
-        case ""debug_save"":
+        case ""obj_manager"":
+            dmenu_title = dstr(""Manage object"", ""Gestion de l'objet"");
+            dbutton_options = [dstr(""Select instance"", ""Sélectionner instance""), dstr(""Change all var"", ""Changer var à tous""), dstr(""Create new instance"", ""Créer nouvelle instance""), dstr(""Delete all instances"", ""Supprimer toutes instances"")];
+            dbutton_indices = [0, 1, 2, 3];
+
+            var _desc_str = dstr(""Object: "", ""Objet : "") + object_get_name(sel_obj);
+            dbutton_desc = array_create(array_length(dbutton_options), _desc_str);
+
+            dbutton_layout = 1;
+            dmenu_box = 1;
+            break;
+        case ""inst_manager"":
+            dmenu_title = dstr(""Manage instance"", ""Gestion de l'instance"");
+            dbutton_options = [dstr(""Change var"", ""Changer var""), dstr(""Move"", ""Bouger""), dstr(""Change sprite index"", ""Changer l'index sprite""), dstr(""Duplicate"", ""Dupliquer""), dstr(""Delete"", ""Supprimer"")];
+            dbutton_indices = [0, 1, 2, 3, 4];
+
+            var _desc_str = dstr(""Object: "", ""Objet : "") + object_get_name(sel_obj);
+            dbutton_desc = array_create(array_length(dbutton_options), _desc_str);
+
+            dbutton_layout = 1;
+            dmenu_box = 1;
+            break;
+        // case ""debug_save"":
             dmenu_title = ""Debug save"";
             dbutton_options = [dstr(""New save"", ""Nouvelle sauvegarde""), dstr(""Search"", ""Recherche"")];
             dbutton_indices = [-2, -2];
+
             var subs = [];
             if (global.dreading_custom_flag || dkeyboard_input != """")
             {
@@ -5100,6 +5153,18 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
                 }
             }
             dmenu_process_submenus(subs, dkeyboard_input);
+
+            dbutton_desc[0] = dstr(""[I] - Import individual\n[Alt+I] - Batch import"", ""[I] - Importation unique\n[Alt+I] - Importation par lot"");
+            for (var i = 1; i < array_length(dbutton_options); i++)
+            {
+                var real_index = (i < array_length(dbutton_indices)) ? dbutton_indices[i] : -1;
+
+                if (real_index >= 0 && real_index < array_length(debug_save_descriptions))
+                    dbutton_desc[i] = debug_save_descriptions[real_index];
+                else
+                    dbutton_desc[i] = """";
+            }
+
             dmenu_box = 1;
             dbutton_layout = 1;
             break;
@@ -5117,6 +5182,19 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
             }
             var load_options = ["" (Normal)"", dstr(""  (Current inventory)"", ""  (Inventaire actuel)"")];
             dbutton_options[0] += load_options[global.dload_cur_inv];
+
+            var target_path = global.debug_selected_save_section;
+            var found_desc = ""No description available."";
+            for (var i = 0; i < array_length(debug_save_sections); i++)
+            {
+                if (debug_save_sections[i] == target_path)
+                {
+                    found_desc = debug_save_descriptions[i];
+                    break;
+                }
+            }
+            dbutton_desc = array_create(array_length(dbutton_options), found_desc);
+
             dmenu_box = 1;
             dbutton_layout = 1;
             break;
@@ -5309,6 +5387,7 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
             dmenu_title = dstr(""Warp Options"", ""Options du saut"");
             dbutton_options = [dstr(""Cancel"", ""Annuler""), dstr(""Is Darkworld: "", ""Est un Darkworld : ""), dstr(""Plot Value: "", ""Valeur de plot : ""), dstr(""Teammate 2:  "", ""Équipier 2 :  ""), dstr(""Teammate 3:  "", ""Équipier 3 :  ""), dstr(""Warp"", ""Sauter"")];
             dbutton_indices = [0, 1, 2, 3, 4, 5];
+
             dbutton_options[1] += drooms_options.target_is_darkzone ? dstr(""Yes"", ""Oui"") : dstr(""No"", ""Non"");
             if (global.dreading_custom_flag)
             {
@@ -5321,6 +5400,15 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
             teammates = [dstr(""Nobody"", ""Personne""), ""Kris"", ""Susie"", ""Ralsei"", ""Noëlle""];
             dbutton_options[3] += teammates[drooms_options.target_member_2];
             dbutton_options[4] += teammates[drooms_options.target_member_3];
+
+            new_room = drooms_options.target_room;
+
+            if (new_room == -1)
+                new_room = room;
+
+            var _desc_str = dstr(""Selected room: "", ""Salle sélectionnée : "") + room_get_name(new_room);
+            dbutton_desc = array_create(array_length(dbutton_options), _desc_str);
+
             break;
         case ""give"":
             dmenu_title = dstr(""Item Type"", ""Type d'items"");
@@ -5329,100 +5417,37 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
             dbutton_layout = 0;
             break;
         case ""objects"":
-            dmenu_title = dstr(""Item List"", ""Liste d'objets"");
-            dbutton_options = [dstr(""Chapter: "", ""Chapitre : "")];
-            dbutton_indices = [-1];
-            dbutton_options[0] += string(ditem_chap);
-            var max_len = 33;
-            var _ranges = ditem_index_data(ditem_chap);
-            if (dhorizontal_page == 0)
-            {
-                for (var r = 0; r < array_length(_ranges); r++)
-                {
-                    var my_start = _ranges[r].start_id;
-                    var my_count = _ranges[r].count;
-                    for (var i = my_start; i < (my_start + my_count); i++)
-                    {
-                        scr_iteminfo(i);
-                        var cleaned_desc = string_replace_all(itemdescb, ""#"", "" "");
-                        var combined = itemnameb;
-                        if (string_length(combined) > max_len)
-                        {
-                            combined = string_copy(combined, 1, max_len - 3) + ""..."";
-                        }
-                        array_push(dbutton_options, combined);
-                        array_push(dbutton_indices, i);
-                    }
-                }
-            }
-            else
-            {
-                array_delete(dbutton_options, 0, 1);
-                array_delete(dbutton_indices, 0, 1);
-                for (var i = 0; i < array_length(dlight_objects); i++)
-                {
-                    scr_litemcheck(dlight_objects[i][0]);
-                    var combined = dlight_objects[i][1] + "" - "" + string(itemcount) + "" "" + dstr(""held"", ""possédé(s)"");
-                    array_push(dbutton_options, combined);
-                    array_push(dbutton_indices, dlight_objects[i][0]);
-                }
-            }
-            dmenu_box = 2;
-            dbutton_layout = 1;
-            break;
         case ""armors"":
-            dmenu_title = dstr(""Armor List"", ""Liste d'armures"");
-            dbutton_options = [dstr(""Chapter: "", ""Chapitre : "")];
-            dbutton_indices = [-1];
-            dbutton_options[0] += string(ditem_chap);
-            var max_len = 33;
-            var _ranges = darmor_index_data(ditem_chap);
-            if (dhorizontal_page == 0)
-            {
-                for (var r = 0; r < array_length(_ranges); r++)
-                {
-                    var my_start = _ranges[r].start_id;
-                    var my_count = _ranges[r].count;
-                    for (var i = my_start; i < (my_start + my_count); i++)
-                    {
-                        scr_armorinfo(i);
-                        var cleaned_desc = string_replace_all(armordesctemp, ""#"", "" "");
-                        var combined = armornametemp;
-                        if (string_length(combined) > max_len)
-                        {
-                            combined = string_copy(combined, 1, max_len - 3) + ""..."";
-                        }
-                        array_push(dbutton_options, combined);
-                        array_push(dbutton_indices, i);
-                    }
-                }
-            }
-            else
-            {
-                array_delete(dbutton_options, 0, 1);
-                array_delete(dbutton_indices, 0, 1);
-                for (var i = 0; i < array_length(dlight_armors); i++)
-                {
-                    var combined = dlight_armors[i][1];
-                    if (global.larmor == dlight_armors[i][0])
-                    {
-                        combined += ("" ("" + dstr(""Equipped"", ""Équipé"") + "")"");
-                    }
-                    array_push(dbutton_options, combined);
-                    array_push(dbutton_indices, i);
-                }
-            }
-            dmenu_box = 2;
-            dbutton_layout = 1;
-            break;
         case ""weapons"":
-            dmenu_title = dstr(""Weapon List"", ""Liste d'armes"");
-            dbutton_options = [dstr(""Chapter: "", ""Chapitre : "")];
+        case ""keyitems"":
+            dbutton_options = [dstr(""Chapter: "", ""Chapitre : "") + string(ditem_chap)];
             dbutton_indices = [-1];
-            dbutton_options[0] += string(ditem_chap);
+            dbutton_desc = [dstr(""Press "", ""Appuyez sur "") + scr_get_input_name(4) + dstr("" to change chapter"", "" pour changer de chapitre"")];
+
             var max_len = 33;
-            var _ranges = dweapon_index_data(ditem_chap);
-            if (dhorizontal_page == 0)
+            var _ranges = [];
+
+            switch (dmenu_state)
+            {
+                case ""objects"":
+                    dmenu_title = dstr(""Item List"", ""Liste d'objets"");
+                    _ranges = ditem_index_data(ditem_chap);
+                    break;
+                case ""armors"":
+                    dmenu_title = dstr(""Armor List"", ""Liste d'armures"");
+                    _ranges = darmor_index_data(ditem_chap);
+                    break;
+                case ""weapons"":
+                    dmenu_title = dstr(""Weapon List"", ""Liste d'armes"");
+                    _ranges = dweapon_index_data(ditem_chap);
+                    break;
+                case ""keyitems"":
+                    dmenu_title = dstr(""Key Item List"", ""Liste d'objets clés"");
+                    _ranges = dkeyitem_index_data(ditem_chap);
+                    break;
+            }
+
+            if (dhorizontal_page == 0 || dmenu_state == ""keyitems"")
             {
                 for (var r = 0; r < array_length(_ranges); r++)
                 {
@@ -5430,60 +5455,74 @@ importGroup.QueueReplace(obj_dmenu_system.EventHandlerFor(EventType.Step, (uint)
                     var my_count = _ranges[r].count;
                     for (var i = my_start; i < (my_start + my_count); i++)
                     {
-                        scr_weaponinfo(i);
-                        var cleaned_desc = string_replace_all(weapondesctemp, ""#"", "" "");
-                        var combined = weaponnametemp;
-                        if (string_length(combined) > max_len)
+                        var raw_name = """";
+                        var raw_desc = """";
+
+                        switch (dmenu_state)
                         {
-                            combined = string_copy(combined, 1, max_len - 3) + ""..."";
+                            case ""objects"":
+                                scr_iteminfo(i);
+                                raw_name = itemnameb;
+                                raw_desc = itemdescb;
+                                break;
+                            case ""armors"":
+                                scr_armorinfo(i);
+                                raw_name = armornametemp;
+                                raw_desc = armordesctemp;
+                                break;
+                            case ""weapons"":
+                                scr_weaponinfo(i);
+                                raw_name = weaponnametemp;
+                                raw_desc = weapondesctemp;
+                                break;
+                            case ""keyitems"":
+                                scr_keyiteminfo(i);
+                                raw_name = tempkeyitemname;
+                                raw_desc = tempkeyitemdesc;
+                                break;
                         }
+
+                        var combined = (string_length(raw_name) > max_len) ? (string_copy(raw_name, 1, max_len - 3) + ""..."") : raw_name;
+                        var cleaned_desc = string_replace_all(raw_desc, ""#"", "" "");
+
                         array_push(dbutton_options, combined);
                         array_push(dbutton_indices, i);
+                        array_push(dbutton_desc, cleaned_desc);
                     }
                 }
             }
             else
             {
-                array_delete(dbutton_options, 0, 1);
-                array_delete(dbutton_indices, 0, 1);
-                for (var i = 0; i < array_length(dlight_weapons); i++)
+                dbutton_options = [];
+                dbutton_indices = [];
+                dbutton_desc = [];
+
+                if (dmenu_state == ""objects"")
                 {
-                    var combined = dlight_weapons[i][1];
-                    if (global.lweapon == dlight_weapons[i][0])
+                    for (var i = 0; i < array_length(dlight_objects); i++)
                     {
-                        combined += ("" ("" + dstr(""Equipped"", ""Équipé"") + "")"");
+                        scr_litemcheck(dlight_objects[i][0]);
+                        var combined = dlight_objects[i][1] + "" - "" + string(itemcount) + "" "" + dstr(""held"", ""possédé(s)"");
+                        array_push(dbutton_options, combined);
+                        array_push(dbutton_indices, dlight_objects[i][0]);
                     }
-                    array_push(dbutton_options, combined);
-                    array_push(dbutton_indices, i);
+                }
+                else
+                {
+                    var _light_arr = (dmenu_state == ""armors"") ? dlight_armors : dlight_weapons;
+                    var _equipped = (dmenu_state == ""armors"") ? global.larmor : global.lweapon;
+
+                    for (var i = 0; i < array_length(_light_arr); i++)
+                    {
+                        var combined = _light_arr[i][1];
+                        if (_equipped == _light_arr[i][0])
+                            combined += ("" ("" + dstr(""Equipped"", ""Équipé"") + "")"");
+                        array_push(dbutton_options, combined);
+                        array_push(dbutton_indices, i);
+                    }
                 }
             }
-            dmenu_box = 2;
-            dbutton_layout = 1;
-            break;
-        case ""keyitems"":
-            dmenu_title = dstr(""Key Item List"", ""Liste d'objets clés"");
-            dbutton_options = [dstr(""Chapter: "", ""Chapitre : "")];
-            dbutton_indices = [-1];
-            dbutton_options[0] += string(ditem_chap);
-            var max_len = 33;
-            var _ranges = dkeyitem_index_data(ditem_chap);
-            for (var r = 0; r < array_length(_ranges); r++)
-            {
-                var my_start = _ranges[r].start_id;
-                var my_count = _ranges[r].count;
-                for (var i = my_start; i < (my_start + my_count); i++)
-                {
-                    scr_keyiteminfo(i);
-                    var cleaned_desc = string_replace_all(tempkeyitemdesc, ""#"", "" "");
-                    var combined = tempkeyitemname;
-                    if (string_length(combined) > max_len)
-                    {
-                        combined = string_copy(combined, 1, max_len - 3) + ""..."";
-                    }
-                    array_push(dbutton_options, combined);
-                    array_push(dbutton_indices, i);
-                }
-            }
+
             dmenu_box = 2;
             dbutton_layout = 1;
             break;
@@ -5729,7 +5768,7 @@ function dmenu_state_interact()
             }
             else if (selected_name == ""Game Obj"")
             {
-                var obj_list = [];
+                obj_list = [];
                 with (all)
                 {
                     var _name = object_get_name(object_index);
@@ -5759,6 +5798,20 @@ function dmenu_state_interact()
                 dkeyboard_input = """";
                 dmenu_state_update();
             }
+            else
+            {
+                var real_index = asset_get_index(dbutton_indices[dvertical_index]);
+                sel_obj = real_index;
+                if (instance_number(sel_obj) <= 1)
+                {
+                    sel_inst = sel_obj;
+                    dmenu_state = ""inst_manager"";
+                }
+                else
+                {
+                    dmenu_state = ""obj_manager"";
+                }
+            }
             break;
         case ""obj_create"":
             dremove_false_history();
@@ -5782,6 +5835,70 @@ function dmenu_state_interact()
 
                 dpop_history();
                 dmenu_active = false;
+            }
+            break;
+        case ""obj_manager"":
+            if (dvertical_index == 0)
+            {
+                global.flag[7] = 1;
+                instance_create(0, 0, obj_dmode_xy);
+                var _obj = sel_obj;
+
+                with (obj_dmode_xy)
+                {
+                    selmode = 1;
+                    flashing = 0;
+                    sel_obj = _obj;
+                }
+
+                dpop_history();
+                dmenu_active = false;
+            }
+            if (dvertical_index == 2)
+            {
+                global.flag[7] = 1;
+                instance_create(0, 0, obj_dmode_xy);
+                var obj_new = instance_create(obj_mainchara.x, obj_mainchara.y, sel_obj);
+
+                with (obj_dmode_xy)
+                    sel_obj = obj_new;
+
+                dpop_history();
+                dmenu_active = false;
+            }
+            if (dvertical_index == 3)
+            {
+                with (sel_obj)
+                {
+                    instance_destroy();
+                }
+                scr_debug_print(dstr(""Deleted all instances of "", ""Toutes les instances supprimées de : "") + object_get_name(sel_obj));
+            }
+            break;
+        case ""inst_manager"":
+            if (dvertical_index == 0 || dvertical_index == 2 || dvertical_index == 3)
+            {
+                scr_debug_print(""Not available for now"")
+            }
+            if (dvertical_index == 1)
+            {
+                global.flag[7] = 1;
+                instance_create(0, 0, obj_dmode_xy);
+                var _inst = sel_inst;
+
+                with (obj_dmode_xy)
+                sel_obj = _inst;
+
+                dpop_history();
+                dmenu_active = false;
+            }
+            if (dvertical_index == 4)
+            {
+                with (sel_inst)
+                {
+                    instance_destroy();
+                }
+                scr_debug_print(dstr(""Instance deleted of: "", ""Instance supprimée de : "") + object_get_name(sel_obj));
             }
             break;
         case ""debug_save"":
@@ -7113,18 +7230,20 @@ if (dmenu_active)
             draw_sprite_ext(heartsprite, 0, x_start + (108 * dhorizontal_index * d) + xx, heart_y, 1, 1, 0, c_white, 1);
         }
     }
-    
-    dhinter_active = true;
-    
-    if (dhinter_active && dhinter_text != """" && (scr_array_contains(ditem_types, dmenu_state) || dmenu_state == ""warp_options"" || dmenu_state == ""debug_save"" || dmenu_state == ""debug_save_options""))
+
+    if (is_array(dbutton_desc) && dvertical_index >= 0 && dvertical_index < array_length(dbutton_desc))
     {
-        draw_set_color(c_white);
-        draw_rectangle(((xcenter - (menu_width / 2) - 3) * d) + xx, (2 * d) + yy, ((xcenter + (menu_width / 2) + 3) * d) + xx, (51 * d) + yy, false);
-        draw_set_color(c_black);
-        draw_rectangle(((xcenter - (menu_width / 2)) * d) + xx, (5 * d) + yy, ((xcenter + (menu_width / 2)) * d) + xx, (48 * d) + yy, false);
-        draw_set_color(c_white);
-        var x_start_desc = ((xcenter - (menu_width / 2)) + x_padding) * d;
-        draw_text_ext(x_start_desc + xx, (10 * d) + yy, string(dhinter_text), 18 * d, (menu_width - (x_padding * 2)) * d);
+        var _desc = dbutton_desc[dvertical_index];
+        if (is_string(_desc) && _desc != """")
+        {
+            draw_set_color(c_white);
+            draw_rectangle(((xcenter - (menu_width / 2) - 3) * d) + xx, (2 * d) + yy, ((xcenter + (menu_width / 2) + 3) * d) + xx, (51 * d) + yy, false);
+            draw_set_color(c_black);
+            draw_rectangle(((xcenter - (menu_width / 2)) * d) + xx, (5 * d) + yy, ((xcenter + (menu_width / 2)) * d) + xx, (48 * d) + yy, false);
+            draw_set_color(c_white);
+            var x_start_desc = ((xcenter - (menu_width / 2)) + x_padding) * d;
+            draw_text_ext(x_start_desc + xx, (10 * d) + yy, _desc, 18 * d, (menu_width - (x_padding * 2)) * d);
+        }
     }
 }
 
@@ -7192,7 +7311,8 @@ enum e__VW
     HPort,
     Camera,
     SurfaceID
-}");
+}
+");
 
 importGroup.Import();
 

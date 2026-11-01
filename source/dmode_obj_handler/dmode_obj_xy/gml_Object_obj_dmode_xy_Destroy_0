@@ -1,0 +1,21 @@
+selmode = 0;
+global.flag[7] = 0;
+global.interact = 0;
+
+if (inst_valid == 1)
+{
+    var _inst = sel_obj;
+
+    with (obj_dmenu_system)
+    {
+        sel_inst = _inst;
+        global.interact = 1;
+        array_push(dmenu_state_history, dmenu_state);
+        array_push(dmenu_vertical_index_history, dvertical_index);
+        array_push(dmenu_horizontal_index_history, dhorizontal_index);
+        array_push(dmenu_page_index_history, dhorizontal_page);
+        dmenu_state = "inst_manager";
+        dmenu_state_update();
+        dmenu_active = 1;
+    }
+}
