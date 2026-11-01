@@ -1,4 +1,4 @@
-function scr_dmode_cmd_delete_debug_save(argc, argv)
+function dcmd_delete_debug_save(argc, argv)
 {
 	if (argc != 2)
 		return (1);

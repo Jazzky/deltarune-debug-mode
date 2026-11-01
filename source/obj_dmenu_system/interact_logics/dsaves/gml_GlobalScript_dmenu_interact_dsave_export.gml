@@ -1,4 +1,4 @@
-function scr_dmenu_interact_dsave_save()
+function dmenu_interact_dsave_save()
 {
 	var target_path = global.debug_selected_save_section;
 	var target_name = global.debug_selected_save_name;
@@ -45,7 +45,7 @@ function scr_dmenu_interact_dsave_save()
 	
 	var cmd = "dsave_save \"" + target_name + "\"";
 	global.debug_overwrite_section = target_path;
-	scr_dmode_parse_cmd(cmd);
+	dconsole_exec(cmd);
 
 	dmenu_popup_launch = 0;
 	dmenu_state = "debug";
@@ -59,12 +59,13 @@ function scr_dmenu_interact_dsave_save()
 	global.interact = 0;
 }
 
-function scr_dmenu_interact_dsave_delete()
+function dmenu_interact_dsave_delete()
 {
-dremove_false_history();
+	dremove_false_history();
 	var target_path = global.debug_selected_save_section;
 	
-	var res = scr_dmode_parse_cmd("dsave_delete \"" + string(target_path) + "\"");
+	var cmd = "dsave_delete \"" + string(target_path) + "\"";
+	var res = dmode_parse_cmd(cmd);
 	if (res == 0)
 		scr_get_debug_save_list();
 
@@ -74,10 +75,10 @@ dremove_false_history();
 	dmenu_start_index = 0;
 }
 
-function scr_dmenu_interact_dsave_load()
+function dmenu_interact_dsave_load()
 {
 	var target_path = global.debug_selected_save_section;
-	var res = scr_dmode_parse_cmd("dsave_load \"" + string(target_path) + "\"");
+	var res = dconsole_exec("dsave_load \"" + string(target_path) + "\"");
 	
 	if (res == 0)
 	{
@@ -94,7 +95,7 @@ function scr_dmenu_interact_dsave_load()
 	}
 }
 
-function scr_dmenu_interact_dsave_update_metadata()
+function dmenu_interact_dsave_update_metadata()
 {
 	keyboard_string = "";
 	dkeyboard_input = "";
@@ -109,7 +110,7 @@ function scr_dmenu_interact_dsave_update_metadata()
 		dmenu_state = "dsave_edit_cat";
 }
 
-function scr_dmenu_interact_dsave_update_metadata_confirm()
+function dmenu_interact_dsave_update_metadata_confirm()
 {
 	dremove_false_history();
 	if (dvertical_index == 0)
@@ -137,7 +138,7 @@ function scr_dmenu_interact_dsave_update_metadata_confirm()
 
 		cmd_arg = "--" + cmd_arg + "=\"" + final_text + "\"";
 		var cmd = "dsave_update \"" + string(target_path) + "\" " + cmd_arg;
-		var res = scr_dmode_parse_cmd(cmd);
+		var res = dconsole_exec(cmd);
 
 		if (typeof(res) == "string")
 			global.debug_selected_save_section = res;

@@ -1,7 +1,7 @@
-function scr_dmode_cmd_load_debug_save(argc, argv)
+function dcmd_load_debug_save(argc, argv)
 {
-	var flags = scr_dmode_get_argv_flags(argv);
-	argv = scr_dmode_remove_argv_flags(argv);
+	var flags = dcmd_get_argv_flags(argv);
+	argv = dcmd_remove_argv_flags(argv);
 	argc = array_length(argv);
 
 	if (argc != 2)
@@ -11,7 +11,7 @@ function scr_dmode_cmd_load_debug_save(argc, argv)
 	var exist = file_exists(target_path);
 	if (exist)
 	{
-		var keep_inv = scr_dmode_flags_flag_used(flags, "keepinv");
+		var keep_inv = dcmd_flags_flag_used(flags, "keepinv");
 		global.dload_cur_inv = keep_inv;
 		scr_debug_load(target_path);
 		global.dload_cur_inv = 0;

@@ -39,16 +39,16 @@ function scr_dmode_init_enemies_id_map()
 		var name = global.monstername[myself];
 		if (name == "")
 			continue;
+
 		ds_map_add(emap, string_lower(name), i);
 	}
+
 	if (global.chapter == 4)
-	{
 		ds_map_add(emap, "sound of justice", 106);
-	}
+
 	else if (global.chapter == 5)
-	{
 		ds_map_add(emap, "aqua", 112);
-	}
+
 	global.monstertype[myself] = 0;
 	return (emap);
 }

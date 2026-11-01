@@ -1,8 +1,8 @@
-function scr_dmode_parse_cmd(arg0)
+function dconsole_exec(arg0)
 {
 	var cmd_str = arg0;
 
-	var argv = scr_parse_cmd_str(cmd_str);
+	var argv = dconsole_parse_cmd(cmd_str);
 	var command;
 	
 	if (argv == [])
@@ -50,11 +50,12 @@ function scr_dmode_parse_cmd(arg0)
 			scr_debug_print(dstr("Error: Invalid command", "Erreur : Commande invalide"));
 			return (-1);
 	}
+
 	scr_debug_print("DEBUG: launching argv " + string(argv));
 	return (command(array_length(argv), argv));
 }
 
-function scr_parse_cmd_str(arg0)
+function dconsole_parse_cmd(arg0)
 {
 	var cmd_str = arg0;
 	var cmd_len = string_length(cmd_str) + 1;

@@ -1,4 +1,4 @@
-function _scr_dmode_cmd_get_room_id(arg0)
+function _dcmd_get_room_id(arg0)
 {
 	var arg = arg0;
 
@@ -18,16 +18,16 @@ function _scr_dmode_cmd_get_room_id(arg0)
 	return (-1);
 }
 
-function scr_dmode_cmd_warp(argc, argv)
+function dcmd_warp(argc, argv)
 {
-	var flags = scr_dmode_get_argv_flags(argv);
-	argv = scr_dmode_remove_argv_flags(argv);
+	var flags = dcmd_get_argv_flags(argv);
+	argv = dcmd_remove_argv_flags(argv);
 	argc = array_length(argv);
 
 	var _room_index = room;
 	if (argc != 1)
 	{
-		_room_index = _scr_dmode_cmd_get_room_id(argv[1]);
+		_room_index = _dcmd_get_room_id(argv[1]);
 		if (_room_index == -1)
 			_room_index = room;
 	}
@@ -44,16 +44,16 @@ function scr_dmode_cmd_warp(argc, argv)
 		for (var i = 2; i < argc; i++)
 			team_str += argv[i] + " ";
 
-		scr_dmode_parse_cmd("setteam --noreload " + team_str);
+		dconsole_exec("setteam --noreload " + team_str);
 	}
 
-	if (scr_dmode_flags_flag_used(flags, "plot"))
-		global.plot = real(scr_dmode_flags_get_value(flags, "plot"));
+	if (dcmd_flags_flag_used(flags, "plot"))
+		global.plot = real(dcmd_flags_get_value(flags, "plot"));
 
-	if (scr_dmode_flags_flag_used(flags, "lw"))
+	if (dcmd_flags_flag_used(flags, "lw"))
 		global.darkzone = 0;
 
-	if (scr_dmode_flags_flag_used(flags, "dw"))
+	if (dcmd_flags_flag_used(flags, "dw"))
 		global.darkzone = 1;
 
 	room_goto(_room_index);

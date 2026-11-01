@@ -38,7 +38,7 @@ function scr_dmenu_interact_setup_givertab()
 			global.larmor = dlight_armors[dvertical_index][0];
 		else
 			global.lweapon = dlight_weapons[dvertical_index][0];
-		exit; //TODO create dmode_cmd for light world
+		exit; //TODO create dcmd for light world
 	}
 	dgiver_menu_state = dmenu_state;
 	dvertical_index = clamp(dvertical_index, 0, array_length(dbutton_options));

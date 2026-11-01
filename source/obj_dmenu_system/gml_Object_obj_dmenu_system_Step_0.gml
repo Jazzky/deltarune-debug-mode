@@ -8,15 +8,9 @@ if (dmenu_popup_launch == 1)
 
 if (dmenu_state == "debug_save")
 {
-    if (keyboard_check_pressed(ord("I")) && keyboard_check(vk_alt) && !global.dreading_custom_flag)
+    if (keyboard_check_pressed(ord("I")) && !global.dreading_custom_flag)
     {
         scr_debug_save_scan_imports();
-        scr_get_debug_save_list();
-        dmenu_state_update();
-    }
-    else if (keyboard_check_pressed(ord("I")) && !keyboard_check(vk_alt) && !global.dreading_custom_flag)
-    {
-        scr_debug_save_import();
         scr_get_debug_save_list();
         dmenu_state_update();
     }

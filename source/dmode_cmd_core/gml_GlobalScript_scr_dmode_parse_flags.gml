@@ -1,4 +1,4 @@
-function scr_dmode_get_argv_flags(arg0, arg1="--")
+function dcmd_get_argv_flags(arg0, arg1="--")
 {
 	var argv = arg0;
 	var argc = array_length(argv);
@@ -24,7 +24,13 @@ function scr_dmode_get_argv_flags(arg0, arg1="--")
 	return (flags);
 }
 
-function scr_dmode_remove_argv_flags(arg0, arg1="--")
+function dcmd_get_avf(arg0, arg1="--")
+{
+	return (dcmd_get_argv_flags(arg0, arg1));
+}
+
+
+function dcmd_remove_argv_flags(arg0, arg1="--")
 {
 	var argv = arg0;
 	var argc = array_length(argv);
@@ -55,7 +61,13 @@ function scr_dmode_remove_argv_flags(arg0, arg1="--")
 	return (argv);
 }
 
-function scr_dmode_flags_flag_used(arg0, arg1, arg2="=")
+function dcmd_rm_avf(arg0, arg1="--")
+{
+	return (dcmd_remove_argv_flags(arg0, arg1));
+}
+
+
+function dcmd_flag_used(arg0, arg1, arg2="=")
 {
 	var flag_list = arg0;
 
@@ -80,7 +92,13 @@ function scr_dmode_flags_flag_used(arg0, arg1, arg2="=")
 	return (0);
 }
 
-function scr_dmode_flags_get_value(arg0, arg1, arg2="=")
+function dcmd_fused(arg0, arg1, arg2="=")
+{
+	return (dcmd_flag_used(arg0, arg1, arg2));
+}
+
+
+function dcmd_get_flag_value(arg0, arg1, arg2="=")
 {
 	var flag_list = arg0;
 
@@ -103,4 +121,9 @@ function scr_dmode_flags_get_value(arg0, arg1, arg2="=")
 			return (string_copy(cur_flag, 1 + target_len + value_sep_len, string_length(cur_flag) - target_len - value_sep_len));
 	}
 	return ("");
+}
+
+function dcmd_get_fvalue(arg0, arg1, arg2="=")
+{
+	return (dcmd_get_flag_value(arg0, arg1, arg2));
 }

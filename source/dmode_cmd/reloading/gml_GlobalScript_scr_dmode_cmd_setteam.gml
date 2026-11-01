@@ -1,4 +1,4 @@
-function _scr_dmode_cmd_arg_to_party_member(arg0)
+function _dcmd_arg_to_party_member(arg0)
 {
 	var arg = arg0;
 
@@ -38,10 +38,10 @@ function _scr_dmode_cmd_arg_to_party_member(arg0)
 	return (0);
 }
 
-function scr_dmode_cmd_setteam(argc, argv)
+function dcmd_setteam(argc, argv)
 {
-	var flags = scr_dmode_get_argv_flags(argv);
-	argv = scr_dmode_remove_argv_flags(argv);
+	var flags = dcmd_get_argv_flags(argv);
+	argv = dcmd_remove_argv_flags(argv);
 	argc = array_length(argv);
 
 	if (argc == 1)
@@ -56,10 +56,10 @@ function scr_dmode_cmd_setteam(argc, argv)
 	var _char_index = (argc != 4)
 	for (var i = 1; i < argc; i++)
 	{
-		global.char[_char_index++] = _scr_dmode_cmd_arg_to_party_member(argv[i]);
+		global.char[_char_index++] = _dcmd_arg_to_party_member(argv[i]);
 	}
 
-	if (scr_dmode_flags_flag_used(flags, "noreload") == 0)
+	if (dcmd_flags_flag_used(flags, "noreload") == 0)
 	{
 		snd_free_all();
 		room_restart();

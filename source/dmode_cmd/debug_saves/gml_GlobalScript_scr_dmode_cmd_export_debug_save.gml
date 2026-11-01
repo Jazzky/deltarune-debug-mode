@@ -1,7 +1,7 @@
-function scr_dmode_cmd_export_debug_save(argc, argv)
+function dcmd_export_debug_save(argc, argv)
 {
-	var flags = scr_dmode_get_argv_flags(argv);
-	argv = scr_dmode_remove_argv_flags(argv);
+	var flags = dcmd_get_argv_flags(argv);
+	argv = dcmd_remove_argv_flags(argv);
 	argc = array_length(argv);
 
 	if (argc != 2)
@@ -16,15 +16,15 @@ function scr_dmode_cmd_export_debug_save(argc, argv)
 	}
 
 	var export_mode = "normal";
-	if (scr_dmode_flags_flag_used(flags, "mode"))
-		export_mode = scr_dmode_flags_get_value(flags, "mode");
+	if (dcmd_flags_flag_used(flags, "mode"))
+		export_mode = dcmd_flags_get_value(flags, "mode");
 
 
 	if (export_mode == "normal")
-		_dmode_cmd_export_normal(source_file);
+		_dcmd_export_normal(source_file);
 
 	else if (export_mode == "debug")
-		_dmode_cmd_export_debug(source_file);
+		_dcmd_export_debug(source_file);
 
 	else
 	{
@@ -35,7 +35,7 @@ function scr_dmode_cmd_export_debug_save(argc, argv)
 	return (0);
 }
 
-function _dmode_cmd_export_normal(arg0)
+function _dcmd_export_normal(arg0)
 {
 	var source_file = arg0;
 
@@ -96,7 +96,7 @@ function _dmode_cmd_export_normal(arg0)
 	snd_play(snd_shineselect);
 }
 
-function _dmode_cmd_export_debug(arg0)
+function _dcmd_export_debug(arg0)
 {
 	var source_file = arg0;
 	var export_path = get_save_filename("Debug save (*.save)|*.save", string("TODO") + ".save");

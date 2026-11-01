@@ -1,4 +1,4 @@
-function scr_dmode_argv_respect_types()
+function dcmd_argv_respect_types()
 {
 	if (argument_count == 0)
 	{
@@ -32,7 +32,7 @@ function scr_dmode_argv_respect_types()
 	return (1);
 }
 
-function scr_dmode_argv_start_respect_types()
+function dcmd_argv_start_respect_types()
 {
 	if (argument_count == 0)
 	{

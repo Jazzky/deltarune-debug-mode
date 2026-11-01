@@ -1,4 +1,4 @@
-function scr_dmenu_interact_warp_setup()
+function dmenu_interact_warp_setup()
 {
 	if (dvertical_index == 1)
 	{
@@ -8,24 +8,22 @@ function scr_dmenu_interact_warp_setup()
 		keyboard_string = "";
 		dkeyboard_input = "";
 		dmenu_state_update();
+		exit;
 	}
-	else
-	{
-		drooms_options.target_room = -1;
-		
-		if (dvertical_index != 0)
-			drooms_options.target_room = dbutton_indices[dvertical_index];
-		
-		drooms_options.target_plot = global.plot;
-		drooms_options.target_is_darkzone = global.darkzone;
-		drooms_options.target_member_2 = global.char[1];
-		drooms_options.target_member_3 = global.char[2];
-		dmenu_state = "warp_options";
-		dkeyboard_input = "";
-	}
+
+	drooms_options.target_room = -1;
+	if (dvertical_index != 0)
+		drooms_options.target_room = dbutton_indices[dvertical_index];
+	
+	drooms_options.target_plot = global.plot;
+	drooms_options.target_is_darkzone = global.darkzone;
+	drooms_options.target_member_2 = global.char[1];
+	drooms_options.target_member_3 = global.char[2];
+	dmenu_state = "warp_options";
+	dkeyboard_input = "";
 }
 
-function scr_dmenu_interact_warp()
+function dmenu_interact_warp()
 {
 	if (dvertical_index == 0)
 	{
@@ -65,6 +63,6 @@ function scr_dmenu_interact_warp()
 
 		global.interact = 0;
 		dmenu_active = false;
-		scr_dmode_parse_cmd(cmd);
+		dconsole_parse_cmd(cmd);
 	}
 }
