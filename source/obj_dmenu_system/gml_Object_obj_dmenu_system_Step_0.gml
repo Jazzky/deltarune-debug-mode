@@ -8,7 +8,7 @@ if (dmenu_popup_launch == 1)
 
 if (dmenu_state == "debug_save")
 {
-    if (keyboard_check_pressed(ord("I")) && !global.dreading_custom_flag)
+    if (keyboard_check_pressed(ord("I")) && !global.dreading_kb)
     {
         scr_debug_save_scan_imports();
         scr_get_debug_save_list();
@@ -18,7 +18,7 @@ if (dmenu_state == "debug_save")
 
 if (dmenu_popup_launch != 1)
 {
-    if (!global.dreading_custom_flag && keyboard_check_pressed(ord("D")))
+    if (!global.dreading_kb && keyboard_check_pressed(ord("D")))
     {
         dmenu_active = !dmenu_active;
         
@@ -153,7 +153,7 @@ function evaluate_custom_flag(arg0, arg1)
     return proper_exit;
 }
 
-if (keyboard_check_pressed(vk_left) && !global.dreading_custom_flag)
+if (keyboard_check_pressed(vk_left) && !global.dreading_kb)
 {
     if (variable_instance_exists(id, "dbutton_base_indices") && array_length(dbutton_base_indices) > dvertical_index)
     {
@@ -188,7 +188,7 @@ if (keyboard_check_pressed(vk_left) && !global.dreading_custom_flag)
     }
 }
 
-if (dmenu_active && global.dreading_custom_flag)
+if (dmenu_active && global.dreading_kb)
 {
     update_visu = 1;
     will_exit = 0;
@@ -281,12 +281,12 @@ if (dmenu_active && global.dreading_custom_flag)
     else if (reading_double_flag && keyboard_check_pressed(vk_left) && dhorizontal_index != 0)
     {
         snd_play(snd_menumove);
-        global.dkeyboard_text = dcustom_flag_text[--dhorizontal_index];
+		dutils_set_kb_text(dcustom_flag_text[--dhorizontal_index]);
     }
     else if (reading_double_flag && keyboard_check_pressed(vk_right) && dhorizontal_index != 1)
     {
         snd_play(snd_menumove);
-        global.dkeyboard_text = dcustom_flag_text[++dhorizontal_index];
+		dutils_set_kb_text(dcustom_flag_text[++dhorizontal_index]);
     }
     else
     {
@@ -296,7 +296,7 @@ if (dmenu_active && global.dreading_custom_flag)
         if (reading_double_flag)
             flag_index = dhorizontal_index;
         
-        dcustom_flag_text[flag_index] = global.dkeyboard_text;
+        dcustom_flag_text[flag_index] = dutils_get_kb_text();
     }
     
     if (update_visu)
@@ -558,9 +558,9 @@ else if (dmenu_active)
                     owned_count = 0;
             }
             
-            if (dgiver_amount > -owned_count)
+            if (dhorizontal_index > -owned_count)
             {
-                dgiver_amount -= 1;
+                dhorizontal_index -= 1;
                 snd_play(snd_menumove);
             }
             else
@@ -609,9 +609,9 @@ else if (dmenu_active)
                     owned_count = 0;
             }
             
-            if (dgiver_amount < owned_count)
+            if (dhorizontal_index < owned_count)
             {
-                dgiver_amount += 1;
+                dhorizontal_index += 1;
                 snd_play(snd_menumove);
             }
             else
@@ -668,7 +668,7 @@ else if (dmenu_active)
         
         if (dmenu_state == "flag_categories" && dvertical_index == 0)
         {
-            global.dreading_custom_flag = 1;
+            global.dreading_kb = true;
             dhorizontal_index = 0;
             keyboard_string = "";
         }

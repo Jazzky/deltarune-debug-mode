@@ -1,10 +1,17 @@
 {
 	"create_new": true,
-	"reloading/gml_GlobalScript_scr_dmode_cmd_warp.gml": {},
-	"reloading/gml_GlobalScript_scr_dmode_cmd_setteam.gml": {},
-	"debug_saves/gml_GlobalScript_scr_dmode_cmd_export_debug_save.gml": {},
-	"debug_saves/gml_GlobalScript_scr_dmode_cmd_update_debug_save.gml": {},
-	"debug_saves/gml_GlobalScript_scr_dmode_cmd_load_debug_save.gml": {},
-	"debug_saves/gml_GlobalScript_scr_dmode_cmd_delete_debug_save.gml": {},
-	"debug_saves/gml_GlobalScript_scr_dmode_cmd_save_debug_save.gml": {}
+	"init/gml_GlobalScript_scr_dmode_cmds_init.gml": {},
+	"core/gml_GlobalScript_scr_dmode_parse_cmd.gml": {},
+	"core/gml_GlobalScript_scr_dmode_parse_flags.gml": {},
+	"core/gml_GlobalScript_scr_dmode_parse_argv_types.gml": {},
+	"commands/variables/gml_GlobalScript_dcmd_set_global.gml": {},
+	"commands/reloading/gml_GlobalScript_scr_dmode_cmd_warp.gml": {},
+	"commands/reloading/gml_GlobalScript_scr_dmode_cmd_setteam.gml": {},
+	"commands/recruit/gml_GlobalScript_dcmd_recruit.gml": {},
+	"commands/recruit/gml_GlobalScript_dcmd_lose.gml": {},
+	"commands/debug_saves/gml_GlobalScript_scr_dmode_cmd_export_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_scr_dmode_cmd_update_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_scr_dmode_cmd_load_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_scr_dmode_cmd_delete_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_scr_dmode_cmd_save_debug_save.gml": {}
 }

@@ -22,6 +22,14 @@ function scr_debug_print(arg0)
     }
 }
 
+function scr_derror_print(arg0)
+{
+	if (global.dprint_errors == false)
+		exit;
+
+	scr_debug_print(arg0);
+}
+
 function print_message(arg0)
 {
     scr_debug_print(arg0);
@@ -35,6 +43,14 @@ function debug_print(arg0)
 function scr_debug_clear_all()
 {
     scr_debug_clear_persistent();
+}
+
+function set_derror_print(arg0=undefined)
+{
+	if (arg0 == undefined)
+		global.dprint_errors = !global.dprint_errors;
+	else
+		global.dprint_errors = arg0;
 }
 
 enum e__VW

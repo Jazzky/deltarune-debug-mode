@@ -12,7 +12,7 @@
             {
                 "find_replace": {
                     "find": "if (scr_debug())",
-                    "replace": "if (scr_debug() && (!instance_number(obj_dmenu_system) || !global.dreading_custom_flag))"
+                    "replace": "if (scr_debug() && !dutils_reading_kb())"
                 }
             }
         ]
@@ -35,7 +35,7 @@
             {
                 "find_replace": {
                     "find": "if (scr_debug())",
-                    "replace": "if (scr_debug() && (!instance_number(obj_dmenu_system) || !global.dreading_custom_flag))"
+                    "replace": "if (scr_debug() && !dutils_reading_kb())"
                 }
             },
             {

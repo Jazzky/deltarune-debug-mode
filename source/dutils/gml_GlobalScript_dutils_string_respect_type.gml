@@ -1,9 +1,8 @@
-function scr_string_respect_type(arg0, arg1, arg2, arg3)
+function scr_string_respect_type(arg0, arg1, arg2)
 {
     str = arg0;
     type = arg1;
     check_empty = arg2;
-    print_error = arg3;
     
     if (string_length(str) == 0 && check_empty)
     {
@@ -37,9 +36,7 @@ function scr_string_respect_type(arg0, arg1, arg2, arg3)
             }
             else if (!char_is_digit)
             {
-                if (print_error)
-                    scr_debug_print(dstr("Invalid flag ", "Flag invalide ") + "|" + string(str) + "|" + dstr(" because of ", " à cause de ") + "|" + cur_char + "|");
-                
+				scr_derror_print(dstr("Invalid flag ", "Flag invalide ") + "|" + string(str) + "|" + dstr(" because of ", " à cause de ") + "|" + cur_char + "|");
                 is_good = 0;
                 break;
             }
@@ -62,9 +59,7 @@ function scr_string_respect_type(arg0, arg1, arg2, arg3)
         }
         else
         {
-            if (print_error)
-                scr_debug_print(dstr("Error reading variable |", "Erreur de lecture de variable |") + string(str) + dstr("| at |", "| à |") + string(cur_char) + "|");
-            
+			scr_derror_print(dstr("Error reading variable |", "Erreur de lecture de variable |") + string(str) + dstr("| at |", "| à |") + string(cur_char) + "|");
             is_good = 0;
             break;
         }
@@ -72,9 +67,7 @@ function scr_string_respect_type(arg0, arg1, arg2, arg3)
     
     if (type == "variable" && is_good && (is_var_step != 4 && is_var_step != 1))
     {
-        if (print_error)
-            scr_debug_print(dstr("Error: Invalid variable name |", "Erreur : Nom de variable invalide |") + string(str) + "|");
-        
+		scr_derror_print(dstr("Error: Invalid variable name |", "Erreur : Nom de variable invalide |") + string(str) + "|");
         is_good = 0;
     }
     

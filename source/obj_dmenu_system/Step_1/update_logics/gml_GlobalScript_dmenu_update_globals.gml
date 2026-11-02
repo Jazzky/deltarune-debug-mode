@@ -1,0 +1,39 @@
+function dmenu_update_globals()
+{
+	dmenu_title = dstr("Global changer", "Changeur de global");
+	dbutton_options = [];
+	dmenu_box = 1;
+	dbutton_layout = 1;
+	reading_double_flag = dvertical_index == 0 && dutils_reading_kb();
+	
+	set_derror_print(false);
+	for (var i = 0; i < array_length(dglobal_changer_options); i++)
+	{
+		array_push(dbutton_indices, i);
+		name = dglobal_changer_options[i][0];
+		limit = dglobal_changer_options[i][2];
+		
+		text = name;
+		var global_value = "";
+		if (i == 0 && reading_double_flag)
+		{
+			name = dcustom_flag_text[0];
+			text = "global." + name;
+		}
+
+		global_value = _dcmd_get_global_string(name);
+		if (global_value == undefined)
+			global_value = "";
+
+		if (dutils_reading_kb() && i == dvertical_index)
+		{
+			var _keyboard_text = dcustom_flag_text[reading_double_flag];
+			if (_keyboard_text != "")
+				global_value = _keyboard_text;
+		}
+		
+		text += (" = |" + string(global_value) + "|");
+		array_push(dbutton_options, text);
+	}
+	set_derror_print(true);
+}

@@ -1,6 +1,7 @@
-xx = __view_get(e__VW.XView, 0);
-yy = __view_get(e__VW.YView, 0);
-d = global.darkzone + 1;
+var xx = __view_get(e__VW.XView, 0);
+var yy = __view_get(e__VW.YView, 0);
+var d = global.darkzone + 1;
+var reading_kb = dutils_reading_kb();
 
 if (dmenu_box == 0)
 {
@@ -113,7 +114,7 @@ if (dmenu_active)
         draw_set_halign(fa_left);
     }
     
-    if (global.dreading_custom_flag)
+    if (reading_kb)
     {
         draw_set_halign(fa_right);
         draw_set_color(c_gray);
@@ -125,7 +126,7 @@ if (dmenu_active)
         draw_set_halign(fa_left);
     }
     
-    if (global.dreading_custom_flag)
+    if (reading_kb)
     {
         if (dmenu_state == "flag_categories")
         {
@@ -396,44 +397,50 @@ if (dmenu_active)
     {
         dmenu_arrow_yoffset = 2 * sin(dmenu_arrow_timer / 10);
         draw_set_color(c_yellow);
-        draw_text(((xcenter - (string_length(string(dgiver_amount)) * 4)) * d) + xx, (ycenter * d) + yy, string(dgiver_amount));
+        draw_text(((xcenter - (string_length(string(dhorizontal_index)) * 4)) * d) + xx, (ycenter * d) + yy, string(dhorizontal_index));
         draw_set_color(c_white);
         var itemreminder = "";
         
-        if (dgiver_menu_state == "objects")
-        {
-            itemreminder = "[" + string(dgiver_bname) + "]";
-            
-            if (dhorizontal_page == 0)
-                scr_itemcheck(0);
-            else
-                scr_litemcheck(0);
-            
-            max_items = (dhorizontal_page == 0) ? 12 : 8;
-            draw_text(x_start + xx, ((ycenter + 25) * d) + yy, string(dstr("ITEMs: ", "OBJETs : ")) + string(max_items - itemcount) + " / " + string(max_items));
-        }
-        
-        if (dgiver_menu_state == "armors")
-        {
-            itemreminder = "[" + string(dgiver_bname) + "]";
-            scr_armorcheck_inventory(0);
-            draw_text(x_start + xx, ((ycenter + 25) * d) + yy, string(dstr("ARMORs: ", "ARMUREs : ")) + string(48 - itemcount) + " / 48");
-        }
-        
-        if (dgiver_menu_state == "weapons")
-        {
-            itemreminder = "[" + string(dgiver_bname) + "]";
-            scr_weaponcheck_inventory(0);
-            draw_text(x_start + xx, ((ycenter + 25) * d) + yy, string(dstr("WEAPONs: ", "ARMEs : ")) + string(48 - itemcount) + " / 48");
-        }
-        
-        if (dgiver_menu_state == "keyitems")
-        {
-            itemreminder = "[" + string(dgiver_bname) + "]";
-            scr_keyitemcheck(0);
-            draw_text(x_start + xx, ((ycenter + 25) * d) + yy, string(dstr("KEY ITEMs: ", "OBJETs CLÉs : ")) + string(12 - itemcount) + " / 12");
-        }
-        
+		var given_id = dgiver_infos.item_id;
+		var given_name = dgiver_infos.item_name;
+		var given_type = dgiver_infos.item_type;
+
+		var itemreminder = "[" + string(given_name) + "]";
+		var item_cate_name;
+		var limit = 48;
+		switch (given_type)
+		{
+			case "objects":
+				if (dhorizontal_page == 0)
+					scr_itemcheck(given_id);
+				else
+					scr_litemcheck(given_id);
+
+				item_cate_name = dstr("ITEMs: ", "OBJETs : ");
+				limit = (dhorizontal_page == 0) ? 12 : 8;
+				break;
+
+			case "armors":
+				scr_armorcheck_inventory(given_id);
+				item_cate_name = dstr("ARMORs: ", "ARMUREs : ");
+				limit = 48;
+				break;
+
+			case "weapons":
+				scr_weaponcheck_inventory(given_id);
+				item_cate_name = dstr("WEAPONs: ", "ARMEs : ");
+				limit = 48;
+				break;
+
+			case "keyitems":
+				scr_keyitemcheck(given_id);
+				item_cate_name = dstr("KEY ITEMs: ", "OBJETs CLÉs : ");
+				limit = 12;
+				break;
+		}
+
+		draw_text(x_start + xx, ((ycenter + 25) * d) + yy, item_cate_name + string(limit - itemcount) + " / " + string(limit));
+
         var text_width = string_width(itemreminder);
         draw_text(((xcenter * d) - (text_width / 2)) + xx, ((ycenter - 22) * d) + yy, itemreminder);
         darrow_scale = d / 2;
@@ -516,7 +523,7 @@ if (dmenu_active)
         inputbox = function(arg0, arg1, arg2, arg3)
         {
             var border = 1 * d;
-            draw_set_color((dvertical_index == 0 && !global.dreading_custom_flag) ? c_yellow : c_white);
+            draw_set_color((dvertical_index == 0 && !reading_kb) ? c_yellow : c_white);
             
             for (var i = 0; i < border; i++)
                 draw_rectangle((arg0 - border) + i, (arg1 - border) + i, (arg2 + border) - i, (arg3 + border) - i, true);
@@ -525,7 +532,7 @@ if (dmenu_active)
         inputbox(x_start + xx, text_y, box_right_edge, dynamic_bottom_y);
         var color = c_gray;
         
-        if (dvertical_index == 0 && global.dreading_custom_flag)
+        if (dvertical_index == 0 && dreading_kb)
             color = c_yellow;
         else if (dkeyboard_input != "")
             color = c_white;

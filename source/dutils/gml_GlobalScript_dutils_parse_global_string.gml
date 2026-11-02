@@ -20,7 +20,7 @@ function dutils_get_global_access_list(arg0)
 		}
 		else if (mychar == "]") {
 			if (bracket_balance == 0) {
-				scr_debug_print("Error: bracket parsing error");
+				scr_derror_print("Error: bracket parsing error");
 				return (undefined);
 			}
 			bracket_balance--;
@@ -32,18 +32,18 @@ function dutils_get_global_access_list(arg0)
 	}
 
 	if (bracket_balance == 0) {
-		scr_debug_print("Error: bracket parsing error");
+		scr_derror_print("Error: bracket parsing error");
 		return (undefined);
 	}
 
 	if (access_list_len == 0) {
-		scr_debug_print("Error: no data for global extraction");
+		scr_derror_print("Error: no data for global extraction");
 		return (undefined);
 	}
 
 	var global_name = access_list[0];
 	if (!dutils_isvar(global_name)) {
-		scr_debug_print("Error: '" + global_name + "' isn't a valid global name");
+		scr_derror_print("Error: '" + global_name + "' isn't a valid global name");
 		return (undefined);
 	}
 

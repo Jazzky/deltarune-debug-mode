@@ -1,6 +1,6 @@
 dconsole_prefix = "[" + global.truename + "]: ";
 
-if (keyboard_check_pressed(vk_f5) && global.dreading_custom_flag != 1)
+if (keyboard_check_pressed(vk_f5) && !dutils_reading_kb())
 {
     if (!dconsole_active)
     {

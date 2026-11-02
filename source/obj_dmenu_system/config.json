@@ -1,18 +1,45 @@
 {
 	"mode": "replace",
-	"create_new": true,
-	"interact_logics/gml_GlobalScript_scr_dmenu_interact_dsave_export.gml": {},
-	"interact_logics/gml_GlobalScript_scr_dmenu_interact_dsave_options.gml": {},
-	"interact_logics/gml_GlobalScript_scr_dmenu_interact_give_item.gml": {},
-	"interact_logics/gml_GlobalScript_scr_dmenu_interact_warp.gml": {},
-	"gml_Object_obj_dmenu_system_Create_0.gml": {},
-	"gml_Object_obj_dmenu_system_Step_0.gml": {
-		"create_new": false
+	"gml_Object_obj_dmenu_system_Create_0.gml": {
+		"create_new": true
 	},
-	"gml_Object_obj_dmenu_system_Step_1.gml": {
-		"create_new": false
-	},
-	"gml_Object_obj_dmenu_system_Draw_0.gml": {
-		"create_new": false
-	}
+	"Create/gml_GlobalScript_dmenu_init_warps.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_items.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_flags.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_global_changer.gml": {},
+
+
+	"gml_Object_obj_dmenu_system_Step_1.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_new_save.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_main_menu.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_load.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_options.gml": {},
+	"Step_1/update_logics/flags/gml_GlobalScript_dmenu_update_flags.gml": {},
+	"Step_1/update_logics/recruits/gml_GlobalScript_dmenu_update_recruits.gml": {},
+	"Step_1/update_logics/items/gml_GlobalScript_dmenu_update_items.gml": {},
+	"Step_1/update_logics/items/.gml_GlobalScript_dmenu_update_items.gml.swp": {},
+	"Step_1/update_logics/items/gml_GlobalScript_dmenu_update_items_others.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_update_globals.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_update_warps.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_update_main_menu.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_interact_dsave_export.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_interact_new_dsave.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_interact_dsave_load.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_interact_dsave_options.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_interact_dsave_main_menu.gml": {},
+	"Step_1/interact_logics/flags/gml_GlobalScript_dmenu_interact_flags.gml": {},
+	"Step_1/interact_logics/recruits/gml_GlobalScript_dmenu_interact_recruits.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_warp.gml": {},
+	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_interact_givertab.gml": {},
+	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_interact_give_item.gml": {},
+	"Step_1/interact_logics/items/.gml_GlobalScript_dmenu_interact_give_item.gml.swp": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_dsave_utils.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_globals.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_main_menu.gml": {},
+	"utils/dsaves/gml_GlobalScript_dmenu_dsave_process_submenus.gml": {},
+	"utils/history/gml_GlobalScript_dpop_history.gml": {},
+
+
+	"gml_Object_obj_dmenu_system_Step_0.gml": {},
+	"gml_Object_obj_dmenu_system_Draw_0.gml": {}
 }
