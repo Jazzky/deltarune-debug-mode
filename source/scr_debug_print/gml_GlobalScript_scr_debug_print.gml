@@ -1,5 +1,10 @@
-function scr_debug_print(arg0)
+function scr_debug_print(arg0, arg1 = false)
 {
+    if (global.debug == 0 && !arg1)
+    {
+        exit;
+    }
+
     if (!instance_exists(obj_debug_gui))
     {
         instance_create(__view_get(e__VW.XView, 0) + 10, __view_get(e__VW.YView, 0) + 10, obj_debug_gui);

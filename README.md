@@ -1,48 +1,81 @@
-# Scripts de debug mode custom pour Deltarune
+<img src="https://github.com/user-attachments/assets/ac88831a-bccd-4507-ae9d-c50faf9420e7" width="500" alt="logo"/>
 
-Scripts de debug mode customisés pour Undertale Mod Tool fonctionnant avec Deltarune.
+Custom debug mode scripts to use with Undertale Mod Tool for Deltarune.\
+Only works with paid version of the game and the LTS demo from the Steam beta.
 
-Fonctionnent uniquement avec la démo LTS et la version payante du jeu.
+Initially created for the french fan translation team [Deltarune FR](https://deltarune-fr.com).
 
-## Installation
+[![Français](https://img.shields.io/badge/Readme_disponible-en_Français-red)](README.fr-FR.md)
 
-- Téléchargez le fichier `scripts.zip` depuis le menu <a href="releases">releases</a>.
-- Extrayez-le dans le dossier `Scripts` d'Undertale Mod Tool.
+## 📖 Installation
 
-## Utilisation
+* Download the `scripts.zip` file from the [releases](https://github.com/Str4ky/deltarune-debug-mode/releases) menu.
+* Extract the zip file.
 
-- Ouvrez le data.win du chapitre de votre choix avec Undertale Mod Tool.
-- Allez dans le menu `Scripts` puis choisissez l'option adaptée.
-- Laissez-vous guider par les fenêtres et les options de l'interface.
+### Installation with UTMT GUI
 
-## Fonctionnalités et contrôles associés (Chapitres 1 à 4)
+* In the `Scripts` tab  from Undertale Mod Tool, press on  `Run other scripts...` .
+* Select the right `debug_mode_chap[1-5].csx` file based on the currently opened chapter in Undertale Mod Tool.
+* Save the modified data.win file once as appeared the popup saying that the debug mode has been successfully installed.
+* Repeat for each chapters.
 
-| Touches        | Descriptions                     |
-| -------------- | -------------------------------- |
-| F10            | Activer/désactiver le debug mode |
-| D              | Ouvrir le menu Debug             |
-| S              | Sauvegarder la partie            |
-| L              | Charger la dernière sauvegarde   |
-| R              | Redémarrer le jeu                |
-| P              | Mettre en pause/reprendre le jeu |
-| M+1 / M+2      | Ajouter/retirer 100 D$           |
-| Suppr          | Se rendre à la salle précédente  |
-| Insert         | Se rendre à la salle suivante    |
-| Entrer         | Voir les collisions du joueur    |
-| W              | Gagner instantanément un combat  |
-| V              | Passer le tour de l'ennemi       |
-| H              | Restaurer les HP du party        |
-| T              | Remplir/vider la barre de TP     |
-| O              | Basculer entre 30, 60 et 120 FPS |
-| Clic milieu    | Ouvrir l'éditeur de salle        |
-| Retour arrière | Passer le segment d'intro (Ch1)  |
+### Installation with UTMT CLI
 
-## Autres fonctions
+* With a terminal, execute this command:\
+`<UTMT CLI path> load <entry data.win path> -s <.csx script path> -o <output data.win path>`.
 
-Certaines fonctions de debug déjà implémentées ont été conservées au travers des différents chapitres du jeu.
+Ex. for chapter 2 : `"...\UndertaleModCli.exe" load ".../DELTARUNE/chapter2_windows/data.win" -s ".../debug_mode_chap2.csx" -o ".../DELTARUNE/chapter2_windows/data.win"`
 
-Pour celles-ci, les contrôles y sont donc les originaux et sont restés intouchés.
+* Repeat for each chapters.
 
-## Crédits
+---
 
-Ces scripts vous sont proposés par [Straky](https://github.com/Str4ky), [Jazzky](https://github.com/Jazzky) et [Galbio](https://github.com/Galbio).
+## 🛠️ Main shortcuts and debug mode features
+
+#### General
+| Key(s) | Description |
+| :--- | :--- |
+| <kbd>F10</kbd> | Toggle debug mode |
+| <kbd>D</kbd> | Open debug menu |
+| <kbd>S</kbd> | Save game |
+| <kbd>L</kbd> | Load last save |
+| <kbd>R</kbd> | Reload current room |
+| <kbd>Backspace</kbd> + <kbd>R</kbd> | Restart game |
+| <kbd>O</kbd> | Toggle between 30, 60 and 120 FPS |
+| <kbd>`</kbd> | Set game to 150 FPS |
+| <kbd>P</kbd> | Set game to 1 FPS |
+
+#### Navigation
+| Key(s) | Description |
+| :--- | :--- |
+| <kbd>Insert</kbd> | Go to next room |
+| <kbd>Suppr</kbd> | Go to previous room |
+| <kbd>Middle click</kbd> | Open room editor |
+| <kbd>Backspace</kbd> | Skip intro sequence (Only Chapter 1) |
+
+#### Battles
+| Key(s) | Description |
+| :--- | :--- |
+| <kbd>W</kbd> | Skip battle |
+| <kbd>Shift</kbd> + <kbd>W</kbd> | Skip battle with recruit |
+| <kbd>V</kbd> | Skip enemy's turn |
+| <kbd>Alt</kbd> + <kbd>P</kbd> | Disable battle dialog autoskip |
+
+#### Cheat
+| Key(s) | Description |
+| :--- | :--- |
+| <kbd>G</kbd> | Toggle *Godmode* |
+| <kbd>H</kbd> | Fully restore party PV |
+| <kbd>T</kbd> | Fill and empty TP bar |
+| <kbd>M</kbd> + <kbd>1</kbd> | Add 100 D$ to inventory |
+| <kbd>M</kbd> + <kbd>2</kbd> | Remove 100 D$ to inventory |
+
+## More functions
+
+Some debug functions already implemented as been left in each chapters.
+
+For those, controls are still the one they have been assigned to and have been untouched.
+
+## Contribution
+
+If you have any suggestions or encounter bugs, feel free to let us know!

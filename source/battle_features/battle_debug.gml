@@ -1,6 +1,6 @@
 if (scr_debug() && !dutils_reading_kb())
 {
-    if (keyboard_check_pressed(ord("P")))
+    if (keyboard_check_pressed(ord("P")) && keyboard_check(vk_alt))
     {
         global.dpause_dialog = !global.dpause_dialog;
 

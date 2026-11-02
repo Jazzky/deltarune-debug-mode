@@ -1,8 +1,9 @@
 if (scr_debug())
 {
     siner++;
+    var _debug_xy = asset_get_index("obj_debug_xy");
     
-    if (mouse_check_button(mb_right) && !i_ex(obj_debug_xy))
+    if (mouse_check_button(mb_right) && (_debug_xy == -1 || !instance_exists(_debug_xy)))
     {
         if (sprite_index != -1)
         {

@@ -1,0 +1,38 @@
+{
+	".spritecomparer_fix": {
+		"chapters": [-1, -2, -5],
+		"gml_name": "gml_Object_obj_spritecomparer_Draw_0",
+		"actions": [
+			{
+				"find_replace": {
+					"find": "if (keyboard_check_pressed(ord(\"D\")))",
+					"replace": "if (keyboard_check_pressed(vk_f2))"
+				}
+			}
+		]
+    },
+	".dialoguer_fix_ch2": {
+		"chapters": [2],
+		"gml_name": "gml_Object_obj_dialoguer_Draw_0",
+		"actions": [
+			{
+				"find_replace": {
+					"find": "if (keyboard_check_pressed(ord(\"D\")))",
+					"replace": "if (keyboard_check_pressed(vk_f2))"
+				}
+			}
+		]
+    },
+	".dialoguer_fix": {
+		"chapters": [-1, -2],
+		"gml_name": "gml_Object_obj_dialoguer_Draw_0",
+		"actions": [
+			{
+				"find_replace": {
+					"find": "if (sunkus_kb_check_pressed(ord(\"D\")))",
+					"replace": "if (sunkus_kb_check_pressed(vk_f2))"
+				}
+			}
+		]
+    }
+}

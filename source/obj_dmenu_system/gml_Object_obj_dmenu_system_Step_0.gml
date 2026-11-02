@@ -824,7 +824,7 @@ else if (dmenu_active)
         {
             if (dvertical_index == 0)
             {
-                dhinter_text = dstr("[I] - Import individual\n[Alt+I] - Batch import", "[I] - Importation individuelle\n[Alt+I] - Importation par lot");
+                dhinter_text = dstr("[I] - Import individual\n[Alt+I] - Batch import", "[I] - Importation unique\n[Alt+I] - Importation par lot");
             }
             else if (dvertical_index > 0 && dvertical_index < array_length(dbutton_options))
             {

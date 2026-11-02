@@ -1,4 +1,3 @@
-// TOP
 EnsureDataLoaded();
 
 if (!Data.IsVersionAtLeast(2023, 6))
@@ -18,18 +17,6 @@ foreach (var str in Data.Strings)
 }
 string defaultLang = isFrenchPatch ? "fr" : "en";
 
-UndertaleFunction DefineFunc(string name)
-{
-    UndertaleString str = Data.Strings.MakeString(name, out int id);
-    UndertaleFunction func = new()
-    {
-        Name = str,
-        NameStringID = id
-    };
-    Data.Functions.Add(func);
-    return func;
-}
-
 GlobalDecompileContext globalDecompileContext = new(Data);
 Underanalyzer.Decompiler.IDecompileSettings decompilerSettings = new Underanalyzer.Decompiler.DecompileSettings();
 UndertaleModLib.Compiler.CodeImportGroup importGroup = new(Data, globalDecompileContext, decompilerSettings)
@@ -37,5 +24,7 @@ UndertaleModLib.Compiler.CodeImportGroup importGroup = new(Data, globalDecompile
     ThrowOnNoOpFindReplace = true
 };
 
-// BOTTOM
+// SEPARATION
 importGroup.Import();
+
+ScriptMessage("Mode Debug du Chapitre CHAPTER_NUMBER ajouté.\r\n" + "Pour activer le Mode Debug en jeu, appuyer sur F10.");
