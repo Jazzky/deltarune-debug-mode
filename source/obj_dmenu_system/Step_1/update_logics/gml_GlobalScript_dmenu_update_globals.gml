@@ -15,15 +15,18 @@ function dmenu_update_globals()
 		
 		text = name;
 		var global_value = "";
-		if (i == 0 && reading_double_flag)
-		{
-			name = dcustom_flag_text[0];
-			text = "global." + name;
-		}
 
-		global_value = _dcmd_get_global_string(name);
-		if (global_value == undefined)
-			global_value = "";
+		if (i > 0 || reading_double_flag)
+		{
+			if (i == 0) {
+				name = dcustom_flag_text[0];
+				text = "global." + name;
+			}
+
+			global_value = _dcmd_get_global_string(name);
+			if (global_value == undefined)
+				global_value = "";
+		}
 
 		if (dutils_reading_kb() && i == dvertical_index)
 		{

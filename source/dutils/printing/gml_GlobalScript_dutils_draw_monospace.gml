@@ -60,5 +60,5 @@ function dutils_draw_monospace_ext(arg0, arg1, arg2, arg3=0, arg4=-1)
 
 function dutils_draw_monospace(arg0, arg1, arg2)
 {
-	draw_monospace_ext(arg0, arg1, arg2, 0, -1);
+	dutils_draw_monospace_ext(arg0, arg1, arg2, 0, -1);
 }

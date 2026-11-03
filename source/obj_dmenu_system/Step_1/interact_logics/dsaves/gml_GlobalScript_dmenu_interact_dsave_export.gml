@@ -47,16 +47,7 @@ function dmenu_interact_dsave_save()
 	global.debug_overwrite_section = target_path;
 	dconsole_exec(cmd);
 
-	dmenu_popup_launch = 0;
-	dmenu_state = "debug";
-	dbutton_options = dbutton_options_original;
-	dmenu_state_history = [];
-	dmenu_vertical_index_history = [];
-	dvertical_index = 0;
-	dbutton_layout = 0;
-	dmenu_active = false;
-	dkeyboard_input = "";
-	global.interact = 0;
+	dmenu_reset_menu();
 }
 
 function dmenu_interact_dsave_delete()
@@ -81,18 +72,7 @@ function dmenu_interact_dsave_load()
 	var res = dconsole_exec("dsave_load \"" + string(target_path) + "\"");
 	
 	if (res == 0)
-	{
-		dmenu_popup_launch = 0;
-		dmenu_state = "debug";
-		dbutton_options = dbutton_options_original;
-		dmenu_state_history = [];
-		dmenu_vertical_index_history = [];
-		dvertical_index = 0;
-		dbutton_layout = 0;
-		dmenu_active = false;
-		dkeyboard_input = "";
-		global.interact = 0;
-	}
+		dmenu_reset_menu();
 }
 
 function dmenu_interact_dsave_update_metadata()

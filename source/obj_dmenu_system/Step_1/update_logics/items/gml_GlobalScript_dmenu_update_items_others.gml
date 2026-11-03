@@ -10,6 +10,9 @@ function dmenu_update_givertab()
 {
 	dmenu_title = dstr("Add how many to inventory?", "Ajouter combien à l'inventaire ?");
 	dhorizontal_index = 1;
+	if (dgiver_infos.storage_space == 0)
+		dhorizontal_index = 0;
+	
 	dmenu_box = 0;
 	dbutton_layout = 2;
 }

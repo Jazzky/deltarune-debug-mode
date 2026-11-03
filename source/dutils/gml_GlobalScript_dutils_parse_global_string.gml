@@ -2,14 +2,15 @@ function dutils_get_global_access_list(arg0)
 {
 	var global_str = arg0;
 
-	var ipt_len = string_length(s_global);
+	var ipt_len = string_length(global_str);
 	var access_list = [];
 	var access_list_len = 0;
 
-	var cur_word = 0;
+	var cur_word = "";
 	var bracket_balance = 0;
 	for (var i = 1; i <= ipt_len; i++) {
-		var mychar = string_char_at(s_global, i);
+		var mychar = string_char_at(global_str, i);
+		var is_brack = (mychar == "[" || mychar == "]");
 
 		if (mychar == "[") {
 			bracket_balance++;
@@ -27,11 +28,15 @@ function dutils_get_global_access_list(arg0)
 			access_list[access_list_len++] = cur_word;
 			cur_word = "";
 		}
-		else
+
+		if (!is_brack) {
 			cur_word += mychar;
+			if (i == ipt_len && access_list_len == 0)
+				access_list[access_list_len++] = cur_word;
+		}
 	}
 
-	if (bracket_balance == 0) {
+	if (bracket_balance != 0) {
 		scr_derror_print("Error: bracket parsing error");
 		return (undefined);
 	}

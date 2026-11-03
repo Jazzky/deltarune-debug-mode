@@ -59,6 +59,6 @@ function dmenu_interact_warp()
 
 		global.interact = 0;
 		dmenu_active = false;
-		dconsole_parse_cmd(cmd);
+		dconsole_exec(cmd);
 	}
 }

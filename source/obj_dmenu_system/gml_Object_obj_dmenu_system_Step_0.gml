@@ -1,5 +1,15 @@
 dmenu_arrow_timer += 1;
 
+var left_held = dutils_key_pressed(vk_left);
+var right_held = dutils_key_pressed(vk_right);
+var up_held = dutils_key_pressed(vk_up);
+var down_held = dutils_key_pressed(vk_down);
+
+var left_pressed = keyboard_check_pressed(vk_left);
+var right_pressed = keyboard_check_pressed(vk_right);
+var up_pressed = keyboard_check_pressed(vk_up);
+var down_pressed = keyboard_check_pressed(vk_down);
+
 if (dmenu_popup_launch == 1)
 {
     dmenu_state_update();
@@ -36,77 +46,44 @@ if (dmenu_popup_launch != 1)
     }
 }
 
-function dmenu_pressed_key(arg0)
-{
-    if (arg0 != 40 && arg0 != 38 && arg0 != 37 && arg0 != 39 && arg0 != 8)
-        return 0;
-    
-    if (keyboard_check_pressed(arg0))
-    {
-        dscroll_cur_key = arg0;
-        dscroll_timer = 0;
-        return 1;
-    }
-    
-    if (arg0 != dscroll_cur_key)
-        return 0;
-    
-    if (keyboard_check(arg0))
-    {
-        dscroll_timer += 1;
-        
-        if (dscroll_timer >= dscroll_delay)
-        {
-            if ((dscroll_timer % dscroll_speed) == 0)
-                return 2;
-        }
-    }
-    else if (arg0 == dscroll_cur_key)
-    {
-        dscroll_timer = 0;
-        dscroll_cur_key = 0;
-    }
-    
-    return 0;
-}
-
 function vmove_menu(arg0, arg1)
 {
-    pressed_up = arg0;
-    pressed_down = arg1;
-    
-    if (pressed_up != 0 || pressed_down != 0)
-    {
-        if (pressed_up == 1 && dvertical_index == 0)
-        {
-            dvertical_index = array_length(dbutton_options);
-            dmenu_start_index = dvertical_index - 2;
-        }
-        else if (pressed_down == 1 && dvertical_index == (array_length(dbutton_options) - 1))
-        {
-            dvertical_index = -1;
-            dmenu_start_index = 0;
-        }
-        
-        increment = pressed_up ? -1 : 1;
-        
-        if ((pressed_up && dvertical_index != 0) || (pressed_down && dvertical_index != (array_length(dbutton_options) - 1)))
-        {
-            dvertical_index += increment;
-            snd_play(snd_menumove);
-            
-            if (pressed_up && dvertical_index < dmenu_start_index)
-                dmenu_start_index += increment;
-            else if (pressed_down && (dvertical_index + 1) > (dmenu_start_index + dbutton_max_visible))
-                dmenu_start_index += increment;
-            
-            if (dmenu_state == "flag_misc")
-            {
-                new_options = dother_options[dvertical_index];
-                dhorizontal_index = find_subarray_index(new_options[2], new_options[3]);
-            }
-        }
-    }
+	var move_up = arg0;
+	var move_down = arg1;
+
+	var y_limit = array_length(dbutton_options);
+	var new_y = dvertical_index;
+	var new_draw_y = dmenu_start_index;
+
+	if (move_up)
+		new_y--;
+
+	if (move_down)
+		new_y++;
+
+	if (new_y == -1)
+	{
+		new_y = y_limit - 1;
+		new_draw_y = min(5, y_limit) - 1; //TODO check if a variable exist
+	}
+
+	else if (new_y == y_limit)
+	{
+		new_y = 0;
+		new_draw_y = 0;
+	}
+
+	if (new_y == dvertical_index)
+		exit;
+
+	dvertical_index = new_y;
+	dmenu_start_index = new_draw_y;
+	if (dmenu_state == "flag_misc")
+	{
+		new_options = dother_options[dvertical_index];
+		dhorizontal_index = find_subarray_index(new_options[2], new_options[3]);
+	}
+	snd_play(snd_menumove);
 }
 
 function evaluate_custom_flag(arg0, arg1)
@@ -121,12 +98,12 @@ function evaluate_custom_flag(arg0, arg1)
     }
     
     first_type = arg1;
-    proper_exit = scr_string_respect_type(dcustom_flag_text[0], first_type, 1, 1);
+    proper_exit = dutils_istype(dcustom_flag_text[0], first_type, true);
     
     if (dmenu_state != "flag_categories")
         return proper_exit;
     
-    proper_exit = scr_string_respect_type(dcustom_flag_text[1], "real", 0, 1);
+    proper_exit = dutils_isnum(dcustom_flag_text[1], true);
     
     if (string_length(dcustom_flag_text[1]) == 0)
     {
@@ -153,7 +130,7 @@ function evaluate_custom_flag(arg0, arg1)
     return proper_exit;
 }
 
-if (keyboard_check_pressed(vk_left) && !global.dreading_kb)
+if (left_pressed && !global.dreading_kb)
 {
     if (variable_instance_exists(id, "dbutton_base_indices") && array_length(dbutton_base_indices) > dvertical_index)
     {
@@ -198,7 +175,7 @@ if (dmenu_active && global.dreading_kb)
         dkeyboard_input = dcustom_flag_text[0];
     
     will_exit = keyboard_check_pressed(vk_escape) || keyboard_check_pressed(global.input_k[7]);
-    will_exit |= (keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_down));
+    will_exit |= (up_pressed || down_pressed);
     
     if (will_exit)
     {
@@ -220,7 +197,7 @@ if (dmenu_active && global.dreading_kb)
                         check_type = "variable";
                         dglobal_changer_options[dvertical_index][1] = "string";
                         
-                        if (scr_string_respect_type(dcustom_flag_text[1], "real", 1, 0))
+                        if (dutils_isnum(dcustom_flag_text[1]))
                             dglobal_changer_options[dvertical_index][1] = "real";
                     }
                     else
@@ -236,6 +213,9 @@ if (dmenu_active && global.dreading_kb)
                     if (flags_good && dmenu_state == "warp_options")
                         drooms_options.target_plot = real(dkeyboard_input);
                     
+					if (!flags_good)
+						dmenu_reset_kb();
+
                     snd_play(array_get([299, 420], flags_good));
                 }
             }
@@ -248,14 +228,14 @@ if (dmenu_active && global.dreading_kb)
             snd_play(snd_error);
         }
         
-        if (keyboard_check_pressed(vk_down))
+        if (down_pressed)
             vmove_menu(0, 1);
-        else if (keyboard_check_pressed(vk_up))
+        else if (up_pressed)
             vmove_menu(1, 0);
         
         if (dmenu_state != "warp_options")
         {
-            if (keyboard_check_pressed(global.input_k[4]) || keyboard_check_pressed(global.input_k[7]))
+            if (button1_p())
             {
                 snd_play(snd_select);
                 
@@ -290,7 +270,7 @@ if (dmenu_active && global.dreading_kb)
     }
     else
     {
-        update_visu = scr_read_keyboard();
+        update_visu = dutils_read_kb();
         flag_index = 0;
         
         if (reading_double_flag)
@@ -313,7 +293,7 @@ else if (dmenu_active)
     {
         moved = 1;
         
-        if (keyboard_check_pressed(vk_up))
+        if (up_pressed)
         {
             dvertical_index--;
             
@@ -322,7 +302,7 @@ else if (dmenu_active)
             
             dhorizontal_index = min(dhorizontal_index, array_length(dbutton_options_2d[dvertical_index]) - 1);
         }
-        else if (keyboard_check_pressed(vk_down))
+        else if (down_pressed)
         {
             dvertical_index++;
             
@@ -331,7 +311,7 @@ else if (dmenu_active)
             
             dhorizontal_index = min(dhorizontal_index, array_length(dbutton_options_2d[dvertical_index]) - 1);
         }
-        else if (keyboard_check_pressed(vk_left))
+        else if (left_pressed)
         {
             dhorizontal_index--;
             
@@ -345,7 +325,7 @@ else if (dmenu_active)
                 dhorizontal_index = array_length(dbutton_options_2d[dvertical_index]) - 1;
             }
         }
-        else if (keyboard_check_pressed(vk_right))
+        else if (right_pressed)
         {
             dhorizontal_index++;
             
@@ -371,8 +351,6 @@ else if (dmenu_active)
     if (dbutton_layout == 1)
     {
         og_horizontal_index = dhorizontal_index;
-        pressed_right = dmenu_pressed_key(39);
-        pressed_left = dmenu_pressed_key(37);
         
         if (dmenu_state == "flag_misc")
         {
@@ -380,9 +358,9 @@ else if (dmenu_active)
             cur_options_len = array_length(cur_options[3]);
             playsound = 1;
             
-            if (keyboard_check_pressed(vk_right) && dhorizontal_index < (cur_options_len - 1))
+            if (right_pressed && dhorizontal_index < (cur_options_len - 1))
                 dhorizontal_index++;
-            else if (keyboard_check_pressed(vk_left) && dhorizontal_index != 0)
+            else if (left_pressed && dhorizontal_index != 0)
                 dhorizontal_index--;
             else
                 playsound = 0;
@@ -398,20 +376,20 @@ else if (dmenu_active)
         {
             cur_global_array_limit = dglobal_changer_options[dvertical_index][2];
             
-            if (pressed_left == 1 && dhorizontal_index != 0)
+            if (left_pressed == 1 && dhorizontal_index != 0)
                 dhorizontal_index--;
             
-            if (pressed_right == 1 && dhorizontal_index != (cur_global_array_limit - 1))
+            if (right_pressed == 1 && dhorizontal_index != (cur_global_array_limit - 1))
                 dhorizontal_index++;
             
             if (dhorizontal_index != og_horizontal_index)
                 snd_play(snd_menumove);
         }
         
-        if (pressed_left && pressed_right)
-            pressed_right = 0;
+        if (right_pressed && left_pressed)
+			right_pressed = 0;
         
-        if (pressed_right || pressed_left)
+        if (right_pressed || left_pressed)
         {
             if (dmenu_state == "recruits")
             {
@@ -422,19 +400,19 @@ else if (dmenu_active)
                     recruit_count = global.flag[real_index + 600];
                     to_add = 1 / _recruitcount;
                     
-                    if (pressed_left)
+                    if (left_pressed)
                     {
                         to_add = -to_add;
                         
                         if (recruit_count == 0)
                             to_add = -1;
                     }
-                    else if (pressed_right && recruit_count == -1)
+                    else if (right_pressed && recruit_count == -1)
                     {
                         to_add = 1;
                     }
                     
-                    if ((pressed_right && (recruit_count * _recruitcount) < _recruitcount) || (pressed_left && (recruit_count * _recruitcount) > -1))
+                    if ((right_pressed && (recruit_count * _recruitcount) < _recruitcount) || (left_pressed && (recruit_count * _recruitcount) > -1))
                     {
                         global.flag[600 + real_index] = recruit_count + to_add;
                         dmenu_state_update();
@@ -445,11 +423,11 @@ else if (dmenu_active)
                         snd_play(snd_error);
                     }
                 }
-                else if ((pressed_right && dhorizontal_page != global.chapter) || (pressed_left && dhorizontal_page != 0))
+                else if ((right_pressed && dhorizontal_page != global.chapter) || (left_pressed && dhorizontal_page != 0))
                 {
                     dhorizontal_page++;
                     
-                    if (pressed_left)
+                    if (left_pressed)
                         dhorizontal_page -= 2;
                     
                     snd_play(snd_menumove);
@@ -461,13 +439,13 @@ else if (dmenu_active)
                 cur_party = array_get([drooms_options.target_member_2, drooms_options.target_member_3], dvertical_index - 3);
                 new_party = -1;
                 
-                if (pressed_left && cur_party != 0)
+                if (left_pressed && cur_party != 0)
                     new_party = cur_party - 1;
-                else if (pressed_right && cur_party != (4 - (global.chapter == 1)))
+                else if (right_pressed && cur_party != (4 - (global.chapter == 1)))
                     new_party = cur_party + 1;
                 
                 if (new_party == 1)
-                    new_party += (pressed_right - pressed_left);
+                    new_party += (right_pressed - left_pressed);
                 
                 if (new_party != -1)
                 {
@@ -484,9 +462,9 @@ else if (dmenu_active)
             {
                 var new_setting = -1;
                 
-                if (pressed_left && global.dload_cur_inv != 0)
+                if (left_pressed && global.dload_cur_inv != 0)
                     new_setting = 0;
-                else if (pressed_right && global.dload_cur_inv != 1)
+                else if (right_pressed && global.dload_cur_inv != 1)
                     new_setting = 1;
                 
                 if (new_setting != -1)
@@ -496,7 +474,7 @@ else if (dmenu_active)
                     dmenu_state_update();
                 }
             }
-            else if ((dmenu_state == "objects" || dmenu_state == "weapons" || dmenu_state == "armors") && (pressed_left + pressed_right) == 1)
+            else if (dmenu_state == "items" || dmenu_state == "weapons" || dmenu_state == "armors")
             {
                 dhorizontal_page = !dhorizontal_page;
                 dmenu_start_index = 0;
@@ -506,16 +484,13 @@ else if (dmenu_active)
             }
         }
         
-        pressed_up = dmenu_pressed_key(38);
-        pressed_down = dmenu_pressed_key(40);
-        
-        if (dmenu_state == "globals_changer" && (pressed_up || pressed_down))
+        if (dmenu_state == "globals_changer" && (up_pressed || down_pressed))
             dhorizontal_index = 0;
         
-        if (pressed_up && pressed_down)
-            pressed_up = 0;
+        if (up_pressed && down_pressed)
+            up_pressed = 0;
         
-        vmove_menu(pressed_up, pressed_down);
+        vmove_menu(up_pressed, down_pressed);
         dmenu_start_index = clamp(dmenu_start_index, 0, max(0, array_length(dbutton_options) - dbutton_max_visible));
         
         if (dhorizontal_index != og_horizontal_index)
@@ -524,94 +499,21 @@ else if (dmenu_active)
     
     if (dbutton_layout == 2)
     {
-        if (keyboard_check_pressed(vk_left))
+        if (left_held || right_held)
         {
-            var owned_count = 0;
+            var owned_count = dgiver_infos.owned_amt;
+			var storage_space = dgiver_infos.storage_space;
+			var item_id = dgiver_infos.item_id;
+			var item_type = dgiver_infos.item_type;
+			scr_debug_print("Storage space = " + string(storage_space) + ", itemcount = " + string(owned_count));
             
-            switch (dgiver_menu_state)
+			var to_add = (right_held ? 1 : -1);
+			var can_move = ((to_add == 1 && dhorizontal_index < storage_space) ||
+							(to_add == -1 && -dhorizontal_index < owned_count));
+
+            if (can_move)
             {
-                case "objects":
-                    if (dhorizontal_page == 0)
-                        scr_itemcheck(dbutton_indices[dgiver_button_selected - 1]);
-                    else
-                        scr_litemcheck(dbutton_indices[dgiver_button_selected - 1]);
-                    
-                    owned_count = itemcount;
-                    break;
-                
-                case "armors":
-                    scr_armorcheck_inventory(dbutton_indices[dgiver_button_selected - 1]);
-                    owned_count = itemcount;
-                    break;
-                
-                case "weapons":
-                    scr_weaponcheck_inventory(dbutton_indices[dgiver_button_selected - 1]);
-                    owned_count = itemcount;
-                    break;
-                
-                case "keyitems":
-                    scr_keyitemcheck(dbutton_indices[dgiver_button_selected - 1]);
-                    owned_count = itemcount;
-                    break;
-                
-                default:
-                    owned_count = 0;
-            }
-            
-            if (dhorizontal_index > -owned_count)
-            {
-                dhorizontal_index -= 1;
-                snd_play(snd_menumove);
-            }
-            else
-            {
-                snd_play(snd_error);
-            }
-        }
-        
-        if (keyboard_check_pressed(vk_right))
-        {
-            var owned_count = 0;
-            
-            switch (dgiver_menu_state)
-            {
-                case "objects":
-                    if (dhorizontal_page == 0)
-                        scr_itemcheck(0);
-                    else
-                        scr_litemcheck(0);
-                    
-                    owned_count = itemcount;
-                    break;
-                
-                case "armors":
-                    scr_armorcheck_inventory(0);
-                    owned_count = itemcount;
-                    break;
-                
-                case "weapons":
-                    scr_weaponcheck_inventory(0);
-                    owned_count = itemcount;
-                    break;
-                
-                case "keyitems":
-                    scr_keyitemcheck(0);
-                    owned_count = itemcount;
-                    break;
-                
-                case "recruits":
-                    real_indice = dbutton_indices[dvertical_index];
-                    recruited_nbr = global.flag[real_indice + 600];
-                    global.flag[real_indice + 600] = recruited_nbr + 1;
-                    break;
-                
-                default:
-                    owned_count = 0;
-            }
-            
-            if (dhorizontal_index < owned_count)
-            {
-                dhorizontal_index += 1;
+                dhorizontal_index += to_add;
                 snd_play(snd_menumove);
             }
             else
@@ -656,7 +558,7 @@ else if (dmenu_active)
         }
     }
     
-    if (keyboard_check_pressed(global.input_k[4]) || keyboard_check_pressed(global.input_k[7]))
+    if (button1_p())
     {
         if (!(dmenu_state == "new_debug_save" && dvertical_index == 0))
             snd_play(snd_select);
@@ -677,7 +579,7 @@ else if (dmenu_active)
         {
             switch (dmenu_state)
             {
-                case "objects":
+                case "items":
                     if (dhorizontal_page != 0 || dvertical_index != 0)
                     {
                         var real_index = dbutton_indices[dvertical_index];
@@ -787,7 +689,7 @@ else if (dmenu_active)
         dmenu_state_update();
     }
     
-    if (keyboard_check_pressed(global.input_k[5]) || keyboard_check_pressed(global.input_k[8]))
+    if (button2_p())
     {
         snd_play(snd_smallswing);
         
@@ -870,7 +772,7 @@ else if (dmenu_active)
                     
                     switch (dmenu_state)
                     {
-                        case "objects":
+                        case "items":
                             scr_iteminfo(hover_id);
                             raw_desc = itemdescb;
                             break;

@@ -36,7 +36,7 @@ function dmenu_state_update()
 			dmenu_update_items_main_menu();
             break;
         
-        case "objects":
+        case "items":
         case "armors":
         case "weapons":
         case "keyitems":
@@ -124,7 +124,7 @@ function dmenu_state_interact()
 			dmenu_interact_set_itemgiver_type();
             break;
         
-        case "objects":
+        case "items":
         case "armors":
         case "weapons":
         case "keyitems":

@@ -1,5 +1,6 @@
 function dutils_set_kb_text(arg0)
 {
+	keyboard_string = "";
 	global.kb_text = arg0;
 }
 
@@ -14,6 +15,9 @@ function dutils_toggle_kb(arg0=undefined)
 		global.dreading_kb = !global.dreading_kb;
 	else
 		global.dreading_kb = arg0;
+
+	global.kb_text = "";
+	keyboard_string = "";
 }
 
 function dutils_reading_kb()

@@ -22,14 +22,5 @@ function dmenu_interact_new_dsave()
 		dconsole_exec(cmd);
 	}
 
-	dkeyboard_input = "";
-	dmenu_popup_launch = 0;
-	dmenu_state = "debug";
-	dbutton_layout = 0;
-	dbutton_options = dbutton_options_original;
-	dmenu_state_history = [];
-	dmenu_vertical_index_history = [];
-	dvertical_index = 0;
-	dmenu_active = false;
-	global.interact = 0;
+	dmenu_reset_menu();
 }

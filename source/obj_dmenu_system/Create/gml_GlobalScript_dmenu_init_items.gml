@@ -86,6 +86,7 @@ function _dmenu_init_dw_item_data()
 		[ { start_id: 23, count: 5  } ],
 		[ { start_id: 50, count: 5  } ],
 		[ { start_id: 30, count: 9  }]
+	];
 
 	global.dweapon_data = [
 		[],
@@ -119,7 +120,7 @@ function dmenu_get_item_index_data(arg0, arg1)
 
 	var _lookup_lst = [];
 	switch (_type) {
-		case "objects":
+		case "items":
 			_lookup_lst = global.ditem_data;
 			break;
 

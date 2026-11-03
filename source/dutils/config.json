@@ -2,15 +2,21 @@
 	"create_new": true,
 	"gml_GlobalScript_dutils_istype.gml": {},
 	"gml_GlobalScript_dutils_parse_global_string.gml": {},
+
 	"strings/gml_GlobalScript_dutils_parse_strvar.gml": {},
+
 	"printing/gml_GlobalScript_dutils_draw_monospace.gml": {},
+
+	"items/gml_GlobalScript_dutils_get_itemname.gml": {},
+	"items/gml_GlobalScript_dutils_itemmisc.gml": {},
+
 	"keyboard/gml_GlobalScript_dutils_read_kb.gml": {},
 	"keyboard/gml_GlobalScript_dutils_kb_setters.gml": {},
-	"gml_GlobalScript_dutils_string_respect_type.gml": {},
-	"arrays/gml_GlobalScript_dutils_array_utils.gml": {},
-
 	"keyboard/keyboard_globals.gml": {
 		"gml_name": "gml_GlobalScript_scr_gamestart",
 		"mode": "append"
-	}
+	},
+
+	"arrays/gml_GlobalScript_dutils_array_utils.gml": {}
+
 }

@@ -1,6 +1,6 @@
 function scr_dconsole_command(arg0)
 {
-	scr_dmode_parse_cmd(arg0);
+	dconsole_exec(arg0);
 	exit;
     static _commands = 
     {

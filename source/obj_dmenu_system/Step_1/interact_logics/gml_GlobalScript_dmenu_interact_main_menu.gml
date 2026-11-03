@@ -1,4 +1,4 @@
-function dmenu_init_warps()
+function dmenu_interact_init_warps()
 {
 	dmenu_state = "warp";
 	dhorizontal_index = 0;
@@ -12,7 +12,7 @@ function dmenu_interact_main_menu()
 	dvertical_index = 0;
 	
 	if (selected_name == dstr("Warps", "Sauts"))
-		dmenu_init_warps();
+		dmenu_interact_init_warps();
 
 	else if (selected_name == dstr("Items"))
 		dmenu_state = "give";

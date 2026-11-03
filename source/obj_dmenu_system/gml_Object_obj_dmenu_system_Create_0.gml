@@ -1,7 +1,5 @@
-dmenu_active = false;
-dmenu_popup_launch = 0;
-dmenu_box = 0;
-dbutton_layout = 0;
+dmenu_reset_menu();
+
 dmenu_start_index = 0;
 dbutton_max_visible = 5;
 dmenu_arrow_timer = 0;
@@ -11,43 +9,26 @@ dscroll_delay = 15;
 dscroll_speed = 1;
 dbackspace_timer = 0;
 
-dmenu_update_main_menu();
-
 dhinter_active = false;
 global.dload_cur_inv = 0;
 dhinter_text = "";
 
-dbutton_options = [];
-dbutton_options_2d = dbutton_options_original;
-
-
-dmenu_state = "debug";
-dmenu_state_history = [];
-
-dvertical_index = 0;
-dmenu_vertical_index_history = [];
-
-dhorizontal_index = 0;
-dmenu_horizontal_index_history = [];
-
-dhorizontal_page = 0;
-dmenu_page_index_history = [];
-
-
 dgiver_infos = {
 	item_type : "",
 	item_name : "",
-	item_id : 0
+	item_id : 0,
+	owned_amt : 0,
+	storage_space : 0
 };
 
 dbutton_indices = [];
-ditem_types = ["objects", "armors", "weapons", "keyitems"];
+ditem_types = ["items", "armors", "weapons", "keyitems"];
 ditem_chap = global.chapter;
 
-dmenu_init_flags();
-dmenu_init_items();
-dmenu_init_global_changer();
 dmenu_init_warps();
+dmenu_init_items();
+dmenu_init_flags();
+dmenu_init_global_changer();
 
 dcustom_flag_text = ["", ""];
 dkeyboard_input = "";

@@ -4,22 +4,24 @@ function dmenu_update_warp()
 	dbutton_options = [dstr("Current Room", "Salle actuelle"), dstr("Search", "Recherche")];
 	dbutton_indices = [-1, -1];
 	
-	if (dutils_reading_kb())
-		dbutton_options[1] = dstr("Contains: ", "Contient : ");
+	if (dutils_reading_kb() || dkeyboard_input != "")
+		dbutton_options[1] = dstr("Contains: ", "Contient : ") + dkeyboard_input;
 	else
 		dbutton_options[1] = dstr("Search", "Recherche");
 	
-	dbutton_options[1] += dkeyboard_input;
 	var nb_rooms = array_length(drooms);
 	
 	for (var i = 0; i < nb_rooms; i++)
 	{
-		if (!string_pos(dkeyboard_input, drooms[i]))
+		var _room_name = drooms[i].room_name;
+		var _room_id = drooms[i].room_id;
+
+		if (!string_pos(dkeyboard_input, _room_name))
 			continue;
 		
-		var combined = drooms[i];
+		var combined = _room_name;
 		array_push(dbutton_options, combined);
-		array_push(dbutton_indices, drooms_id[i].room_index);
+		array_push(dbutton_indices, _room_id);
 	}
 	
 	dbutton_layout = 1;

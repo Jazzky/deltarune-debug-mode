@@ -22,7 +22,7 @@ function dmenu_interact_recruits_presets()
 
 	else {
 		cmd = (!losemode) ? "recruitchap" : "losechap";
-		cmd += " " + dhorizontal_page;
+		cmd += " " + string(dhorizontal_page);
 	}
 
 	dconsole_exec(cmd);

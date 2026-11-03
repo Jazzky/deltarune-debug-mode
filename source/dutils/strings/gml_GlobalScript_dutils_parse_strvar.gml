@@ -7,7 +7,7 @@ function dutils_parse_strvar(arg0)
 		return ("");
 
 	if (string_char_at(str, 1) == "\\")
-		return (string_copy(str, 2, str_len - 1);
+		return (string_copy(str, 2, str_len - 1));
 
 	if (str == "undefined")
 		return (undefined);

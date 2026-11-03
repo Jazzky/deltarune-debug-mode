@@ -1,6 +1,8 @@
-var xx = __view_get(e__VW.XView, 0);
-var yy = __view_get(e__VW.YView, 0);
-var d = global.darkzone + 1;
+xx = __view_get(e__VW.XView, 0);
+yy = __view_get(e__VW.YView, 0);
+d = global.darkzone + 1;
+
+var mono_spacing = (global.darkzone == 1) ? 15 : 8;
 var reading_kb = dutils_reading_kb();
 
 if (dmenu_box == 0)
@@ -128,21 +130,22 @@ if (dmenu_active)
     
     if (reading_kb)
     {
+		var base_x = x_start + xx;
+		var thickness = 1 * d;
+		var cursor_padding = 3 * d;
+
+		var x1_start = base_x + w_prefix;
+
+		draw_set_color(c_yellow);
         if (dmenu_state == "flag_categories")
         {
-            var base_x = x_start + xx;
             var base_y = (((110 - (dmenu_start_index * 20)) + 2) * d) + yy;
-            var mono_spacing = (global.darkzone == 1) ? 15 : 8;
-            var thickness = 1 * d;
             var visual_offset = -5;
-            var cursor_padding = 3 * d;
             var w_prefix = string_length("global.flag[") * mono_spacing;
             var w_name = string_length(string(dcustom_flag_text[0])) * mono_spacing;
             var w_middle = string_length("] = |") * mono_spacing;
             var w_value = string_length(string(dcustom_flag_text[1])) * mono_spacing;
-            var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name + w_middle;
-            draw_set_color(c_yellow);
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             var draw_w_value = (w_value == 0) ? (mono_spacing / 4) : w_value;
             
@@ -153,17 +156,11 @@ if (dmenu_active)
         }
         else if (dmenu_state == "warp" || dmenu_state == "debug_save")
         {
-            var base_x = x_start + xx;
             var base_y = (((130 - (dmenu_start_index * 20)) + 2) * d) + yy;
-            var mono_spacing = (global.darkzone == 1) ? 15 : 8;
-            var thickness = 1 * d;
             var visual_offset = -2;
-            var cursor_padding = 3 * d;
             var w_prefix = string_length(string(dstr("Contains: ", "Contient : "))) * mono_spacing;
             var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
-            var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
-            draw_set_color(c_yellow);
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             
             if (dhorizontal_index == 0)
@@ -171,17 +168,10 @@ if (dmenu_active)
         }
         else if (dmenu_state == "warp_options")
         {
-            var base_x = x_start + xx;
-            var base_y = (((150 - (dmenu_start_index * 20)) + 2) * d) + yy;
-            var mono_spacing = (global.darkzone == 1) ? 15 : 8;
-            var thickness = 1 * d;
             var visual_offset = -2;
-            var cursor_padding = 3 * d;
             var w_prefix = string_length(string(dstr("Plot Value: ", "Valeur de plot : "))) * mono_spacing;
             var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
-            var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
-            draw_set_color(c_yellow);
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             
             if (dhorizontal_index == 0)
@@ -189,9 +179,8 @@ if (dmenu_active)
         }
         else if (dmenu_state == "new_debug_save" || dmenu_state == "dsave_edit_name" || dmenu_state == "dsave_edit_desc" || dmenu_state == "dsave_edit_cat")
         {
-            var base_x = x_start + x_padding + xx;
+            base_x = x_start + x_padding + xx;
             var base_y = y_start + yy;
-            var mono_spacing = (global.darkzone == 1) ? 15 : 8;
             var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
             var max_width = box_right_edge - base_x;
             var line_sep = 16 * d;
@@ -281,80 +270,83 @@ if (dmenu_active)
     
     if (dbutton_layout == 1)
     {
-        var dcan_scroll_up = dmenu_start_index > 0;
-        var dcan_scroll_down = (dmenu_start_index + dbutton_max_visible) < array_length(dbutton_options);
+		var option_start_index = dvertical_index - abs(dmenu_start_index);
+		var nb_option_to_draw = min(5, array_length(dbutton_options));
+
+        var dcan_scroll_up = (option_start_index > 0);
+        var dcan_scroll_down = (option_start_index + nb_option_to_draw) != array_length(dbutton_options);
+
         dmenu_arrow_yoffset = 2 * sin(dmenu_arrow_timer / 10);
         darrow_scale = d / 2;
         
-        for (var i = 0; i < dbutton_max_visible; i++)
+        for (var i = 0; i < nb_option_to_draw; i++)
         {
-            var button_index = dmenu_start_index + i;
+            var button_index = option_start_index + i;
             
-            if (button_index < array_length(dbutton_options))
-            {
-                is_cur_line = dvertical_index == button_index;
-                var text_color = is_cur_line ? c_yellow : c_white;
-                draw_set_color(text_color);
-                var cur_btn = string(dbutton_options[button_index]);
-                draw_monospace(x_start + xx, y_start + (i * y_spacing) + yy, cur_btn);
-                var mono_spacing = (global.darkzone == 1) ? 15 : 8;
-                var needs_arrows = (is_cur_line && dmenu_state == "flag_misc") || (dmenu_state == "warp_options" && (button_index == 3 || button_index == 4)) || (dmenu_state == "debug_save_options" && button_index == 0);
-                
-                if (needs_arrows)
-                {
-                    var show_left = false;
+			is_cur_line = dvertical_index == button_index;
+			var text_color = is_cur_line ? c_yellow : c_white;
+			draw_set_color(text_color);
+
+			var cur_btn = string(dbutton_options[button_index]);
+			dutils_draw_monospace(x_start + xx, y_start + (i * y_spacing) + yy, cur_btn);
+			var needs_arrows = (is_cur_line && dmenu_state == "flag_misc") || (dmenu_state == "warp_options" && (button_index == 3 || button_index == 4)) || (dmenu_state == "debug_save_options" && button_index == 0);
+			
+			if (needs_arrows)
+			{
+				var show_left = false;
                     
-                    if (dmenu_state == "flag_misc" && dhorizontal_index != 0)
-                        show_left = true;
-                    else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != 0)
-                        show_left = true;
-                    else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 0)
-                        show_left = true;
+				if (dmenu_state == "flag_misc" && dhorizontal_index != 0)
+					show_left = true;
+
+				else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != 0)
+					show_left = true;
+
+				else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 0)
+					show_left = true;
                     
-                    if (show_left)
-                    {
-                        for (dash_pos = 0; 1; dash_pos++)
-                        {
-                            var check_char = "-";
-                            
-                            if (dmenu_state == "warp_options")
-                                check_char = ":";
-                            else if (dmenu_state == "debug_save_options")
-                                check_char = "(";
-                            
-                            if (dash_pos > 4 && string_char_at(cur_btn, dash_pos) == check_char)
-                                break;
-                        }
-                        
-                        if (dmenu_state != "debug_save_options")
-                            dash_pos++;
-                        else
-                            dash_pos -= 2;
-                        
-                        draw_sprite_ext(spr_morearrow, 0, x_start + ((dash_pos * mono_spacing) + floor(mono_spacing / 2)) + dmenu_arrow_yoffset + xx, y_start + (i * y_spacing) + side_arrows_mult[0] + yy, darrow_scale, -darrow_scale, 90, c_white, 1);
-                    }
-                    
-                    var show_right = false;
-                    
-                    if (dmenu_state == "flag_misc" && dhorizontal_index < (array_length(dother_options[dvertical_index][3]) - 1))
-                        show_right = true;
-                    else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != (4 - (global.chapter == 1)))
-                        show_right = true;
-                    else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 1)
-                        show_right = true;
-                    
-                    if (show_right)
-                        draw_sprite_ext(spr_morearrow, 0, (x_start + xx + ((string_length(cur_btn) + 1) * mono_spacing)) - floor(mono_spacing / 2) - dmenu_arrow_yoffset, y_start + yy + (i * y_spacing) + side_arrows_mult[1], darrow_scale, -darrow_scale, 270, c_white, 1);
-                }
-                else if (dmenu_state == "recruits" && button_index == 0)
-                {
-                    if (dhorizontal_page != 0)
-                        draw_sprite_ext(spr_morearrow, 0, x_start + floor(mono_spacing / 2) + dmenu_arrow_yoffset + xx, y_start + (i * y_spacing) + side_arrows_mult[0] + yy, darrow_scale, -darrow_scale, 90, c_white, 1);
-                    
-                    if (dhorizontal_page != global.chapter)
-                        draw_sprite_ext(spr_morearrow, 0, ((x_start + ((string_length(cur_btn) + 1) * mono_spacing)) - floor(mono_spacing / 2) - dmenu_arrow_yoffset) + xx, y_start + (i * y_spacing) + side_arrows_mult[1] + yy, darrow_scale, -darrow_scale, 270, c_white, 1);
-                }
-            }
+				if (show_left)
+				{
+					for (dash_pos = 0; 1; dash_pos++)
+					{
+						var check_char = "-";
+						
+						if (dmenu_state == "warp_options")
+							check_char = ":";
+						else if (dmenu_state == "debug_save_options")
+							check_char = "(";
+						
+						if (dash_pos > 4 && string_char_at(cur_btn, dash_pos) == check_char)
+							break;
+					}
+					
+					if (dmenu_state != "debug_save_options")
+						dash_pos++;
+					else
+						dash_pos -= 2;
+					
+					draw_sprite_ext(spr_morearrow, 0, x_start + ((dash_pos * mono_spacing) + floor(mono_spacing / 2)) + dmenu_arrow_yoffset + xx, y_start + (i * y_spacing) + side_arrows_mult[0] + yy, darrow_scale, -darrow_scale, 90, c_white, 1);
+				}
+				
+				var show_right = false;
+				
+				if (dmenu_state == "flag_misc" && dhorizontal_index < (array_length(dother_options[dvertical_index][3]) - 1))
+					show_right = true;
+				else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != (4 - (global.chapter == 1)))
+					show_right = true;
+				else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 1)
+					show_right = true;
+				
+				if (show_right)
+					draw_sprite_ext(spr_morearrow, 0, (x_start + xx + ((string_length(cur_btn) + 1) * mono_spacing)) - floor(mono_spacing / 2) - dmenu_arrow_yoffset, y_start + yy + (i * y_spacing) + side_arrows_mult[1], darrow_scale, -darrow_scale, 270, c_white, 1);
+			}
+			else if (dmenu_state == "recruits" && button_index == 0)
+			{
+				if (dhorizontal_page != 0)
+					draw_sprite_ext(spr_morearrow, 0, x_start + floor(mono_spacing / 2) + dmenu_arrow_yoffset + xx, y_start + (i * y_spacing) + side_arrows_mult[0] + yy, darrow_scale, -darrow_scale, 90, c_white, 1);
+				
+				if (dhorizontal_page != global.chapter)
+					draw_sprite_ext(spr_morearrow, 0, ((x_start + ((string_length(cur_btn) + 1) * mono_spacing)) - floor(mono_spacing / 2) - dmenu_arrow_yoffset) + xx, y_start + (i * y_spacing) + side_arrows_mult[1] + yy, darrow_scale, -darrow_scale, 270, c_white, 1);
+			}
         }
         
         draw_set_color(c_white);
@@ -366,7 +358,7 @@ if (dmenu_active)
             draw_sprite_ext(spr_morearrow, 0, x_start + xx, ((y_start + (dbutton_max_visible * y_spacing)) - dmenu_arrow_yoffset) + yy, darrow_scale, darrow_scale, 0, c_white, 1);
     }
     
-    if (dmenu_state == "recruits" || dmenu_state == "weapons" || dmenu_state == "armors" || dmenu_state == "objects")
+    if (dmenu_state == "recruits" || dmenu_state == "weapons" || dmenu_state == "armors" || dmenu_state == "items")
     {
         draw_set_halign(fa_right);
         var draw_y = (((ycenter - (menu_length / 2)) + 8) * d) + yy;
@@ -407,39 +399,27 @@ if (dmenu_active)
 
 		var itemreminder = "[" + string(given_name) + "]";
 		var item_cate_name;
-		var limit = 48;
+		var limit = dutils_get_storage_space(given_type);
 		switch (given_type)
 		{
-			case "objects":
-				if (dhorizontal_page == 0)
-					scr_itemcheck(given_id);
-				else
-					scr_litemcheck(given_id);
-
+			case "items":
 				item_cate_name = dstr("ITEMs: ", "OBJETs : ");
-				limit = (dhorizontal_page == 0) ? 12 : 8;
 				break;
 
 			case "armors":
-				scr_armorcheck_inventory(given_id);
 				item_cate_name = dstr("ARMORs: ", "ARMUREs : ");
-				limit = 48;
 				break;
 
 			case "weapons":
-				scr_weaponcheck_inventory(given_id);
 				item_cate_name = dstr("WEAPONs: ", "ARMEs : ");
-				limit = 48;
 				break;
 
 			case "keyitems":
-				scr_keyitemcheck(given_id);
 				item_cate_name = dstr("KEY ITEMs: ", "OBJETs CLÉs : ");
-				limit = 12;
 				break;
 		}
 
-		draw_text(x_start + xx, ((ycenter + 25) * d) + yy, item_cate_name + string(limit - itemcount) + " / " + string(limit));
+		draw_text(x_start + xx, ((ycenter + 25) * d) + yy, item_cate_name + string(limit - dgiver_infos.storage_space) + " / " + string(limit));
 
         var text_width = string_width(itemreminder);
         draw_text(((xcenter * d) - (text_width / 2)) + xx, ((ycenter - 22) * d) + yy, itemreminder);
@@ -456,7 +436,6 @@ if (dmenu_active)
         var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
         var max_width = box_right_edge - text_x;
         var line_spacing = 16 * d;
-        var mono_spacing = (global.darkzone == 1) ? 15 : 8;
         var cursor_x = text_x;
         var line_count = 1;
         var current_word = "";
@@ -538,7 +517,7 @@ if (dmenu_active)
             color = c_white;
         
         draw_set_color(color);
-        draw_monospace_ext(text_x, text_y, cur_btn, line_spacing, max_width);
+        dutils_draw_monospace_ext(text_x, text_y, cur_btn, line_spacing, max_width);
         var heartsprite = (d == 2) ? spr_heart : spr_heartsmall;
         
         if (dvertical_index != 0)

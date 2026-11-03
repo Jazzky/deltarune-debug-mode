@@ -12,7 +12,7 @@ function dmenu_update_dw_items(arg0)
 	
 		for (var i = my_start; i < (my_start + my_count); i++)
 		{
-			var itemname = _dmenu_back_get_itemname(dmenu_state, i);
+			var itemname = dutils_get_itemname(i, dmenu_state);
 			var combined = string_replace_all(itemname, "#", " ");
 			
 			if (string_length(combined) > max_len)
@@ -30,10 +30,10 @@ function dmenu_update_lw_items(arg0)
 
 	var dlight_lst;
 	var cur_selected;
-	var is_item = (_dmenu_state == "objects");
+	var is_item = (_dmenu_state == "items");
 
 	switch (_dmenu_state) {
-		case "objects":
+		case "items":
 			dlight_lst = dlight_objects;
 			break;
 
@@ -74,7 +74,7 @@ function dmenu_update_items()
 
 	switch (dmenu_state)
 	{
-		case "objects":
+		case "items":
             dmenu_title = dstr("Item List", "Liste d'objets");
 			break;
 
@@ -102,34 +102,4 @@ function dmenu_update_items()
 
 	dmenu_box = 2;
 	dbutton_layout = 1;
-}
-
-function _dmenu_back_get_desctext(arg0, arg1)
-{
-	var item_category = arg0;
-	var item_id = arg1;
-
-	var res = "";
-	switch (item_category) {
-		case "objects":
-			scr_iteminfo(item_id);
-			res = itemnameb;
-			break;
-
-		case "armors":
-			scr_armorinfo(item_id);
-			res = armornametemp;
-			break;
-
-		case "weapons":
-			scr_weaponinfo(item_id);
-			res = weaponnametemp;
-			break;
-
-		case "keyitems":
-			scr_keyiteminfo(item_id);
-			res = tempkeyitemname;
-			break;
-	}
-	return (res);
 }

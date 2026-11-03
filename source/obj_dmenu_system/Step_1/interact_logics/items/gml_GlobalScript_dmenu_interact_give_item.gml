@@ -1,7 +1,7 @@
-function scr_dmenu_interact_set_itemgiver_type()
+function dmenu_interact_set_itemgiver_type()
 {
 	if (dhorizontal_index == 0)
-		dmenu_state = "objects";
+		dmenu_state = "items";
 	else if (dhorizontal_index == 1)
 		dmenu_state = "armors";
 	else if (dhorizontal_index == 2)
@@ -18,11 +18,40 @@ function scr_dmenu_interact_set_itemgiver_type()
 	dhorizontal_index = 0;
 }
 
-function scr_dmenu_interact_setup_givertab()
+function dmenu_setup_dgiver_infos()
 {
-	dgiver_infos.item_type = dmenu_state;
-	dgiver_infos.item_id = dbutton_indices[dvertical_index];
-	dgiver_infos.item_name = _dmenu_back_get_desctext(dmenu_state, dgiver_infos.item_id);
+	var item_type = dmenu_state;
+	var item_id = dbutton_indices[dvertical_index];
+
+	switch (dgiver_infos.item_type)
+	{
+		case "items":
+			scr_itemcheck(item_id);
+			break;
+
+		case "armors":
+			scr_armorcheck_inventory(item_id);
+			break;
+
+		case "weapons":
+			scr_weaponcheck_inventory(item_id);
+			break;
+
+		case "keyitems":
+			scr_keyitemcheck(item_id);
+			break;
+	}
+
+	dgiver_infos.item_type = item_type
+	dgiver_infos.item_id = item_id;
+	dgiver_infos.item_name = dutils_get_itemname(item_id, item_type);
+	dgiver_infos.owned_amt = dutils_get_itemcount(item_id, item_type);
+	dgiver_infos.storage_space = dutils_get_storage_left(item_type);
+}
+
+function dmenu_interact_setup_givertab()
+{
+	dmenu_setup_dgiver_infos();
 	
 	if (dhorizontal_page == 0 && dvertical_index == 0)
 	{

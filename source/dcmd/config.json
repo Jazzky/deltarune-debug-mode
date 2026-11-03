@@ -1,0 +1,42 @@
+{
+	"create_new": true,
+	"mode": "append",
+
+	".call_init": {
+		"gml_name": "gml_GlobalScript_scr_load",
+		"create_new": false,
+		"actions": [
+			{
+				"find_replace": {
+					"find": "scr_tempsave();",
+					"replace": "scr_tempsave();\n    dcmd_init();"
+				}
+			}
+		]
+	},
+	"init/gml_GlobalScript_dmode_init_enemies.gml": {},
+	"init/gml_GlobalScript_dmode_init_items.gml": {},
+	"init/gml_GlobalScript_dcmd_init.gml": {},
+
+
+	"core/gml_GlobalScript_scr_dmode_parse_cmd.gml": {},
+	"core/gml_GlobalScript_scr_dmode_parse_flags.gml": {},
+	"core/gml_GlobalScript_scr_dmode_parse_argv_types.gml": {},
+
+	"commands/variables/gml_GlobalScript_dcmd_set_global.gml": {},
+
+	"commands/items/gml_GlobalScript_dcmd_give_item.gml": {},
+	"commands/items/gml_GlobalScript_dcmd_give_wrappers.gml": {},
+
+	"commands/reloading/gml_GlobalScript_dcmd_warp.gml": {},
+	"commands/reloading/gml_GlobalScript_dcmd_setteam.gml": {},
+
+	"commands/recruit/gml_GlobalScript_dcmd_recruit.gml": {},
+	"commands/recruit/gml_GlobalScript_dcmd_lose.gml": {},
+
+	"commands/debug_saves/gml_GlobalScript_dcmd_export_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_dcmd_update_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_dcmd_load_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_dcmd_delete_debug_save.gml": {},
+	"commands/debug_saves/gml_GlobalScript_dcmd_save_debug_save.gml": {}
+}

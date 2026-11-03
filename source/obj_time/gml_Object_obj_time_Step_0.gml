@@ -64,3 +64,4 @@ if (scr_debug() && !dutils_reading_kb())
         }
     }
 }
+global.dkeyboard_timing++

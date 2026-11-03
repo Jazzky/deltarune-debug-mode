@@ -4,7 +4,7 @@ function dmenu_interact_dsave_main_menu()
 	{
 		dkeyboard_input = "";
 		dmenu_state = "new_debug_save";
-		break;
+		exit;
 	}
 	
 	if (dvertical_index == 1)
@@ -14,11 +14,11 @@ function dmenu_interact_dsave_main_menu()
 		dutils_toggle_kb(true);
 		dkeyboard_input = "";
 		dmenu_state_update();
-		break;
+		exit;
 	}
 	
 	if (dmenu_interact_submenus(selected_name))
-		break;
+		exit;
 	
 	var real_index = dbutton_indices[dvertical_index];
 	

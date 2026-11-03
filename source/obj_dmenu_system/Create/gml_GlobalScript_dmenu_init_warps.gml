@@ -13,6 +13,12 @@ function dmenu_init_warps()
 		target_member_3: global.char[2]
 	};
 
-	for (i = 0; i < array_length(drooms_id); i++)
-		array_push(drooms, room_get_name(drooms_id[i].room_index));
+	for (i = 0; i < array_length(drooms_id); i++) {
+		var temp_room_id = drooms_id[i].room_index;
+		var room_info = {
+			room_name: room_get_name(temp_room_id),
+			room_id: temp_room_id
+		}
+		array_push(drooms, room_info);
+	}
 }

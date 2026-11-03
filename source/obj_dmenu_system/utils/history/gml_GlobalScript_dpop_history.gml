@@ -5,18 +5,7 @@ function dpop_history()
     
     if (array_length(dmenu_state_history) == 0)
     {
-        if (!(dmenu_popup_launch == 1 && dmenu_state == "debug_save"))
-            global.interact = 0;
-        
-        dmenu_popup_launch = 0;
-        dmenu_active = !dmenu_active;
-        dmenu_state = "debug";
-        dbutton_options = dbutton_options_original;
-        dmenu_state_history = [];
-        dmenu_vertical_index_history = [];
-        dmenu_horizontal_index_history = [];
-        dmenu_page_index_history = [];
-        dvertical_index = 0;
+		dmenu_reset_menu();
         dmenu_state_update();
     }
     
