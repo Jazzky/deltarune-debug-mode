@@ -1,7 +1,6 @@
 function dpop_history()
 {
     dmenu_skip_reindexing = true;
-    dkeyboard_input = "";
     
     if (array_length(dmenu_state_history) == 0)
     {

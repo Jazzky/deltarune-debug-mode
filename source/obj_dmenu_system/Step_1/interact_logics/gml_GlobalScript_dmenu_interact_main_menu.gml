@@ -2,7 +2,6 @@ function dmenu_interact_init_warps()
 {
 	dmenu_state = "warp";
 	dhorizontal_index = 0;
-	dkeyboard_input = "";
 	drooms_options.target_plot = global.plot;
 	drooms_options.target_is_darkzone = global.darkzone;
 }

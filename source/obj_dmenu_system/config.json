@@ -10,6 +10,11 @@
 	"Create/gml_GlobalScript_dmenu_init_flags.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_global_changer.gml": {},
 
+	"Step_0/keyboard/gml_GlobalScript_dmenuback_default_kb.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_flag_categories.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_global_changer.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_warp_options.gml": {},
+	"Step_0/gml_GlobalScript_dmenu_read_keyboard.gml": {},
 
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_new_save.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_main_menu.gml": {},

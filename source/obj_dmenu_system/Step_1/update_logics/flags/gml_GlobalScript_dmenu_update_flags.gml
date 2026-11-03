@@ -1,15 +1,15 @@
 function dmenu_update_flag_categories()
 {
 	dmenu_title = dstr("Flags");
-	dbutton_options = [];
+	dbutton_options = [
+		dstr("Custom")
+	];
 	dbutton_indices = [-1];
 	categories_len = array_length(dother_categories);
 	var max_len = 40;
 	
-	if (!dutils_reading_kb())
-		array_push(dbutton_options, dstr("Custom"));
-	else
-		array_push(dbutton_options, "global.flag[" + dcustom_flag_text[0] + "] = |" + dcustom_flag_text[1] + "|");
+	if (dutils_reading_kb())
+		dbutton_options[0] = ("global.flag[" + dkeyboard_texts[0] + "] = |" + dkeyboard_texts[1] + "|");
 	
 	for (var i = 0; i < categories_len; i++)
 	{

@@ -30,8 +30,8 @@ dmenu_init_items();
 dmenu_init_flags();
 dmenu_init_global_changer();
 
-dcustom_flag_text = ["", ""];
-dkeyboard_input = "";
+dkeyboard_texts = ["", "", "", "", ""];
+
 dkeys_helper = 0;
 dkeys_data = [];
 
@@ -50,14 +50,6 @@ find_subarray_index = function(arg0, arg1)
     }
     
     return prev;
-};
-
-set_keyboard_reader = function(arg0)
-{
-	dutils_toggle_kb(arg0);
-    keyboard_string = "";
-    dcustom_flag_text = ["", ""];
-    global.dkeyboard_text = "";
 };
 
 dload_options = 

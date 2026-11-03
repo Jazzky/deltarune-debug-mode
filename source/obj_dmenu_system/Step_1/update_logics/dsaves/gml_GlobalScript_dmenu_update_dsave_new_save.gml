@@ -9,7 +9,7 @@ function dmenu_update_dsave_new_save()
 	var cur_btn = dstr("Enter save name", "Entrer nom de sauvegarde");
 	if (dutils_reading_kb())
 	{
-		cur_btn = dkeyboard_input;
+		cur_btn = dkeyboard_texts[0];
 		dbutton_options_2d[0][0] = cur_btn;
 	}
 	

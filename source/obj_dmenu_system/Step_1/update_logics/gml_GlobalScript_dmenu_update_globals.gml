@@ -19,7 +19,7 @@ function dmenu_update_globals()
 		if (i > 0 || reading_double_flag)
 		{
 			if (i == 0) {
-				name = dcustom_flag_text[0];
+				name = dkeyboard_texts[0];
 				text = "global." + name;
 			}
 
@@ -30,7 +30,7 @@ function dmenu_update_globals()
 
 		if (dutils_reading_kb() && i == dvertical_index)
 		{
-			var _keyboard_text = dcustom_flag_text[reading_double_flag];
+			var _keyboard_text = dkeyboard_texts[reading_double_flag];
 			if (_keyboard_text != "")
 				global_value = _keyboard_text;
 		}

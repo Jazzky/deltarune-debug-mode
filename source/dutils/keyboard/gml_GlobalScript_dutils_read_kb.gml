@@ -49,12 +49,13 @@ function dutils_read_kb_key()
 		return (undefined);
 	}
 
-	var special_keys = [vk_left, vk_right, vk_up, vk_down, vk_backspace];
+	var special_keys = dutils_get_kb_special_keys();
 	for (var i = 0; i < array_length(special_keys); i++) {
 		var key = special_keys[i];
 		if (!keyboard_check_pressed(key))
 			continue;
 
+		scr_debug_print("Caca " + string(key));
 		global.dcurrent_kb_key = key;
 		return (key);
 	}
@@ -79,7 +80,8 @@ function dutils_read_kb()
 	var cur_text = global.kb_text;
 
 	var is_char = true;
-	var special_keys = [vk_left, vk_right, vk_up, vk_down, vk_backspace];
+	var special_keys = dutils_get_kb_special_keys();
+
 	for (var i = 0; i < array_length(special_keys); i++) {
 		if (pressed_key != special_keys[i])
 			continue;

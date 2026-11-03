@@ -5,8 +5,6 @@ function dmenu_interact_new_dsave()
 		dremove_false_history();
 		dmenu_skip_reindexing = true;
 		dutils_toggle_kb(true);
-		keyboard_string = "";
-		dkeyboard_input = "";
 		dmenu_state_update();
 		exit;
 	}
@@ -14,9 +12,10 @@ function dmenu_interact_new_dsave()
 	var _created = (dvertical_index == 1 && dhorizontal_index == 0);
 	if (_created)
 	{
+		var entered_text = dkeyboard_texts[0];
 		var target_name = dstr("Untitled", "Sans titre");
-		if (dkeyboard_input != "")
-			target_name = dkeyboard_input;
+		if (entered_text != "")
+			target_name = entered_text;
 	
 		var cmd = "save_dsave \"" + target_name + "\"";
 		dconsole_exec(cmd);

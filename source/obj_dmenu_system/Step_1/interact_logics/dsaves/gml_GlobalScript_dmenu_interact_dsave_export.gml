@@ -77,9 +77,6 @@ function dmenu_interact_dsave_load()
 
 function dmenu_interact_dsave_update_metadata()
 {
-	keyboard_string = "";
-	dkeyboard_input = "";
-
 	if (selected_name == "- " + dstr("Rename", "Renommer"))
 		dmenu_state = "dsave_edit_name";
 
@@ -97,15 +94,13 @@ function dmenu_interact_dsave_update_metadata_confirm()
 	{
 		dmenu_skip_reindexing = true;
 		dutils_toggle_kb(true);
-		keyboard_string = "";
-		dkeyboard_input = "";
 		dmenu_state_update();
 		exit;
 	}
 	if (dvertical_index == 1 && dhorizontal_index == 0)
 	{
 		var target_path = global.debug_selected_save_section;
-		var final_text = dkeyboard_input;
+		var final_text = dkeyboard_texts[0];
 		var cmd_arg = "";
 		var ini_key = "";
 		
@@ -128,6 +123,5 @@ function dmenu_interact_dsave_update_metadata_confirm()
 	}
 	dremove_false_history();
 	dutils_toggle_kb(false);
-	dkeyboard_input = "";
 	dpop_history();
 }

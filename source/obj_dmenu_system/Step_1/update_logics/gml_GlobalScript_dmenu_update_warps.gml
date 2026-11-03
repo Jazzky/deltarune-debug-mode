@@ -1,22 +1,23 @@
 function dmenu_update_warp()
 {
 	dmenu_title = dstr("Room List", "Liste des salles");
-	dbutton_options = [dstr("Current Room", "Salle actuelle"), dstr("Search", "Recherche")];
+	dbutton_options = [
+			dstr("Current Room", "Salle actuelle"),
+			dstr("Search", "Recherche")
+	];
 	dbutton_indices = [-1, -1];
 	
-	if (dutils_reading_kb() || dkeyboard_input != "")
-		dbutton_options[1] = dstr("Contains: ", "Contient : ") + dkeyboard_input;
-	else
-		dbutton_options[1] = dstr("Search", "Recherche");
-	
+	var room_substr = dkeyboard_texts[0];
+	if (dutils_reading_kb() || room_substr != "")
+		dbutton_options[1] =  dstr("Contains: ", "Contient : ") + room_substr;
+
 	var nb_rooms = array_length(drooms);
-	
 	for (var i = 0; i < nb_rooms; i++)
 	{
 		var _room_name = drooms[i].room_name;
 		var _room_id = drooms[i].room_id;
 
-		if (!string_pos(dkeyboard_input, _room_name))
+		if (!string_pos(room_substr, _room_name))
 			continue;
 		
 		var combined = _room_name;
@@ -46,10 +47,8 @@ function dmenu_update_warp_options()
 
 	dbutton_options[1] += drooms_options.target_is_darkzone ? dstr("Yes", "Oui") : dstr("No", "Non");
 	
-	if (dutils_reading_kb())
-		dbutton_options[2] += dkeyboard_input;
-	else
-		dbutton_options[2] += string(drooms_options.target_plot);
+	var plot_string = dkeyboard_texts[0];
+	dbutton_options[2] += dutils_reading_kb() ? plot_string : string(drooms_options.target_plot);
 	
 	teammates = [dstr("Nobody", "Personne"), "Kris", "Susie", "Ralsei", "Noëlle"];
 	dbutton_options[3] += teammates[drooms_options.target_member_2];

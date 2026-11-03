@@ -5,7 +5,6 @@ function dmenu_interact_warp_setup()
 		dremove_false_history();
 		dmenu_skip_reindexing = true;
 		dutils_toggle_kb(true);
-		dkeyboard_input = "";
 		dmenu_state_update();
 		exit;
 	}
@@ -19,16 +18,13 @@ function dmenu_interact_warp_setup()
 	drooms_options.target_member_2 = global.char[1];
 	drooms_options.target_member_3 = global.char[2];
 	dmenu_state = "warp_options";
-	dkeyboard_input = "";
 }
 
 function dmenu_interact_warp()
 {
 	if (dvertical_index == 0)
-	{
-		dkeyboard_input = "";
 		dmenu_state = "warp";
-	}
+
 	else if (dvertical_index == 1)
 	{
 		dremove_false_history();

@@ -134,15 +134,17 @@ if (dmenu_active)
 		var thickness = 1 * d;
 		var cursor_padding = 3 * d;
 
+		var ipt_text = dkeyboard_texts[0];
+
 		draw_set_color(c_yellow);
         if (dmenu_state == "flag_categories")
         {
             var base_y = (((110 - (dmenu_start_index * 20)) + 2) * d) + yy;
             var visual_offset = -5;
             var w_prefix = string_length("global.flag[") * mono_spacing;
-            var w_name = string_length(string(dcustom_flag_text[0])) * mono_spacing;
+            var w_name = string_length(dkeyboard_texts[0]) * mono_spacing;
             var w_middle = string_length("] = |") * mono_spacing;
-            var w_value = string_length(string(dcustom_flag_text[1])) * mono_spacing;
+            var w_value = string_length(dkeyboard_texts[1]) * mono_spacing;
 			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name + w_middle;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
@@ -155,10 +157,10 @@ if (dmenu_active)
         }
         else if (dmenu_state == "warp" || dmenu_state == "debug_save")
         {
-            var base_y = (((130 - (dmenu_start_index * 20)) + 2) * d) + yy;
+            var base_y = (((150 - (dmenu_start_index * 20)) + 2) * d) + yy;
             var visual_offset = -2;
-            var w_prefix = string_length(string(dstr("Contains: ", "Contient : "))) * mono_spacing;
-            var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
+            var w_prefix = string_length(dstr("Contains: ", "Contient : ")) * mono_spacing;
+            var w_name = string_length(ipt_text) * mono_spacing;
 			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
@@ -169,8 +171,8 @@ if (dmenu_active)
         else if (dmenu_state == "warp_options")
         {
             var visual_offset = -2;
-            var w_prefix = string_length(string(dstr("Plot Value: ", "Valeur de plot : "))) * mono_spacing;
-            var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
+            var w_prefix = string_length(dstr("Plot Value: ", "Valeur de plot : ")) * mono_spacing;
+            var w_name = string_length(ipt_text) * mono_spacing;
 			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
@@ -188,7 +190,7 @@ if (dmenu_active)
             var cursor_x = base_x;
             var cursor_y = base_y;
             var current_word = "";
-            var input_str = string(dkeyboard_input);
+            var input_str = ipt_text;
             var str_len = string_length(input_str);
             
             for (var i = 1; i <= str_len; i++)
@@ -514,7 +516,7 @@ if (dmenu_active)
         
         if (dvertical_index == 0 && dreading_kb)
             color = c_yellow;
-        else if (dkeyboard_input != "")
+        else if (dkeyboard_texts[0] != "")
             color = c_white;
         
         draw_set_color(color);

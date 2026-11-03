@@ -5,6 +5,7 @@ right_held = dutils_key_pressed(vk_right);
 up_held = dutils_key_pressed(vk_up);
 down_held = dutils_key_pressed(vk_down);
 
+enter_pressed = keyboard_check_pressed(vk_enter);
 left_pressed = keyboard_check_pressed(vk_left);
 right_pressed = keyboard_check_pressed(vk_right);
 up_pressed = keyboard_check_pressed(vk_up);
@@ -79,50 +80,6 @@ function vmove_menu(arg0, arg1)
 	snd_play(snd_menumove);
 }
 
-function evaluate_custom_flag(arg0, arg1)
-{
-    scr_debug_print("Checking for " + string(arg1));
-    proper_exit = arg0;
-    
-    if (!proper_exit)
-    {
-        set_keyboard_reader(0);
-        return 0;
-    }
-    
-    first_type = arg1;
-    proper_exit = dutils_istype(dcustom_flag_text[0], first_type, true);
-    
-    if (dmenu_state != "flag_categories")
-        return proper_exit;
-    
-    proper_exit = dutils_isnum(dcustom_flag_text[1], true);
-    
-    if (string_length(dcustom_flag_text[1]) == 0)
-    {
-        if (proper_exit)
-            scr_debug_print("global.flag[" + string(real(dcustom_flag_text[0])) + "] = |" + string(global.flag[real(dcustom_flag_text[0])]) + "|");
-        else
-            scr_debug_print(dstr("Empty value", "Valeur vide"));
-        
-        proper_exit = 0;
-    }
-    
-    if (proper_exit)
-    {
-        scr_debug_print(dstr("Updated ", "Mise à jour de ") + "global.flag[" + string(real(dcustom_flag_text[0])) + "]" + dstr(" from ", " de ") + "|" + string(global.flag[real(dcustom_flag_text[0])]) + "|" + dstr(" to ", " à ") + "|" + dcustom_flag_text[1] + "|");
-        global.flag[real(dcustom_flag_text[0])] = real(dcustom_flag_text[1]);
-    }
-    
-    if (proper_exit)
-    {
-        dmenu_active = 0;
-        global.interact = 0;
-    }
-    
-    return proper_exit;
-}
-
 if (left_pressed && !global.dreading_kb)
 {
     if (variable_instance_exists(id, "dbutton_base_indices") && array_length(dbutton_base_indices) > dvertical_index)
@@ -160,121 +117,8 @@ if (left_pressed && !global.dreading_kb)
 
 if (dmenu_active && global.dreading_kb)
 {
-    update_visu = 1;
-    will_exit = 0;
-    reading_double_flag = dmenu_state == "flag_categories" || (dmenu_state == "globals_changer" && dvertical_index == 0);
-    
-    if (!reading_double_flag)
-        dkeyboard_input = dcustom_flag_text[0];
-    
-    will_exit = keyboard_check_pressed(vk_escape) || keyboard_check_pressed(global.input_k[7]);
-    will_exit |= (up_pressed || down_pressed);
-    
-    if (will_exit)
-    {
-        clean_exit = !keyboard_check_pressed(vk_escape);
-        
-        if (clean_exit)
-        {
-            if (dmenu_state == "flag_categories" || dmenu_state == "warp_options" || dmenu_state == "globals_changer")
-            {
-                check_type = "uint";
-                
-                if (dmenu_state == "warp_options")
-                    check_type = "real";
-                
-                if (dmenu_state == "globals_changer")
-                {
-                    if (dvertical_index == 0)
-                    {
-                        check_type = "variable";
-                        dglobal_changer_options[dvertical_index][1] = "string";
-                        
-                        if (dutils_isnum(dcustom_flag_text[1]))
-                            dglobal_changer_options[dvertical_index][1] = "real";
-                    }
-                    else
-                    {
-                        check_type = dglobal_changer_options[dvertical_index][1];
-                    }
-                }
-                
-                if (dcustom_flag_text[0] != "")
-                {
-                    flags_good = evaluate_custom_flag(clean_exit, check_type);
-                    
-                    if (flags_good && dmenu_state == "warp_options")
-                        drooms_options.target_plot = real(dkeyboard_input);
-                    
-					if (!flags_good)
-						dmenu_reset_kb();
-
-                    snd_play(array_get([299, 420], flags_good));
-                }
-            }
-        }
-        else
-        {
-            set_keyboard_reader(0);
-            dkeyboard_input = "";
-            dcustom_flag_text = ["", ""];
-            snd_play(snd_error);
-        }
-        
-		vmove_menu(up_held, down_held);
-        if (dmenu_state != "warp_options")
-        {
-            if (button1_p())
-            {
-                snd_play(snd_select);
-                
-                if (dmenu_state == "globals_changer" && flags_good)
-                    dmenu_state_interact();
-            }
-            else if (keyboard_check_pressed(vk_escape))
-            {
-                snd_play(snd_error);
-            }
-            else
-            {
-                snd_play(snd_menumove);
-            }
-        }
-        
-        if (!clean_exit)
-            dkeyboard_input = "";
-        
-        set_keyboard_reader(0);
-        will_exit = 1;
-    }
-    else if (reading_double_flag && keyboard_check_pressed(vk_left) && dhorizontal_index != 0)
-    {
-        snd_play(snd_menumove);
-		dutils_set_kb_text(dcustom_flag_text[--dhorizontal_index]);
-    }
-    else if (reading_double_flag && keyboard_check_pressed(vk_right) && dhorizontal_index != 1)
-    {
-        snd_play(snd_menumove);
-		dutils_set_kb_text(dcustom_flag_text[++dhorizontal_index]);
-    }
-    else
-    {
-        update_visu = dutils_read_kb();
-        flag_index = 0;
-        
-        if (reading_double_flag)
-            flag_index = dhorizontal_index;
-        
-        dcustom_flag_text[flag_index] = dutils_get_kb_text();
-    }
-    
-    if (update_visu)
-    {
-        if (!will_exit)
-            dkeyboard_input = dcustom_flag_text[0];
-        
+	dmenuback_update_keyboard();
         dmenu_state_update();
-    }
 }
 else if (dmenu_active)
 {

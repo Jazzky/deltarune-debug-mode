@@ -2,7 +2,6 @@ function dmenu_interact_dsave_main_menu()
 {
 	if (dvertical_index == 0)
 	{
-		dkeyboard_input = "";
 		dmenu_state = "new_debug_save";
 		exit;
 	}
@@ -12,7 +11,6 @@ function dmenu_interact_dsave_main_menu()
 		dremove_false_history();
 		dmenu_skip_reindexing = true;
 		dutils_toggle_kb(true);
-		dkeyboard_input = "";
 		dmenu_state_update();
 		exit;
 	}

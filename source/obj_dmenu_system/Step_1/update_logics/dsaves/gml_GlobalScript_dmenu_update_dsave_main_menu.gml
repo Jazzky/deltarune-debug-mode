@@ -3,15 +3,15 @@ function dmenu_update_dsave_main_menu()
 	dmenu_title = "Debug save";
 	dbutton_options = [
 			dstr("New save", "Nouvelle sauvegarde"),
+			dstr("Search", "Recherche"),
 			dstr("Search", "Recherche")
 	];
 	dbutton_indices = [-2, -2];
 	var subs = [];
 	
-	if (dutils_reading_kb())
-		dbutton_options[1] = dstr("Contains: ", "Contient : ") + dkeyboard_input;
-	else
-		dbutton_options[1] = dstr("Search", "Recherche") + dkeyboard_input;
+	var save_substr = dkeyboard_texts[0];
+	if (dutils_reading_kb() || save_substr != "")
+		dbutton_options[1] = dstr("Contains: ", "Contient : ") + save_substr;
 	
 	for (var i = 0; i < array_length(debug_save_names); i++)
 	{
@@ -55,7 +55,7 @@ function dmenu_update_dsave_main_menu()
 		}
 	}
 	
-	dmenu_process_submenus(subs, dkeyboard_input);
+	dmenu_process_submenus(subs, save_substr);
 	dmenu_box = 1;
 	dbutton_layout = 1;
 }
