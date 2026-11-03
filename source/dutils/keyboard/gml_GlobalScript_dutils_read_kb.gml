@@ -1,3 +1,19 @@
+function dutils_update_kb_timer()
+{
+	var key = global.dcurrent_kb_key;
+
+	if (key == undefined)
+		exit;
+
+	if (!keyboard_check(key))
+	{
+		global.dcurrent_kb_key = undefined;
+		global.dkeyboard_timing = 0;
+		exit;
+	}
+	global.dkeyboard_timing++;
+}
+
 function dutils_key_pressed(arg0)
 {
 	var key = arg0;
@@ -11,8 +27,12 @@ function dutils_key_pressed(arg0)
 	if (!keyboard_check(key))
 		return (false);
 
+	if (global.dcurrent_kb_key != key)
+		global.dcurrent_kb_key = key;
+
+	var is_pressed = keyboard_check_pressed(key);
 	var timing = global.dkeyboard_timing;
-	return (timing >= 15);
+	return (is_pressed || timing >= 15);
 }
 
 function dutils_read_kb_key()
@@ -28,8 +48,6 @@ function dutils_read_kb_key()
 			return (cur_key);
 		return (undefined);
 	}
-
-	global.dkeyboard_timing = 0;
 
 	var special_keys = [vk_left, vk_right, vk_up, vk_down, vk_backspace];
 	for (var i = 0; i < array_length(special_keys); i++) {

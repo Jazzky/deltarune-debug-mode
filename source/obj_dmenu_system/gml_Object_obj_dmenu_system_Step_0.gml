@@ -1,19 +1,26 @@
 dmenu_arrow_timer += 1;
 
-var left_held = dutils_key_pressed(vk_left);
-var right_held = dutils_key_pressed(vk_right);
-var up_held = dutils_key_pressed(vk_up);
-var down_held = dutils_key_pressed(vk_down);
+left_held = dutils_key_pressed(vk_left);
+right_held = dutils_key_pressed(vk_right);
+up_held = dutils_key_pressed(vk_up);
+down_held = dutils_key_pressed(vk_down);
 
-var left_pressed = keyboard_check_pressed(vk_left);
-var right_pressed = keyboard_check_pressed(vk_right);
-var up_pressed = keyboard_check_pressed(vk_up);
-var down_pressed = keyboard_check_pressed(vk_down);
+left_pressed = keyboard_check_pressed(vk_left);
+right_pressed = keyboard_check_pressed(vk_right);
+up_pressed = keyboard_check_pressed(vk_up);
+down_pressed = keyboard_check_pressed(vk_down);
 
-if (dmenu_popup_launch == 1)
+
+if (!global.dreading_kb && keyboard_check_pressed(ord("D")))
 {
-    dmenu_state_update();
-    global.interact = 1;
+	dmenu_active = !dmenu_active;
+	
+	if (dmenu_active)
+		snd_play(snd_egg);
+	else
+		snd_play(snd_smallswing);
+
+	global.interact = dmenu_active;
 }
 
 if (dmenu_state == "debug_save")
@@ -26,25 +33,6 @@ if (dmenu_state == "debug_save")
     }
 }
 
-if (dmenu_popup_launch != 1)
-{
-    if (!global.dreading_kb && keyboard_check_pressed(ord("D")))
-    {
-        dmenu_active = !dmenu_active;
-        
-        if (dmenu_active)
-        {
-            dmenu_previous_interact = global.interact;
-            snd_play(snd_egg);
-            global.interact = 1;
-        }
-        else
-        {
-            snd_play(snd_smallswing);
-            global.interact = dmenu_previous_interact;
-        }
-    }
-}
 
 function vmove_menu(arg0, arg1)
 {
@@ -54,6 +42,8 @@ function vmove_menu(arg0, arg1)
 	var y_limit = array_length(dbutton_options);
 	var new_y = dvertical_index;
 	var new_draw_y = dmenu_start_index;
+	var drawn_elements = min(5, y_limit); //TODO check if a variable exist
+	var middle_elements = ceil(drawn_elements / 2);
 
 	if (move_up)
 		new_y--;
@@ -61,20 +51,23 @@ function vmove_menu(arg0, arg1)
 	if (move_down)
 		new_y++;
 
-	if (new_y == -1)
-	{
-		new_y = y_limit - 1;
-		new_draw_y = min(5, y_limit) - 1; //TODO check if a variable exist
-	}
-
-	else if (new_y == y_limit)
-	{
-		new_y = 0;
-		new_draw_y = 0;
-	}
-
 	if (new_y == dvertical_index)
 		exit;
+
+
+	if (new_y == -1)
+		new_y = y_limit - 1;
+
+	else if (new_y == y_limit)
+		new_y = 0;
+
+
+	if (new_y < middle_elements)
+		new_draw_y = new_y;
+
+	else if (new_y >= (y_limit - middle_elements))
+		new_draw_y = drawn_elements - (y_limit - new_y);
+
 
 	dvertical_index = new_y;
 	dmenu_start_index = new_draw_y;
@@ -228,11 +221,7 @@ if (dmenu_active && global.dreading_kb)
             snd_play(snd_error);
         }
         
-        if (down_pressed)
-            vmove_menu(0, 1);
-        else if (up_pressed)
-            vmove_menu(1, 0);
-        
+		vmove_menu(up_held, down_held);
         if (dmenu_state != "warp_options")
         {
             if (button1_p())
@@ -376,18 +365,15 @@ else if (dmenu_active)
         {
             cur_global_array_limit = dglobal_changer_options[dvertical_index][2];
             
-            if (left_pressed == 1 && dhorizontal_index != 0)
+            if (left_pressed && dhorizontal_index != 0)
                 dhorizontal_index--;
             
-            if (right_pressed == 1 && dhorizontal_index != (cur_global_array_limit - 1))
+            if (right_pressed && dhorizontal_index != (cur_global_array_limit - 1))
                 dhorizontal_index++;
             
             if (dhorizontal_index != og_horizontal_index)
                 snd_play(snd_menumove);
         }
-        
-        if (right_pressed && left_pressed)
-			right_pressed = 0;
         
         if (right_pressed || left_pressed)
         {
@@ -487,10 +473,10 @@ else if (dmenu_active)
         if (dmenu_state == "globals_changer" && (up_pressed || down_pressed))
             dhorizontal_index = 0;
         
-        if (up_pressed && down_pressed)
-            up_pressed = 0;
-        
-        vmove_menu(up_pressed, down_pressed);
+		var up_requirement = (dvertical_index == 0) ? up_pressed : up_held;
+		var down_requirement = (dvertical_index == (array_length(dbutton_options) - 1)) ? down_pressed : down_held;
+		vmove_menu(up_requirement, down_requirement);
+
         dmenu_start_index = clamp(dmenu_start_index, 0, max(0, array_length(dbutton_options) - dbutton_max_visible));
         
         if (dhorizontal_index != og_horizontal_index)
@@ -575,90 +561,18 @@ else if (dmenu_active)
             keyboard_string = "";
         }
         
-        if (scr_array_contains(ditem_types, dmenu_state))
+        if (dmenu_parent_state == "item")
         {
-            switch (dmenu_state)
-            {
-                case "items":
-                    if (dhorizontal_page != 0 || dvertical_index != 0)
-                    {
-                        var real_index = dbutton_indices[dvertical_index];
-                        
-                        if (dhorizontal_page == 0)
-                        {
-                            scr_iteminfo(real_index);
-                            dgiver_bname = itemnameb;
-                        }
-                        else
-                        {
-                            for (var i = 0; i < array_length(dlight_objects); i++)
-                            {
-                                if (dlight_objects[i][0] == real_index)
-                                {
-                                    real_index = i;
-                                    break;
-                                }
-                            }
-                            
-                            dgiver_bname = dlight_objects[real_index][1];
-                        }
-                        
-                        scr_debug_print(dgiver_bname + dstr(" selected!", " sélectionné !"));
-                    }
-                    
-                    break;
-                
-                case "armors":
-                    if (dhorizontal_page != 0 || dvertical_index != 0)
-                    {
-                        var real_index = dbutton_indices[dvertical_index];
-                        
-                        if (dhorizontal_page == 0)
-                        {
-                            scr_armorinfo(real_index);
-                            dgiver_bname = armornametemp;
-                        }
-                        else
-                        {
-                            dgiver_bname = dlight_armors[real_index][1];
-                        }
-                        
-                        scr_debug_print(string(dgiver_bname) + dstr(" selected!", " sélectionné !"));
-                    }
-                    
-                    break;
-                
-                case "weapons":
-                    if (dhorizontal_page != 0 || dvertical_index != 0)
-                    {
-                        var real_index = dbutton_indices[dvertical_index];
-                        
-                        if (dhorizontal_page == 0)
-                        {
-                            scr_weaponinfo(real_index);
-                            dgiver_bname = weaponnametemp;
-                        }
-                        else
-                        {
-                            dgiver_bname = dlight_weapons[real_index][1];
-                        }
-                        
-                        scr_debug_print(string(dgiver_bname) + dstr(" selected!", " sélectionné !"));
-                    }
-                    
-                    break;
-                
-                case "keyitems":
-                    if (dvertical_index != 0)
-                    {
-                        var real_index = dbutton_indices[dvertical_index];
-                        scr_keyiteminfo(real_index);
-                        dgiver_bname = tempkeyitemname;
-                        scr_debug_print(string(dgiver_bname) + dstr(" selected!", " sélectionné !"));
-                    }
-                    
-                    break;
-            }
+			var real_index = dbutton_indices[dvertical_index];
+			if (dhorizontal_page == 0)
+			{
+				var selected_item = dutils_get_itemname(real_index, dmenu_state);
+				scr_debug_print(selected_item + dstr(" selected!", " sélectionné !"));
+			}
+			else
+			{
+				scr_debug_print("TODO");
+			}
         }
         else if (dmenu_state == "warp" && dvertical_index == 1)
         {
@@ -756,7 +670,7 @@ else if (dmenu_active)
             dhinter_text = found_desc;
         }
         
-        if (scr_array_contains(ditem_types, dmenu_state))
+        if (dmenu_parent_state = "item")
         {
             if (dhorizontal_page == 0 && dvertical_index == 0)
             {

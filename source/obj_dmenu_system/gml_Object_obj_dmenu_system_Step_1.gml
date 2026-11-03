@@ -1,6 +1,10 @@
-function dmenu_state_update()
+function dmenu_state_update(arg0 = dmenu_state)
 {
-    switch (dmenu_state)
+	var state = arg0;
+	dmenu_state = state;
+
+	dmenu_parent_state = "";
+    switch (state)
     {
         case "debug":
 			dmenu_update_main_menu();
@@ -74,10 +78,12 @@ function dmenu_state_update()
     }
 }
 
-function dmenu_state_interact()
+function dmenu_state_interact(arg0 = dmenu_state)
 {
+	var state = arg0;
+	dmenu_state = state;
+
     selected_name = "";
-    
     if (dbutton_layout == 0 || dbutton_layout == 3)
     {
         var safe_h_index = min(dhorizontal_index, array_length(dbutton_options_2d[dvertical_index]) - 1);
@@ -88,7 +94,7 @@ function dmenu_state_interact()
         selected_name = string(dbutton_options[dvertical_index]);
     }
     
-    switch (dmenu_state)
+    switch (state)
     {
         case "debug":
 			dmenu_interact_main_menu();

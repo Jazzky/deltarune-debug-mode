@@ -70,8 +70,7 @@ function dmenu_update_lw_items(arg0)
 
 function dmenu_update_items()
 {
-	var is_weapon = (dmenu_state == "weapons")
-
+	dmenu_parent_state = "item";
 	switch (dmenu_state)
 	{
 		case "items":

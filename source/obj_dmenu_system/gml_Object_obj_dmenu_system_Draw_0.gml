@@ -134,8 +134,6 @@ if (dmenu_active)
 		var thickness = 1 * d;
 		var cursor_padding = 3 * d;
 
-		var x1_start = base_x + w_prefix;
-
 		draw_set_color(c_yellow);
         if (dmenu_state == "flag_categories")
         {
@@ -145,6 +143,7 @@ if (dmenu_active)
             var w_name = string_length(string(dcustom_flag_text[0])) * mono_spacing;
             var w_middle = string_length("] = |") * mono_spacing;
             var w_value = string_length(string(dcustom_flag_text[1])) * mono_spacing;
+			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name + w_middle;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             var draw_w_value = (w_value == 0) ? (mono_spacing / 4) : w_value;
@@ -160,6 +159,7 @@ if (dmenu_active)
             var visual_offset = -2;
             var w_prefix = string_length(string(dstr("Contains: ", "Contient : "))) * mono_spacing;
             var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
+			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             
@@ -171,6 +171,7 @@ if (dmenu_active)
             var visual_offset = -2;
             var w_prefix = string_length(string(dstr("Plot Value: ", "Valeur de plot : "))) * mono_spacing;
             var w_name = string_length(string(dkeyboard_input)) * mono_spacing;
+			var x1_start = base_x + w_prefix;
             var x2_start = x1_start + w_name;
             var draw_w_name = (w_name == 0) ? (mono_spacing / 4) : w_name;
             
@@ -271,10 +272,10 @@ if (dmenu_active)
     if (dbutton_layout == 1)
     {
 		var option_start_index = dvertical_index - abs(dmenu_start_index);
-		var nb_option_to_draw = min(5, array_length(dbutton_options));
+		var nb_option_to_draw = min(5, button_count);
 
         var dcan_scroll_up = (option_start_index > 0);
-        var dcan_scroll_down = (option_start_index + nb_option_to_draw) != array_length(dbutton_options);
+        var dcan_scroll_down = ((option_start_index + nb_option_to_draw) != button_count);
 
         dmenu_arrow_yoffset = 2 * sin(dmenu_arrow_timer / 10);
         darrow_scale = d / 2;

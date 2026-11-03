@@ -2,6 +2,9 @@ function dmenu_update_main_menu()
 {
 	dmenu_title = dstr("Debug Menu", "Menu Debug");
 
+	dmenu_state = "debug";
+	dmenu_parent_state = "";
+
 	dbutton_options = [];
 	dbutton_options_2d = [
 		[dstr("Warps", "Sauts"), dstr("Items"), dstr("Recruits", "Recrues"), dstr("Flags")],

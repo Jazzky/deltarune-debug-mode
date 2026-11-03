@@ -1,6 +1,7 @@
 {
 	"mode": "replace",
 	"utils/gml_GlobalScript_dmenu_reset_menu.gml": {},
+	"utils/gml_GlobalScript_dmenu_launch_menu.gml": {},
 	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
 	"utils/history/gml_GlobalScript_dpop_history.gml": {},
 
