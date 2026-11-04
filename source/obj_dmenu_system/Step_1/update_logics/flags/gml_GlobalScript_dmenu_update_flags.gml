@@ -38,10 +38,7 @@ function dmenu_update_flag()
 		var nb_options = array_length(cur_option[3]);
 
 		var combined = cur_option[1] + " - " + dstr("problem lol", "problème lol");
-		if (i == dvertical_index)
-			option_index = dhorizontal_index;
-		else
-			option_index = find_subarray_index(cur_option[2], cur_option[3]);
+		option_index = find_subarray_index(cur_option[2], cur_option[3]);
 		
 		combined = cur_option[1] + " -  " + cur_option[3][option_index][0];
 		

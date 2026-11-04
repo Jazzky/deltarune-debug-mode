@@ -3,6 +3,8 @@
 	"utils/gml_GlobalScript_dmenu_reset_menu.gml": {},
 	"utils/gml_GlobalScript_dmenu_launch_menu.gml": {},
 	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
+	"utils/gml_GlobalScript_dmenu_fix_start_index.gml": {},
+	"utils/gml_GlobalScript_dmenu_dsave_utils.gml": {},
 	"utils/history/gml_GlobalScript_dpop_history.gml": {},
 
 
@@ -18,13 +20,15 @@
 	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_warp_options.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenu_read_keyboard.gml": {},
 
-	"Step_0/move/gml_GlobalScript_dmenu_move_sideway_common_logic.gml": {},
-	"Step_0/move/gml_GlobalScript_dmenu_move_sideway.gml": {},
-	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_items.gml": {},
-	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_flag_misc.gml": {},
-	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_recruits.gml": {},
-	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_warp_options.gml": {},
-	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_dsave_options.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_xmove.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_ymove.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_xmove_common_logic.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_ymove_common_logic.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_items.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_flag_misc.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_recruits.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_warp_options.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_dsave_options.gml": {},
 
 	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_items.gml": {},
 	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_warp_options.gml": {},
@@ -54,7 +58,6 @@
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_warp.gml": {},
 	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_interact_givertab.gml": {},
 	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_interact_give_item.gml": {},
-	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_dsave_utils.gml": {},
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_globals.gml": {},
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_main_menu.gml": {},
 

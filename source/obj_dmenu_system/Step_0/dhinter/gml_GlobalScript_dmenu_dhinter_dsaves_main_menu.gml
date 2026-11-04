@@ -8,7 +8,7 @@ function dmenu_dhinter_dsaves_main_menu()
 	if (dvertical_index > 0)
 	{
 		dhinter_text = "";
-		var real_index = cur_btn.indice;
+		var real_index = cur_btn.data;
 		dhinter_text = debug_save_descriptions[real_index];
 	}
 }

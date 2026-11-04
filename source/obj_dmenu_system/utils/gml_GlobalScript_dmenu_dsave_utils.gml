@@ -32,9 +32,9 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
     
     for (var i = 0; i < array_length(my_options); i++)
     {
-        var _base_name = my_options[i];
+        var _base_name = my_options[i].text;
         var _is_dropdown = i < array_length(_subs) && is_array(_subs[i]);
-        var _original_index = (i < nb_buttons) ? dbuttons[i].indice : -1;
+        var _original_index = (i < nb_buttons) ? dbuttons[i].data : -1;
         var _is_persistent = _original_index == -2;
         var _cat_match = true;
         var _sub_match = false;
@@ -70,7 +70,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
         if (_is_dropdown)
             _display_name += (_is_open ? " ^" : " v");
         
-		array_push(_temp_buttons, dmenu_makeby(_display_name, _original_index));
+		array_push(_temp_buttons, dmenu_makebt(_display_name, _original_index));
         array_push(_temp_base_indices, i);
         
         if (_is_open)
@@ -97,7 +97,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
     dbutton_base_indices = _temp_base_indices;
 }
 
-function dmenu_interact_submenus(arg0)
+function dmenu_dsave_interact_submenus(arg0)
 {
     var _clicked_index = -1;
     

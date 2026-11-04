@@ -11,7 +11,7 @@ function dmenu_interact_flag_categories()
 	}
 
 	dother_options = [];
-	var real_index = dbuttons[dvertical_index].indice;
+	var real_index = dbuttons[dvertical_index].data;
 	
 	for (var i = 0; i < array_length(dother_all_options); i++)
 	{

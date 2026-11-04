@@ -39,51 +39,6 @@ if (dmenu_state == "debug_save")
 }
 
 
-function vmove_menu(arg0, arg1)
-{
-	var move_up = arg0;
-	var move_down = arg1;
-
-	var y_limit = nb_button;
-	var new_y = dvertical_index;
-	var new_draw_y = dmenu_start_index;
-	var drawn_elements = min(5, y_limit); //TODO check if a variable exist
-	var middle_elements = ceil(drawn_elements / 2);
-
-	if (move_up)
-		new_y--;
-
-	if (move_down)
-		new_y++;
-
-	if (new_y == dvertical_index)
-		exit;
-
-
-	if (new_y == -1)
-		new_y = y_limit - 1;
-
-	else if (new_y == y_limit)
-		new_y = 0;
-
-
-	if (new_y < middle_elements)
-		new_draw_y = new_y;
-
-	else if (new_y >= (y_limit - middle_elements))
-		new_draw_y = drawn_elements - (y_limit - new_y);
-
-
-	dvertical_index = new_y;
-	dmenu_start_index = new_draw_y;
-	if (dmenu_state == "flag_misc")
-	{
-		new_options = dother_options[dvertical_index];
-		dhorizontal_index = find_subarray_index(new_options[2], new_options[3]);
-	}
-	snd_play(snd_menumove);
-}
-
 if (left_pressed && !global.dreading_kb)
 {
     if (variable_instance_exists(id, "dbutton_base_indices") && array_length(dbutton_base_indices) > dvertical_index)
@@ -131,57 +86,14 @@ if (dmenu_active && !dutils_reading_kb())
 	var original_y = dvertical_index;
 
 	move_snd = snd_menumove;
-	dmenu_move_sideway();
-    if (dbutton_layout == 0 && dkeys_helper == 0)
-    {
-        if (up_pressed)
-        {
-            dvertical_index--;
-            
-            if (dvertical_index == -1)
-                dvertical_index = array_length(dbuttons_2d) - 1;
-            
-            dhorizontal_index = min(dhorizontal_index, array_length(dbuttons_2d[dvertical_index]) - 1);
-        }
-        else if (down_pressed)
-        {
-            dvertical_index++;
-            
-            if (dvertical_index == array_length(dbuttons_2d))
-                dvertical_index = 0;
-            
-            dhorizontal_index = min(dhorizontal_index, array_length(dbuttons_2d[dvertical_index]) - 1);
-        }
-    }
-    
-    if (dbutton_layout == 1)
-    {
-        if (dmenu_state == "globals_changer" && (up_pressed || down_pressed))
-            dhorizontal_index = 0;
-        
-		var up_requirement = (dvertical_index == 0) ? up_pressed : up_held;
-		var down_requirement = (dvertical_index == (nb_button - 1)) ? down_pressed : down_held;
-		vmove_menu(up_requirement, down_requirement);
+	dmenu_xmove();
+	dmenu_ymove();
+	scr_debug_print("Y = " + string(dvertical_index) + ", draw = " + string(dmenu_start_index));
+	dmenu_fix_start_index();
 
-    }
-    
-    if (dbutton_layout == 2)
-    {
-    }
-    
-    if (dbutton_layout == 3)
+	if (dhorizontal_index != original_x || dvertical_index != original_y)
 	{
-		if (keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_down))
-		{
-			dvertical_index ^= 1;
-			snd_play(snd_menumove);
-		}
-	}
-    
-	if (dhorizontal_index != original_x ||
-		dvertical_index != original_y)
-	{
-		snd_play(
+		snd_play(move_snd);
 		dmenu_state_update();
 	}
 
@@ -206,7 +118,7 @@ if (dmenu_active && !dutils_reading_kb())
         
         if (dmenu_parent_state == "items")
         {
-			var real_index = cur_btn.indice;
+			var real_index = cur_btn.data;
 			if (dhorizontal_page == 0)
 			{
 				var selected_item = dutils_get_itemname(real_index, dmenu_state);
@@ -268,9 +180,9 @@ if (dmenu_active && !dutils_reading_kb())
     }
 }
 
-if ((dmenu_active == 1 && dmenu_state == "debug") || dkeys_helper == 1)
+if (dmenu_active == 1 && dmenu_state == "debug")
 {
-    if (keyboard_check_pressed(ord("M")))
+	if (dkeys_helper == 1 && keyboard_check_pressed(ord("M")))
     {
         if (dkeys_helper == 0)
             snd_play(snd_select);
@@ -279,10 +191,7 @@ if ((dmenu_active == 1 && dmenu_state == "debug") || dkeys_helper == 1)
         
         dkeys_helper = !dkeys_helper;
     }
-}
 
-if (dmenu_active == 1 && dmenu_state == "debug")
-{
     if (keyboard_check_pressed(ord("F")))
     {
         global.dlang = (global.dlang == "en") ? "fr" : "en";

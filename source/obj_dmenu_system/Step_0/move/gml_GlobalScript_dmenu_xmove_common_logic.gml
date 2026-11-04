@@ -1,17 +1,23 @@
-function dmenu_move_sideway_default_logic()
+function dmenu_xmove_default_logic()
 {
 	var left_limit = cur_btn.xranges[0];
 	var right_limit = cur_btn.xranges[1];
 
+	var left_requierement = (dhorizontal_index > left_limit) ? left_held : left_pressed;
+	var right_requierement = (dhorizontal_index < right_limit) ? right_held : right_pressed;
+
+	if (!left_requierement && !right_requierement)
+		return (2);
+
 	var invalid_movement = 0;
-	if (left_held)
+	if (left_requierement)
 	{
 		if (dhorizontal_index == left_limit)
 			invalid_movement = 1;
 		else
 			dhorizontal_index--;
 	}
-	if (right_held)
+	if (right_requierement)
 	{
 		if (dhorizontal_index == right_limit)
 			invalid_movement = 1;
@@ -21,7 +27,7 @@ function dmenu_move_sideway_default_logic()
 	return (invalid_movement);
 }
 
-function dmenu_move_sideway_common_2d()
+function dmenu_xmove_common_2d()
 {
 	if (dkeys_helper != 0)
 		exit;
@@ -49,7 +55,7 @@ function dmenu_move_sideway_common_2d()
 	}
 }
 
-function dmenu_move_sideway_textbox_type()
+function dmenu_xmove_textbox_type()
 {
 	if (dvertical_index == 0)
 		exit;
@@ -74,22 +80,22 @@ function dmenu_move_sideway_textbox_type()
 	}
 }
 
-function dmenu_move_sideway_common_logic()
+function dmenu_xmove_common_logic()
 {
 	var callfunc = undefined;
 
 	switch (dbutton_layout) {
 		case 0:
-			callfunc = dmenu_move_sideway_common_2d;
+			callfunc = dmenu_xmove_common_2d;
 			break;
 
 		case 1:
 		case 2:
-			callfunc = dmenu_move_sideway_default_logic;
+			callfunc = dmenu_xmove_default_logic;
 			break;
 
 		case 3:
-			callfunc = dmenu_move_sideway_textbox_type;
+			callfunc = dmenu_xmove_textbox_type;
 			break;
 	}
 

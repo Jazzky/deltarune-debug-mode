@@ -49,7 +49,7 @@ function dmenu_update_dsave_main_menu()
 			array_push(dbuttons, dmenu_makebt(s_name, i));
 	}
 	
-	dmenu_process_submenus(subs, save_substr);
+	dmenu_dsave_process_submenus(subs, save_substr);
 	dmenu_box = 1;
 	dbutton_layout = 1;
 }

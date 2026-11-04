@@ -21,7 +21,7 @@ function dmenu_update_dsave_load()
 			dstr("Change category", "Changer catégorie")
 	];
 
-	dmenu_process_submenus(subs, "");
+	dmenu_dsave_process_submenus(subs, "");
 	if (!variable_global_exists("dload_cur_inv"))
 		global.dload_cur_inv = 0;
 	

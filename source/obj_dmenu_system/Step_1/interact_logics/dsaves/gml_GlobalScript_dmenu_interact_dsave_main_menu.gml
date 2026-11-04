@@ -15,10 +15,10 @@ function dmenu_interact_dsave_main_menu()
 		exit;
 	}
 	
-	if (dmenu_interact_submenus(selected_name))
+	if (dmenu_dsave_interact_submenus(selected_name))
 		exit;
 	
-	var real_index = dbuttons[dvertical_index].indice;
+	var real_index = dbuttons[dvertical_index].data;
 	
 	if (real_index >= 0)
 	{

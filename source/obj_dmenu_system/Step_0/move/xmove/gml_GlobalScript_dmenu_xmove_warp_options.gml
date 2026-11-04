@@ -1,13 +1,13 @@
-function dmenu_move_sideway_warp_options()
+function dmenu_xmove_warp_options()
 {
 	var cur_party = drooms_options.target_member_2;
 	if (dvertical_index == 4)
 		cur_party = drooms_options.target_member_3;
 
-	if (!left_pressed && !right_pressed)
+	if (!left_held && !right_held)
 		exit;
 
-	var to_add = (left_pressed) ? -1 : 1;
+	var to_add = (left_held) ? -1 : 1;
 	var new_party = cur_party + to_add;
 	
 	if (new_party == 1)

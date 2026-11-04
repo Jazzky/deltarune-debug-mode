@@ -48,5 +48,10 @@ function dmenu_update_warp_options()
 	dbuttons[2].text += dutils_reading_kb() ? plot_string : string(drooms_options.target_plot);
 	
 	dbuttons[3].text += teammates[drooms_options.target_member_2];
+	if (dvertical_index == 3)
+		dhorizontal_index = drooms_options.target_member_2;
+
 	dbuttons[4].text += teammates[drooms_options.target_member_3];
+	if (dvertical_index == 4)
+		dhorizontal_index = drooms_options.target_member_3;
 }

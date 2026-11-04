@@ -1,4 +1,4 @@
-function dmenu_move_sideway_dsave_options()
+function dmenu_xmove_dsave_options()
 {
 	var new_setting = -1;
 	

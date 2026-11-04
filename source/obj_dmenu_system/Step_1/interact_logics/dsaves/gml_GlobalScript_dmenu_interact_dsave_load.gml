@@ -1,7 +1,7 @@
 function dmenu_interact_dsave_load()
 {
 	var check_name = selected_name;
-	if (dmenu_interact_submenus(check_name))
+	if (dmenu_dsave_interact_submenus(check_name))
 		exit;
 
 	if (string_ends_with(check_name, " v") || string_ends_with(check_name, " ^"))

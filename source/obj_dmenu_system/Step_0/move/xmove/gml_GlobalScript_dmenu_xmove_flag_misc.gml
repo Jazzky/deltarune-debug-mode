@@ -1,4 +1,4 @@
-function dmenu_move_sideway_flag_misc()
+function dmenu_xmove_flag_misc()
 {
 	cur_options = dother_options[dvertical_index];
 	

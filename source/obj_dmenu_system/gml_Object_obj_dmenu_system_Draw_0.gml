@@ -89,33 +89,21 @@ if (dmenu_active)
         var text_scale = (global.darkzone == 1) ? 1 : 0.5;
         draw_set_color(c_gray);
         
-        var str_ = string(dstr("M - Keys", "M - Touches"));
+        var key_text = string(dstr("M - Keys", "M - Touches"));
+        var lang_text = string(dstr("F - French", "F - Anglais"));
         
         var draw_x = (((xcenter + (menu_width / 2)) - 10) * d) + xx;
-        var draw_y = (((ycenter + (menu_length / 2)) - 15) * d) + yy;
+        var key_draw_y = (((ycenter + (menu_length / 2)) - 15) * d) + yy;
+        var lang_draw_y = (((ycenter - (menu_length / 2)) + 8) * d) + yy;
         
-        draw_text_transformed(draw_x, draw_y, str_, text_scale, text_scale, 0);
+        draw_text_transformed(draw_x, key_draw_y, key_text, text_scale, text_scale, 0);
+        draw_text_transformed(draw_x, lang_draw_y, lang_text, text_scale, text_scale, 0);
         
         var _fnt = (global.darkzone == 1) ? fnt_mainbig : fnt_main;
         draw_set_font(_fnt);
         draw_set_halign(fa_left);
     }
 
-    if (dmenu_state == "debug")
-    {
-        draw_set_halign(fa_right);
-        draw_set_font(fnt_main);
-        var text_scale = (global.darkzone == 1) ? 1 : 0.5;
-        draw_set_color(c_gray);
-        var str_ = string(dstr("F - French", "F - Anglais"));
-        var draw_x = (((xcenter + (menu_width / 2)) - 10) * d) + xx;
-        var draw_y = (((ycenter - (menu_length / 2)) + 8) * d) + yy;
-        draw_text_transformed(draw_x, draw_y, str_, text_scale, text_scale, 0);
-        var _fnt = (global.darkzone == 1) ? fnt_mainbig : fnt_main;
-        draw_set_font(_fnt);
-        draw_set_halign(fa_left);
-    }
-    
     if (reading_kb)
     {
         draw_set_halign(fa_right);
@@ -171,6 +159,7 @@ if (dmenu_active)
         else if (dmenu_state == "warp_options")
         {
             var visual_offset = -2;
+			var base_y = (((190 - (dmenu_start_index * 20)) + 2) * d) + yy;
             var w_prefix = string_length(dstr("Plot Value: ", "Valeur de plot : ")) * mono_spacing;
             var w_name = string_length(ipt_text) * mono_spacing;
 			var x1_start = base_x + w_prefix;

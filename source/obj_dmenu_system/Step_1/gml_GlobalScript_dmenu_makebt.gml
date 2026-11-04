@@ -2,7 +2,7 @@ function dmenu_makebt(arg0="", arg1=-1, arg2=undefined)
 {
 	var res = {
 		text: arg0,
-		indice: arg1,
+		data: arg1,
 		xranges: arg2
 	};
 
