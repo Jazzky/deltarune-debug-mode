@@ -1,14 +1,7 @@
 function dmenu_interact_set_itemgiver_type()
 {
-	if (dhorizontal_index == 0)
-		dmenu_state = "items";
-	else if (dhorizontal_index == 1)
-		dmenu_state = "armors";
-	else if (dhorizontal_index == 2)
-		dmenu_state = "weapons";
-	else if (dhorizontal_index == 3)
-		dmenu_state = "keyitems";
-	
+	dmenu_state = cur_btn.data;
+
 	dhorizontal_page = !global.darkzone;
 	
 	if (dmenu_state == "keyitems")

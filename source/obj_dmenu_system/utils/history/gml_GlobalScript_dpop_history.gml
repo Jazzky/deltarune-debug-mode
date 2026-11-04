@@ -1,5 +1,6 @@
 function dpop_history()
 {
+	dmenu_reset_kb();
     dmenu_skip_reindexing = true;
     
     if (array_length(dmenu_state_history) == 0)
@@ -10,7 +11,6 @@ function dpop_history()
     
 	dpop_history_vars(false);
     dmenu_state_update();
-    dmenu_start_index = clamp(dvertical_index, 0, max(0, array_length(dbuttons) - dbutton_max_visible));
 };
 
 function dpop_history_vars(arg0=false)
@@ -29,7 +29,13 @@ function dpop_history_vars(arg0=false)
 		if (!just_delete)
 			dvertical_index = _temp;
 	}
-    
+
+    if (array_length(dmenu_start_index_history) > 0) {
+        _temp = array_pop(dmenu_start_index_history);
+		if (!just_delete)
+			dmenu_start_index = _temp;
+	}
+
     if (array_length(dmenu_horizontal_index_history) > 0) {
         _temp = array_pop(dmenu_horizontal_index_history);
 		if (!just_delete)

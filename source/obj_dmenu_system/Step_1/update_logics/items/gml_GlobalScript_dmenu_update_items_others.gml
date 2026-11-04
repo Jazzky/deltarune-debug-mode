@@ -1,7 +1,14 @@
 function dmenu_update_items_main_menu()
 {
 	dmenu_title = dstr("Item Type", "Type d'items");
-	dbuttons_2d = [[dstr("Items", "Objets"), dstr("Armors", "Armures"), dstr("Weapons", "Armes"), dstr("Key Items", "Obj Clés")]];
+	dbuttons_2d = [
+		[
+			dmenu_makebt(dstr("Items", "Objets"), "items"),
+			dmenu_makebt(dstr("Armors", "Armures"), "armors"),
+			dmenu_makebt(dstr("Weapons", "Armes"), "weapons"),
+			dmenu_makebt(dstr("Key Items", "Obj Clés"), "keyitems")
+		]
+	];
 	dmenu_box = 0;
 	dbutton_layout = 0;
 }

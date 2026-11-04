@@ -14,6 +14,7 @@ function dmenuback_update_keyboard()
 	if (kill_method == 0 || kill_method == undefined) // keep reading
 		exit;
 
+	dutils_clear_key(vk_enter);
 	if (kill_method == 1) // keep text variables
 	{
 		dutils_toggle_kb(false);
@@ -21,7 +22,10 @@ function dmenuback_update_keyboard()
 	}
 
 	else if (kill_method == -1) // true reset
-		dmenuback_reset_keyboard();
+	{
+		snd_play(snd_error);
+		dmenu_reset_kb();
+	}
 }
 
 function dmenuback_get_keyboard_func(arg0=dmenu_state)
@@ -63,15 +67,4 @@ function dmenuback_handle_kb()
 		dutils_set_kb_text(kb_text);
 
 	dkeyboard_texts[dhorizontal_index] = dutils_get_kb_text();
-}
-
-function dmenuback_reset_keyboard()
-{
-	var _limit = 10; //TODO change for a variable
-
-	for (var i = 0; i < _limit; i++)
-		dkeyboard_texts[i] = "";
-
-	dutils_toggle_kb(false);
-	snd_play(snd_error);
 }

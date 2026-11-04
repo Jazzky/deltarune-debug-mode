@@ -12,6 +12,7 @@
 
 	"keyboard/gml_GlobalScript_dutils_read_kb.gml": {},
 	"keyboard/gml_GlobalScript_dutils_kb_setters.gml": {},
+	"keyboard/gml_GlobalScript_dutils_clear_key.gml": {},
 	"keyboard/keyboard_globals.gml": {
 		"gml_name": "gml_GlobalScript_scr_gamestart",
 		"mode": "append"

@@ -7,8 +7,11 @@ function dmenu_update_warp()
 	];
 	
 	var room_substr = dkeyboard_texts[0];
-	if (dutils_reading_kb() || room_substr != "")
-		dbuttons[1].text =  dstr("Contains: ", "Contient : ") + room_substr;
+	if (dutils_reading_kb() || room_substr != "") {
+		dbuttons[1].text = dstr("Contains: ", "Contient : ");
+		dbuttons[1].data = string_length(dbuttons[1].text);
+		dbuttons[1].text += room_substr;
+	}
 
 	var nb_rooms = array_length(drooms);
 	for (var i = 0; i < nb_rooms; i++)
@@ -45,6 +48,7 @@ function dmenu_update_warp_options()
 	dbuttons[1].text += drooms_options.target_is_darkzone ? dstr("Yes", "Oui") : dstr("No", "Non");
 	
 	var plot_string = dkeyboard_texts[0];
+	dbuttons[2].data = string_length(dbuttons[2]);
 	dbuttons[2].text += dutils_reading_kb() ? plot_string : string(drooms_options.target_plot);
 	
 	dbuttons[3].text += teammates[drooms_options.target_member_2];

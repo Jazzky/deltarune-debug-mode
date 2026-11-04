@@ -29,4 +29,5 @@ function dmenuback_kb_flag_categories()
 		"|" + flag_value + "| to " +
 		"|" + value_text + "|"
 	);
+	return (-1);
 }

@@ -9,6 +9,9 @@ function dmenu_reset_menu()
 	dvertical_index = 0;
 	dmenu_vertical_index_history = [];
 
+	dmenu_start_index = 0;
+	dmenu_start_index_history = [];
+
 	dhorizontal_index = 0;
 	dmenu_horizontal_index_history = [];
 

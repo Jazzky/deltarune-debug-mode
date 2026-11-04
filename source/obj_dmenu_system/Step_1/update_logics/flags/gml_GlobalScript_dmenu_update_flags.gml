@@ -9,7 +9,17 @@ function dmenu_update_flag_categories()
 	var max_len = 40;
 	
 	if (dutils_reading_kb())
-		dbuttons[0].text = ("global.flag[" + dkeyboard_texts[0] + "] = |" + dkeyboard_texts[1] + "|");
+	{
+		dbuttons[0].text = "global.flag[";
+		if (dhorizontal_index == 0)
+			dbuttons[0].data = string_length(dbuttons[0].text);
+
+		dbuttons[0].text += dkeyboard_texts[0] + "] = |"
+		if (dhorizontal_index == 1)
+			dbuttons[0].data = string_length(dbuttons[0].text);
+
+		dbuttons[0].text += dkeyboard_texts[1] + "|";
+	}
 	
 	for (var i = 0; i < categories_len; i++)
 	{

@@ -9,7 +9,11 @@ function dmenu_update_dsave_main_menu()
 	var subs = [];
 	var save_substr = dkeyboard_texts[0];
 	if (dutils_reading_kb() || save_substr != "")
-		dbuttons[1].text = dstr("Contains: ", "Contient : ") + save_substr;
+	{
+		dbuttons[1].text = dstr("Contains: ", "Contient : ");
+		dbuttons[1].data = string_length(dbuttons[1].text);
+		dbuttons[1].text += save_substr;
+	}
 	
 	for (var i = 0; i < array_length(debug_save_names); i++)
 	{

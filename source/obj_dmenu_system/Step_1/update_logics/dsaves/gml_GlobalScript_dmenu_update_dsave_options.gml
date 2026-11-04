@@ -9,7 +9,15 @@ function dmenu_update_dsave_metadata()
 	else if (dmenu_state == "dsave_edit_cat")
 		dmenu_title = dstr("Change category", "Changer catégorie");
 	
-	dbuttons_2d = [[""], [dstr("Save", "Sauver"), dstr("Cancel", "Annuler")]];
+	dbuttons_2d = [
+		[
+			dmenu_makebt("")
+		],
+		[
+			dmenu_makebt(dstr("Save", "Sauver")),
+			dmenu_makebt(dstr("Cancel", "Annuler"))
+		]
+	];
 	var target_path = global.debug_selected_save_section;
 	var default_text = "";
 	
@@ -42,7 +50,7 @@ function dmenu_update_dsave_metadata()
 	if (cur_btn == "")
 		cur_btn = default_text;
 	
-	dbuttons_2d[0][0] = cur_btn;
+	dbuttons_2d[0][0].text = cur_btn;
 	var mono_spacing = (global.darkzone == 1) ? 15 : 8;
 	var text_x = x_start + x_padding + xx;
 	var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;

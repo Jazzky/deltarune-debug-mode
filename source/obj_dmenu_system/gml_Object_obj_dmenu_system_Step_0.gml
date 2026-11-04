@@ -15,6 +15,9 @@ if (dbutton_layout != 0) {
 	cur_btn = dbuttons[dvertical_index];
 	nb_button = array_length(dbuttons);
 }
+else if (dbutton_layout == 0) {
+	cur_btn = dbuttons_2d[dvertical_index][dhorizontal_index];
+}
 
 if (!global.dreading_kb && keyboard_check_pressed(ord("D")))
 {
@@ -88,7 +91,6 @@ if (dmenu_active && !dutils_reading_kb())
 	move_snd = snd_menumove;
 	dmenu_xmove();
 	dmenu_ymove();
-	scr_debug_print("Y = " + string(dvertical_index) + ", draw = " + string(dmenu_start_index));
 	dmenu_fix_start_index();
 
 	if (dhorizontal_index != original_x || dvertical_index != original_y)
@@ -106,6 +108,7 @@ if (dmenu_active && !dutils_reading_kb())
         
         array_push(dmenu_state_history, dmenu_state);
         array_push(dmenu_vertical_index_history, dvertical_index);
+        array_push(dmenu_start_index_history, dmenu_start_index);
         array_push(dmenu_horizontal_index_history, dhorizontal_index);
         array_push(dmenu_page_index_history, dhorizontal_page);
         
@@ -135,14 +138,7 @@ if (dmenu_active && !dutils_reading_kb())
         }
         else if (dmenu_state != "givertab" && dmenu_state != "flag_misc" && dmenu_state != "warp_options" && (dmenu_state != "recruits" || dvertical_index == 0) && dmenu_state != "new_debug_save")
         {
-            option_name = "";
-            
-            if (dbutton_layout == 0)
-                option_name = string(dbuttons_2d[dvertical_index][dhorizontal_index]);
-            else
-                option_name = string(cur_btn.text);
-            
-            scr_debug_print(option_name + dstr(" selected!", " sélectionné !"));
+			var option_name = string(cur_btn.text);
         }
         
         dmenu_skip_reindexing = false;

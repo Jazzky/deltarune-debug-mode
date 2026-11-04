@@ -2,15 +2,20 @@ function dmenu_update_dsave_new_save()
 {
 	dmenu_title = "New debug save";
 	dbuttons_2d = [
-		[dstr("Enter save name", "Entrer nom de sauvegarde")],
-		[dstr("Save", "Sauver"), dstr("Cancel", "Annuler")]
+		[
+			dmenu_makebt(dstr("Enter save name", "Entrer nom de sauvegarde"))
+		],
+		[
+			dmenu_makebt(dstr("Save", "Sauver")),
+			dmenu_makebt(dstr("Cancel", "Annuler"))
+		]
 	];
 
 	var cur_btn = dstr("Enter save name", "Entrer nom de sauvegarde");
 	if (dutils_reading_kb())
 	{
 		cur_btn = dkeyboard_texts[0];
-		dbuttons_2d[0][0] = cur_btn;
+		dbuttons_2d[0][0].text = cur_btn;
 	}
 	
 	var mono_spacing = (global.darkzone == 1) ? 15 : 8;
