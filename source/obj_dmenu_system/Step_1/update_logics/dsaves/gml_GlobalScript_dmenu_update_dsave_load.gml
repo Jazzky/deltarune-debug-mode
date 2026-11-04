@@ -1,16 +1,15 @@
 function dmenu_update_dsave_load()
 {
 	dmenu_title = dstr("Options: ", "Options : ") + string(global.debug_selected_save_name);
-	dbutton_options = [
-			dstr("Load", "Charger"),
-			dstr("Save", "Sauver"),
-			dstr("Export", "Exporter"),
-			dstr("Save management", "Gestion sauvegardes"),
-			dstr("Delete", "Supprimer")
+	dbuttons = [
+		dmenu_makebt(dstr("Load", "Charger"), -2, [0, 1]),
+		dmenu_makebt(dstr("Save", "Sauver"), -2),
+		dmenu_makebt(dstr("Export", "Exporter"), -1),
+		dmenu_makebt(dstr("Save management", "Gestion sauvegardes"), -1),
+		dmenu_makebt(dstr("Delete", "Supprimer"), -2)
 	];
 
-	dbutton_indices = [-2, -2, -1, -1, -2];
-	var subs = array_create(array_length(dbutton_options), 0);
+	var subs = array_create(array_length(dbuttons), 0);
 	subs[2] = [
 			dstr("Debug mode save", "Sauvegarde mode debug"),
 			dstr("Default Deltarune save", "Sauvegarde Deltarune par défaut")
@@ -27,7 +26,8 @@ function dmenu_update_dsave_load()
 		global.dload_cur_inv = 0;
 	
 	var load_options = [" (Normal)", dstr("  (Current inventory)", "  (Inventaire actuel)")];
-	dbutton_options[0] += load_options[global.dload_cur_inv];
+	dbuttons[0].text += load_options[global.dload_cur_inv];
+
 	dmenu_box = 1;
 	dbutton_layout = 1;
 }

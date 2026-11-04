@@ -11,7 +11,7 @@ function dmenu_interact_warp_setup()
 
 	drooms_options.target_room = -1;
 	if (dvertical_index != 0)
-		drooms_options.target_room = dbutton_indices[dvertical_index];
+		drooms_options.target_room = dbuttons[dvertical_index].indice;
 	
 	drooms_options.target_plot = global.plot;
 	drooms_options.target_is_darkzone = global.darkzone;

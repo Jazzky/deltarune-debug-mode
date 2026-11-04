@@ -1,0 +1,19 @@
+{
+	"text" -> text content
+	"info" -> text info for idk
+	"xranges" -> min & max for horizontal movement
+}
+
+Warp menu :
+krisroom = {
+	"text": "krisroom",
+	"info": room_id,
+	"xranges": [0, 0]
+}
+
+Warp options :
+teammate 2 ["Personne", "Kris", "Susie", "Ralsei", "Noelle"] = {
+	"text": list[dhoriztal_index],
+	"info": teammate_id[dhoriztal_index],
+	"xranges": [0, 4]
+}

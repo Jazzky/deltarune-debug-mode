@@ -1,10 +1,10 @@
 function dmenu_reset_menu()
 {
+	dbuttons = [];
 	dmenu_update_main_menu();
 
 	dmenu_active = false;
 	dmenu_popup_launch = 0;
-
 
 	dvertical_index = 0;
 	dmenu_vertical_index_history = [];

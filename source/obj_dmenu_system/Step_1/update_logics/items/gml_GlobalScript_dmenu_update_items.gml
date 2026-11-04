@@ -18,8 +18,7 @@ function dmenu_update_dw_items(arg0)
 			if (string_length(combined) > max_len)
 				combined = string_copy(combined, 1, max_len - 3) + "...";
 			
-			array_push(dbutton_options, combined);
-			array_push(dbutton_indices, i);
+			array_push(dbuttons, dmenu_makebt(combined, i));
 		}
 	}
 }
@@ -49,8 +48,7 @@ function dmenu_update_lw_items(arg0)
 	}
 
 	var dlight_lst_len = array_delete(dlight_lst);
-	array_delete(dbutton_options, 0, 1);
-	array_delete(dbutton_indices, 0, 1);
+	array_delete(dbuttons, 0, 1);
 	for (var i = 0; i < dlight_lst_len; i++)
 	{
 		var item_id = dlight_lst[i][0];
@@ -63,14 +61,13 @@ function dmenu_update_lw_items(arg0)
 			combined += " - " + string(itemcount) + " " + dstr("held", "possédé(s)");
 		}
 		
-		array_push(dbutton_options, combined);
-		array_push(dbutton_indices, item_id);
+		array_push(dbuttons, dmenu_makebt(combined, item_id));
 	}
 }
 
 function dmenu_update_items()
 {
-	dmenu_parent_state = "item";
+	dmenu_parent_state = "items";
 	switch (dmenu_state)
 	{
 		case "items":
@@ -90,9 +87,9 @@ function dmenu_update_items()
 			break;
 	}
 
-	dbutton_options = [dstr("Chapter: ", "Chapitre : ")];
-	dbutton_indices = [-1];
-	dbutton_options[0] += string(ditem_chap);
+	dbuttons = [
+		dmenu_makebt(dstr("Chapter: ", "Chapitre : ") + string(ditem_chap))
+	];
 
 	if (dhorizontal_page == 0)
 		dmenu_update_dw_items(dmenu_state);

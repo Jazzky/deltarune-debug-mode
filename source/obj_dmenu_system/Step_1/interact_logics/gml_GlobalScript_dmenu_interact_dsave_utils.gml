@@ -3,9 +3,10 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
 	var _subs = arg0;
 	var _search = string_lower(arg1);
 
-    my_options = array_create(array_length(dbutton_options));
-    array_copy(my_options, 0, dbutton_options, 0, array_length(dbutton_options));
-    var _state_tracker = variable_struct_exists(dmenu_expanded, dmenu_state) ? variable_struct_get(dmenu_expanded, dmenu_state) : array_create(array_length(dbutton_options), false);
+	var nb_buttons = array_length(dbuttons);
+    my_options = array_create(nb_buttons);
+    array_copy(my_options, 0, dbuttons, 0, nb_buttons);
+    var _state_tracker = variable_struct_exists(dmenu_expanded, dmenu_state) ? variable_struct_get(dmenu_expanded, dmenu_state) : array_create(nb_buttons, false);
     
     while (array_length(_state_tracker) < array_length(my_options))
         array_push(_state_tracker, false);
@@ -25,8 +26,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
         dmenu_was_searching = true;
     }
     
-    var _temp_options = [];
-    var _temp_indices = [];
+    var _temp_buttons = [];
     var _temp_base_indices = [];
     var _needs_struct_save = false;
     
@@ -34,7 +34,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
     {
         var _base_name = my_options[i];
         var _is_dropdown = i < array_length(_subs) && is_array(_subs[i]);
-        var _original_index = (i < array_length(dbutton_indices)) ? dbutton_indices[i] : -1;
+        var _original_index = (i < nb_buttons) ? dbuttons[i].indice : -1;
         var _is_persistent = _original_index == -2;
         var _cat_match = true;
         var _sub_match = false;
@@ -70,8 +70,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
         if (_is_dropdown)
             _display_name += (_is_open ? " ^" : " v");
         
-        array_push(_temp_options, _display_name);
-        array_push(_temp_indices, _original_index);
+		array_push(_temp_buttons, dmenu_makeby(_display_name, _original_index));
         array_push(_temp_base_indices, i);
         
         if (_is_open)
@@ -83,9 +82,8 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
             {
                 if (_search == "" || _cat_match || string_pos(_search, string_lower(_submenu[j])) > 0)
                 {
-                    array_push(_temp_options, "- " + _submenu[j]);
                     var exact_index = (array_length(_subindices) > j) ? _subindices[j] : -1;
-                    array_push(_temp_indices, exact_index);
+                    array_push(_temp_buttons, dmenu_makebt("- " + _submenu[j], exact_index));
                     array_push(_temp_base_indices, i);
                 }
             }
@@ -95,8 +93,7 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
     if (_needs_struct_save || !variable_struct_exists(dmenu_expanded, dmenu_state))
         variable_struct_set(dmenu_expanded, dmenu_state, _state_tracker);
     
-    dbutton_options = _temp_options;
-    dbutton_indices = _temp_indices;
+    dbuttons = _temp_buttons;
     dbutton_base_indices = _temp_base_indices;
 }
 

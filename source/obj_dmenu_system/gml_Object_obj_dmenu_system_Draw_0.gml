@@ -65,7 +65,7 @@ if (dbutton_layout == 3)
     x_start = ((xcenter - (menu_width / 2)) * d) + x_padding;
 }
 
-button_count = array_length(dbutton_options);
+button_count = array_length(dbuttons);
 
 if (dmenu_active)
 {
@@ -251,13 +251,13 @@ if (dmenu_active)
     {
         var draw_y = (100 * d) + yy;
         
-        for (var j = 0; j < array_length(dbutton_options_2d); j++)
+        for (var j = 0; j < array_length(dbuttons_2d); j++)
         {
             var draw_x = x_start + xx;
             
-            for (var i = 0; i < array_length(dbutton_options_2d[j]); i++)
+            for (var i = 0; i < array_length(dbuttons_2d[j]); i++)
             {
-                var cur_btn = string(dbutton_options_2d[j][i]);
+                var cur_btn = string(dbuttons_2d[j][i]);
                 var text_width = string_width(cur_btn);
                 draw_set_color((dvertical_index == j && dhorizontal_index == i) ? c_yellow : c_white);
                 draw_text(draw_x, draw_y, cur_btn);
@@ -290,7 +290,7 @@ if (dmenu_active)
 			var text_color = is_cur_line ? c_yellow : c_white;
 			draw_set_color(text_color);
 
-			var cur_btn = string(dbutton_options[button_index]);
+			var cur_btn = string(dbuttons[button_index].text);
 			dutils_draw_monospace(x_start + xx, y_start + (i * y_spacing) + yy, cur_btn);
 			var needs_arrows = (is_cur_line && dmenu_state == "flag_misc") || (dmenu_state == "warp_options" && (button_index == 3 || button_index == 4)) || (dmenu_state == "debug_save_options" && button_index == 0);
 			
@@ -433,7 +433,7 @@ if (dmenu_active)
     
     if (dbutton_layout == 3)
     {
-        var cur_btn = string(dbutton_options_2d[0][0]);
+        var cur_btn = string(dbuttons_2d[0][0]);
         var text_x = x_start + x_padding + xx;
         var text_y = y_start + yy;
         var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
@@ -494,9 +494,9 @@ if (dmenu_active)
         var is_multiline = dmenu_box == 1;
         var buttons_y = yy + (is_multiline ? (185 * d) : (125 * d));
         
-        for (var i = 0; i < array_length(dbutton_options_2d[1]); i++)
+        for (var i = 0; i < array_length(dbuttons_2d[1]); i++)
         {
-            var bottom_btn_str = string(dbutton_options_2d[1][i]);
+            var bottom_btn_str = string(dbuttons_2d[1][i]);
             var text_is_yellow = dvertical_index == 1 && dhorizontal_index == i;
             draw_set_color(text_is_yellow ? c_yellow : c_white);
             draw_text(x_start + (12 * power(10, i) * d) + xx, buttons_y, bottom_btn_str);
@@ -530,9 +530,7 @@ if (dmenu_active)
         }
     }
     
-    dhinter_active = true;
-    
-    if (dhinter_active && dhinter_text != "" && (scr_array_contains(ditem_types, dmenu_state) || dmenu_state == "warp_options" || dmenu_state == "debug_save" || dmenu_state == "debug_save_options"))
+    if (dhinter_text != "")
     {
         draw_set_color(c_white);
         draw_rectangle(((xcenter - (menu_width / 2) - 3) * d) + xx, (2 * d) + yy, ((xcenter + (menu_width / 2) + 3) * d) + xx, (51 * d) + yy, false);

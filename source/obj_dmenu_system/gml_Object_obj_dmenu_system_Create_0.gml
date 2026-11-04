@@ -3,13 +3,7 @@ dmenu_reset_menu();
 dmenu_start_index = 0;
 dbutton_max_visible = 5;
 dmenu_arrow_timer = 0;
-dscroll_timer = 0;
-dscroll_cur_key = 0;
-dscroll_delay = 15;
-dscroll_speed = 1;
-dbackspace_timer = 0;
 
-dhinter_active = false;
 global.dload_cur_inv = 0;
 dhinter_text = "";
 
@@ -21,8 +15,6 @@ dgiver_infos = {
 	storage_space : 0
 };
 
-dbutton_indices = [];
-ditem_types = ["items", "armors", "weapons", "keyitems"];
 ditem_chap = global.chapter;
 
 dmenu_init_warps();

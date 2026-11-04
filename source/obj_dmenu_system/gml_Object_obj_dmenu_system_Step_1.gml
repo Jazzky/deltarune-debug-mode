@@ -3,6 +3,7 @@ function dmenu_state_update(arg0 = dmenu_state)
 	var state = arg0;
 	dmenu_state = state;
 
+	dhinter_text = "";
 	dmenu_parent_state = "";
     switch (state)
     {
@@ -72,9 +73,9 @@ function dmenu_state_update(arg0 = dmenu_state)
             break;
         
         default:
+            dbuttons = [];
             dmenu_box = 0;
             dbutton_layout = 0;
-            dbutton_options = [];
     }
 }
 
@@ -86,12 +87,12 @@ function dmenu_state_interact(arg0 = dmenu_state)
     selected_name = "";
     if (dbutton_layout == 0 || dbutton_layout == 3)
     {
-        var safe_h_index = min(dhorizontal_index, array_length(dbutton_options_2d[dvertical_index]) - 1);
-        selected_name = string(dbutton_options_2d[dvertical_index][safe_h_index]);
+        var safe_h_index = min(dhorizontal_index, array_length(dbuttons_2d[dvertical_index]) - 1);
+        selected_name = string(dbuttons_2d[dvertical_index][safe_h_index]);
     }
     else
     {
-        selected_name = string(dbutton_options[dvertical_index]);
+        selected_name = string(dbuttons[dvertical_index].text);
     }
     
     switch (state)

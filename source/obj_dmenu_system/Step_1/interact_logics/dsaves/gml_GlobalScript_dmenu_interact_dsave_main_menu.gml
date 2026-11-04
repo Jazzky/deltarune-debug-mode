@@ -18,7 +18,7 @@ function dmenu_interact_dsave_main_menu()
 	if (dmenu_interact_submenus(selected_name))
 		exit;
 	
-	var real_index = dbutton_indices[dvertical_index];
+	var real_index = dbuttons[dvertical_index].indice;
 	
 	if (real_index >= 0)
 	{

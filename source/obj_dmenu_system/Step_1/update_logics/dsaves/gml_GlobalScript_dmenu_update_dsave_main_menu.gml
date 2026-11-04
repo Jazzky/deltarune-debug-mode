@@ -1,17 +1,15 @@
 function dmenu_update_dsave_main_menu()
 {
 	dmenu_title = "Debug save";
-	dbutton_options = [
-			dstr("New save", "Nouvelle sauvegarde"),
-			dstr("Search", "Recherche"),
-			dstr("Search", "Recherche")
+	dbuttons = [
+		dmenu_makebt(dstr("New save", "Nouvelle sauvegarde"), -2),
+		dmenu_makebt(dstr("Search", "Recherche"), -2)
 	];
-	dbutton_indices = [-2, -2];
+
 	var subs = [];
-	
 	var save_substr = dkeyboard_texts[0];
 	if (dutils_reading_kb() || save_substr != "")
-		dbutton_options[1] = dstr("Contains: ", "Contient : ") + save_substr;
+		dbuttons[1].text = dstr("Contains: ", "Contient : ") + save_substr;
 	
 	for (var i = 0; i < array_length(debug_save_names); i++)
 	{
@@ -27,9 +25,9 @@ function dmenu_update_dsave_main_menu()
 		{
 			var cat_index = -1;
 			
-			for (var j = 0; j < array_length(dbutton_options); j++)
+			for (var j = 0; j < array_length(dbuttons); j++)
 			{
-				if (dbutton_options[j] == s_cat)
+				if (dbuttons[j].text == s_cat)
 				{
 					cat_index = j;
 					break;
@@ -38,9 +36,8 @@ function dmenu_update_dsave_main_menu()
 			
 			if (cat_index == -1)
 			{
-				cat_index = array_length(dbutton_options);
-				array_push(dbutton_options, s_cat);
-				array_push(dbutton_indices, -1);
+				cat_index = array_length(dbuttons);
+				array_push(dbuttons, dmenu_makebt(s_cat));
 				subs[cat_index] = [];
 				subs[cat_index + 1000] = [];
 			}
@@ -49,10 +46,7 @@ function dmenu_update_dsave_main_menu()
 			array_push(subs[cat_index + 1000], i);
 		}
 		else
-		{
-			array_push(dbutton_options, s_name);
-			array_push(dbutton_indices, i);
-		}
+			array_push(dbuttons, dmenu_makebt(s_name, i));
 	}
 	
 	dmenu_process_submenus(subs, save_substr);

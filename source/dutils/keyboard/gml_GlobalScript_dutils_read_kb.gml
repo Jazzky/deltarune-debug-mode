@@ -55,7 +55,6 @@ function dutils_read_kb_key()
 		if (!keyboard_check_pressed(key))
 			continue;
 
-		scr_debug_print("Caca " + string(key));
 		global.dcurrent_kb_key = key;
 		return (key);
 	}

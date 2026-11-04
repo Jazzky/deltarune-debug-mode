@@ -10,7 +10,7 @@ function dpop_history()
     
 	dpop_history_vars(false);
     dmenu_state_update();
-    dmenu_start_index = clamp(dvertical_index, 0, max(0, array_length(dbutton_options) - dbutton_max_visible));
+    dmenu_start_index = clamp(dvertical_index, 0, max(0, array_length(dbuttons) - dbutton_max_visible));
 };
 
 function dpop_history_vars(arg0=false)

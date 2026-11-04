@@ -5,17 +5,34 @@
 	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
 	"utils/history/gml_GlobalScript_dpop_history.gml": {},
 
+
 	"Create/gml_GlobalScript_dmenu_init_warps.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_items.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_flags.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_global_changer.gml": {},
 
+
 	"Step_0/keyboard/gml_GlobalScript_dmenuback_default_kb.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_flag_categories.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_global_changer.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_warp_options.gml": {},
-	"Step_0/gml_GlobalScript_dmenu_read_keyboard.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_read_keyboard.gml": {},
 
+	"Step_0/move/gml_GlobalScript_dmenu_move_sideway_common_logic.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_move_sideway.gml": {},
+	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_items.gml": {},
+	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_flag_misc.gml": {},
+	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_recruits.gml": {},
+	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_warp_options.gml": {},
+	"Step_0/move/side_movement/gml_GlobalScript_dmenu_move_sideway_dsave_options.gml": {},
+
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_items.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_warp_options.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_dsaves_main_menu.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_dsaves_options.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenuback_update_dhinter.gml": {},
+
+	"Step_1/gml_GlobalScript_dmenu_makebt.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_new_save.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_main_menu.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_load.gml": {},
@@ -41,10 +58,10 @@
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_globals.gml": {},
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_main_menu.gml": {},
 
+
 	"gml_Object_obj_dmenu_system_Create_0.gml": {
 		"create_new": true
 	},
-
 	"gml_Object_obj_dmenu_system_Step_0.gml": {},
 	"gml_Object_obj_dmenu_system_Step_1.gml": {},
 	"gml_Object_obj_dmenu_system_Draw_0.gml": {}
