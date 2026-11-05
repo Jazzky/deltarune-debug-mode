@@ -18,6 +18,9 @@ function dmenu_update_dsave_metadata()
 			dmenu_makebt(dstr("Cancel", "Annuler"))
 		]
 	];
+
+	dmenu_set_bttype(dbuttons_2d[0][0], "keyboard");
+
 	var target_path = global.debug_selected_save_section;
 	var default_text = "";
 	

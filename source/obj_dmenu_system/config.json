@@ -12,12 +12,15 @@
 	"Create/gml_GlobalScript_dmenu_init_items.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_flags.gml": {},
 	"Create/gml_GlobalScript_dmenu_init_global_changer.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_dsaves.gml": {},
 
 
-	"Step_0/keyboard/gml_GlobalScript_dmenuback_default_kb.gml": {},
-	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_flag_categories.gml": {},
-	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_global_changer.gml": {},
-	"Step_0/keyboard/gml_GlobalScript_dmenuback_kb_warp_options.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_confirm.gml": {},
+
+	"Step_0/keyboard/gml_GlobalScript_dmenu_default_kb.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_flag_categories.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_global_changer.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_warp_options.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenu_read_keyboard.gml": {},
 
 	"Step_0/move/gml_GlobalScript_dmenu_xmove.gml": {},

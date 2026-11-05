@@ -7,16 +7,16 @@ function dmenu_reset_menu()
 	dmenu_popup_launch = 0;
 
 	dvertical_index = 0;
-	dmenu_vertical_index_history = [];
+	dvertical_index_history = [];
 
 	dmenu_start_index = 0;
 	dmenu_start_index_history = [];
 
 	dhorizontal_index = 0;
-	dmenu_horizontal_index_history = [];
+	dhorizontal_index_history = [];
 
 	dhorizontal_page = 0;
-	dmenu_page_index_history = [];
+	dhorizontal_page_history = [];
 
 	dmenu_state_history = [];
 	global.interact = 0;

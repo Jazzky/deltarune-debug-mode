@@ -5,6 +5,8 @@ function dmenu_update_warp()
 		dmenu_makebt(dstr("Current Room", "Salle actuelle")),
 		dmenu_makebt(dstr("Search", "Recherche"))
 	];
+
+	dmenu_set_bttype(dbuttons[1], "keyboard");
 	
 	var room_substr = dkeyboard_texts[0];
 	if (dutils_reading_kb() || room_substr != "") {
@@ -50,6 +52,7 @@ function dmenu_update_warp_options()
 	var plot_string = dkeyboard_texts[0];
 	dbuttons[2].data = string_length(dbuttons[2]);
 	dbuttons[2].text += dutils_reading_kb() ? plot_string : string(drooms_options.target_plot);
+	dmenu_set_bttype(dbuttons[2], "keyboard");
 	
 	dbuttons[3].text += teammates[drooms_options.target_member_2];
 	if (dvertical_index == 3)

@@ -1,6 +1,5 @@
 function dmenu_interact_init_warps()
 {
-	dhorizontal_index = 0;
 	drooms_options.target_plot = global.plot;
 	drooms_options.target_is_darkzone = global.darkzone;
 }

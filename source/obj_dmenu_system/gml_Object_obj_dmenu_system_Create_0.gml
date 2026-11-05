@@ -4,7 +4,6 @@ dmenu_start_index = 0;
 dbutton_max_visible = 5;
 dmenu_arrow_timer = 0;
 
-global.dload_cur_inv = 0;
 dhinter_text = "";
 
 dgiver_infos = {
@@ -21,6 +20,7 @@ dmenu_init_warps();
 dmenu_init_items();
 dmenu_init_flags();
 dmenu_init_global_changer();
+dmenu_init_dsaves();
 
 dkeyboard_texts = ["", "", "", "", ""];
 
@@ -43,14 +43,3 @@ find_subarray_index = function(arg0, arg1)
     
     return prev;
 };
-
-dload_options = 
-{
-    target_save: -1,
-    target_with_cur_inv: global.dload_cur_inv
-};
-
-dmenu_expanded = {};
-dmenu_last_search = "";
-dmenu_was_searching = false;
-my_options = [];

@@ -11,6 +11,8 @@ function dmenu_update_dsave_new_save()
 		]
 	];
 
+	dmenu_set_bttype(dbuttons_2d[0][0], "keyboard");
+
 	var cur_btn = dstr("Enter save name", "Entrer nom de sauvegarde");
 	if (dutils_reading_kb())
 	{

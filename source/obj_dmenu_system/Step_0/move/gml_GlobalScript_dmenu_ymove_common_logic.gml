@@ -24,6 +24,9 @@ function dmenu_ymove_default_logic()
 		return (2);
 
 	dvertical_index = new_y;
+
+	var new_bt = dbuttons[dvertical_index];
+	dhorizontal_index = clamp(dhorizontal_index, new_bt.xranges[0], new_bt.xranges[1]);
 	return (0);
 }
 

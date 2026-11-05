@@ -38,5 +38,6 @@ function dmenu_update_globals()
 		text += (" = |" + string(global_value) + "|");
 		array_push(dbuttons, dmenu_makebt(text, i));
 	}
+	dmenu_set_bttype(dbuttons[0], "keyboard");
 	set_derror_print(true);
 }

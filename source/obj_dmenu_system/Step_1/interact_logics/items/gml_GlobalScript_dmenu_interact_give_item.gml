@@ -48,18 +48,14 @@ function dmenu_interact_setup_givertab()
 	
 	if (dhorizontal_page == 0 && dvertical_index == 0)
 	{
-		dremove_false_history();
-		dmenu_skip_reindexing = true;
 		ditem_chap += 1;
-		
 		if (ditem_chap > global.chapter)
 			ditem_chap = 1;
+
 		exit;
 	}
 	if (dhorizontal_page == 1 && (dmenu_state == "armors" || dmenu_state == "weapons"))
 	{
-		dremove_false_history();
-		dmenu_skip_reindexing = true;
 		if (dmenu_state == "armors")
 			global.larmor = dlight_armors[dvertical_index][0];
 		else
@@ -67,5 +63,4 @@ function dmenu_interact_setup_givertab()
 		exit; //TODO create dcmd for light world
 	}
 	dmenu_state = "givertab";
-	dvertical_index = 0;
 }

@@ -1,8 +1,5 @@
 function dmenu_interact_globals()
 {
-	dremove_false_history();
-	dmenu_skip_reindexing = true;
-	
 	var cmd = "setg";
 	cmd += " " + dkeyboard_texts[0];
 

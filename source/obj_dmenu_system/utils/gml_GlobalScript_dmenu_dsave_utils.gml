@@ -4,9 +4,12 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
 	var _search = string_lower(arg1);
 
 	var nb_buttons = array_length(dbuttons);
-    my_options = array_create(nb_buttons);
+    var my_options = array_create(nb_buttons);
     array_copy(my_options, 0, dbuttons, 0, nb_buttons);
-    var _state_tracker = variable_struct_exists(dmenu_expanded, dmenu_state) ? variable_struct_get(dmenu_expanded, dmenu_state) : array_create(nb_buttons, false);
+
+    var _state_tracker = dmenu_expanded;
+	if (_state_tracker == undefined)
+		_state_tracker = array_create(nb_buttons, false);
     
     while (array_length(_state_tracker) < array_length(my_options))
         array_push(_state_tracker, false);
@@ -70,7 +73,11 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
         if (_is_dropdown)
             _display_name += (_is_open ? " ^" : " v");
         
-		array_push(_temp_buttons, dmenu_makebt(_display_name, _original_index));
+		var _new_bt = dmenu_makebt(_display_name, _original_index);
+		if (_is_dropdown)
+			dmenu_set_bttype(_new_bt, "category");
+
+		array_push(_temp_buttons, _new_bt);
         array_push(_temp_base_indices, i);
         
         if (_is_open)
@@ -90,38 +97,29 @@ function dmenu_dsave_process_submenus(arg0, arg1 = "")
         }
     }
     
-    if (_needs_struct_save || !variable_struct_exists(dmenu_expanded, dmenu_state))
-        variable_struct_set(dmenu_expanded, dmenu_state, _state_tracker);
+    if (_needs_struct_save || (dmenu_expanded == undefined))
+		dmenu_expanded = _state_tracker;
     
     dbuttons = _temp_buttons;
     dbutton_base_indices = _temp_base_indices;
 }
 
-function dmenu_dsave_interact_submenus(arg0)
+function dmenu_dsave_interact_submenus()
 {
-    var _clicked_index = -1;
+	var pressed_btn = dbuttons[dvertical_index];
+	var is_category = (pressed_btn.type == "category");
+
+	if (!is_category)
+		return (false);
     
-    for (var i = 0; i < array_length(my_options); i++)
+    if (dmenu_expanded != undefined)
     {
-        var _base_name = my_options[i];
+        var _state_tracker = dmenu_expanded;
         
-        if (arg0 == (_base_name + " v") || arg0 == (_base_name + " ^"))
+        if (dvertical_index < array_length(_state_tracker))
         {
-            _clicked_index = i;
-            break;
-        }
-    }
-    
-    if (_clicked_index != -1 && variable_struct_exists(dmenu_expanded, dmenu_state))
-    {
-        var _state_tracker = variable_struct_get(dmenu_expanded, dmenu_state);
-        
-        if (_clicked_index < array_length(_state_tracker))
-        {
-            _state_tracker[_clicked_index] = !_state_tracker[_clicked_index];
-            variable_struct_set(dmenu_expanded, dmenu_state, _state_tracker);
-            dmenu_skip_reindexing = true;
-            dremove_false_history();
+            _state_tracker[dvertical_index] ^= 1;
+			dmenu_expanded = _state_tracker;
             return true;
         }
     }

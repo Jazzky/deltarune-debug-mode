@@ -1,10 +1,9 @@
-function scr_debug_load(arg0)
+function scr_debug_load(arg0, arg1=false)
 {
+    var file = string(arg0);
+	var keep_inv = arg1;
+
     snd_free_all();
-    var keep_inv = false;
-    
-    if (variable_global_exists("dload_cur_inv") && global.dload_cur_inv == 1)
-        keep_inv = true;
     
 	var option_flags = [8, 11, 15, 16, 17, 25, 1391];
 	var cache_option_flags = [];
@@ -78,8 +77,6 @@ function scr_debug_load(arg0)
                 cache_pocketitem[idx] = global.pocketitem[idx];
         }
     }
-    
-    var file = string(arg0);
     
     if (file == "" || string_length(file) < 3)
     {
@@ -745,6 +742,4 @@ function scr_debug_load(arg0)
     {
         room_goto(__loadedroom);
     }
-
-    global.dload_cur_inv = 0;
 }

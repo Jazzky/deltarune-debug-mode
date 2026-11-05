@@ -250,7 +250,7 @@ if (dmenu_active)
 				else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != 0)
 					show_left = true;
 
-				else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 0)
+				else if (dmenu_state == "debug_save_options" && dload_options.target_keep_inv)
 					show_left = true;
                     
 				if (show_left)
@@ -282,7 +282,7 @@ if (dmenu_active)
 					show_right = true;
 				else if (dmenu_state == "warp_options" && array_get([drooms_options.target_member_2, drooms_options.target_member_3], button_index - 3) != (4 - (global.chapter == 1)))
 					show_right = true;
-				else if (dmenu_state == "debug_save_options" && global.dload_cur_inv != 1)
+				else if (dmenu_state == "debug_save_options" && dload_options.target_keep_inv)
 					show_right = true;
 				
 				if (show_right)

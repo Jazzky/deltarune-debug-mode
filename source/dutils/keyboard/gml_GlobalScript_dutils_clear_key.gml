@@ -1,6 +1,7 @@
-function dutils_clear_key(arg0)
+function _dutils_set_key(arg0, arg1)
 {
 	var key = arg0;
+	var value = arg1;
 
 	var ipt_type = typeof(key);
 
@@ -19,9 +20,23 @@ function dutils_clear_key(arg0)
 		break;
 	}
 
-	keyboard_clear(key);
+	if (value == 0)
+		keyboard_clear(key);
+	else
+		keyboard_press(key);
+
 	if (_game_idx != -1) {
-		global.input_held[_game_idx] = 0;
-		global.input_pressed[_game_idx] = 0;
+		global.input_held[_game_idx] = value;
+		global.input_pressed[_game_idx] = value;
 	}
+}
+
+function dutils_clear_key(arg0)
+{
+	_dutils_set_key(arg0, 0);
+}
+
+function dutils_press_key(arg0)
+{
+	_dutils_set_key(arg0, 1);
 }

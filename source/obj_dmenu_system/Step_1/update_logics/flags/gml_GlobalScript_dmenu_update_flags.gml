@@ -5,6 +5,8 @@ function dmenu_update_flag_categories()
 		dmenu_makebt(dstr("Custom"))
 	];
 
+	dmenu_set_bttype(dbuttons[0], "keyboard");
+
 	categories_len = array_length(dother_categories);
 	var max_len = 40;
 	

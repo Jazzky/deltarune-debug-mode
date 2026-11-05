@@ -8,9 +8,7 @@ function dcmd_load_debug_save(argc, argv, flags)
 	if (exist)
 	{
 		var keep_inv = dcmd_flag_used(flags, "keepinv");
-		global.dload_cur_inv = keep_inv;
-		scr_debug_load(target_path);
-		global.dload_cur_inv = 0;
+		scr_debug_load(target_path, keep_inv);
 	}
 	else
 	{

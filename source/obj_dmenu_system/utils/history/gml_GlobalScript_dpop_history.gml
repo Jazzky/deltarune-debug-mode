@@ -1,55 +1,49 @@
 function dpop_history()
 {
 	dmenu_reset_kb();
-    dmenu_skip_reindexing = true;
     
+	dmenu_popped_index = true;
     if (array_length(dmenu_state_history) == 0)
     {
 		dmenu_reset_menu();
         dmenu_state_update();
+		exit;
     }
     
-	dpop_history_vars(false);
-    dmenu_state_update();
+	dmenu_update_history("pop");
 };
 
-function dpop_history_vars(arg0=false)
+function dmenu_update_history(arg0="add")
 {
-	var just_delete = arg0;
-	var _temp;
+	var method = arg0;
 
-    if (array_length(dmenu_state_history) > 0) {
-        _temp = array_pop(dmenu_state_history);
-		if (!just_delete)
-			dmenu_state = _temp;
-	}
-    
-    if (array_length(dmenu_vertical_index_history) > 0) {
-        _temp = array_pop(dmenu_vertical_index_history);
-		if (!just_delete)
-			dvertical_index = _temp;
-	}
+	var historics = [
+		["dmenu_state", "dmenu_state_history", ""],
+		["dvertical_index", "dvertical_index_history", 0],
+		["dmenu_start_index", "dmenu_start_index_history", 0],
+		["dhorizontal_index", "dhorizontal_index_history", 0],
+		["dhorizontal_page", "dhorizontal_page_history", 0]
+	];
 
-    if (array_length(dmenu_start_index_history) > 0) {
-        _temp = array_pop(dmenu_start_index_history);
-		if (!just_delete)
-			dmenu_start_index = _temp;
-	}
+	var _len = array_length(historics);
+	for (var i = 0; i < _len; i++) {
+		var state_varname = historics[i][0];
+		var historic_varname = historics[i][1];
+		var default_val = historics[i][2];
 
-    if (array_length(dmenu_horizontal_index_history) > 0) {
-        _temp = array_pop(dmenu_horizontal_index_history);
-		if (!just_delete)
-			dhorizontal_index = _temp;
-	}
-    
-    if (array_length(dmenu_page_index_history) > 0) {
-        _temp = array_pop(dmenu_page_index_history);
-		if (!just_delete)
-			dhorizontal_page = _temp;
-	}
-};
+		var historic = variable_instance_get(id, historic_varname);
 
-function dremove_false_history()
-{
-	dpop_history_vars(true);
+		if (method == "add") {
+			array_push(historic, variable_instance_get(id, state_varname));
+		}
+		else if (method == "pop") {
+			variable_instance_set(id, state_varname, array_pop(historic));
+		}
+		else if (method == "init") {
+			if (i != 0)
+				variable_instance_set(id, state_varname, array_pop(historic));
+				
+			variable_instance_set(id, historic_varname, []);
+		}
+	}
 }

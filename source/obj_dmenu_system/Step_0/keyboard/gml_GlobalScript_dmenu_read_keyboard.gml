@@ -1,55 +1,61 @@
-function dmenuback_update_keyboard()
+function dmenu_update_keyboard()
 {
 	dutils_read_kb();
 	if (dutils_cur_kb_key() == undefined)
 		exit;
 
-	dmenuback_handle_kb();
+	dmenu_handle_kb();
 
-	var keyboard_func = dmenuback_get_keyboard_func();
+	var keyboard_func = dmenu_get_keyboard_func();
 	if (keyboard_func == undefined)
 		exit;
 
 	var kill_method = keyboard_func();
-	if (kill_method == 0 || kill_method == undefined) // keep reading
+	if (kill_method == -1 || kill_method == undefined) // keep reading
 		exit;
 
+	snd_play(snd_menumove);
 	dutils_clear_key(vk_enter);
-	if (kill_method == 1) // keep text variables
+
+	if (kill_method == 0) // success reading, reset variables
 	{
-		dutils_toggle_kb(false);
-		exit;
+		dmenu_reset_kb();
 	}
 
-	else if (kill_method == -1) // true reset
+	if (kill_method == 1) // an error occured
 	{
-		snd_play(snd_error);
+		snd_play(error_snd);
 		dmenu_reset_kb();
+	}
+
+	else if (kill_method == 2) // keep text variables
+	{
+		dutils_toggle_kb(false);
 	}
 }
 
-function dmenuback_get_keyboard_func(arg0=dmenu_state)
+function dmenu_get_keyboard_func(arg0=dmenu_state)
 {
 	var state = arg0;
 
 	switch (state)
 	{
 		case "warp_options":
-			return (dmenuback_kb_warp_options);
+			return (dmenu_kb_warp_options);
 
 		case "flag_categories":
-			return (dmenuback_kb_flag_categories);
+			return (dmenu_kb_flag_categories);
 
 		case "globals_changer":
-			return (dmenuback_kb_global_changer);
+			return (dmenu_kb_global_changer);
 
 		default:
-			return (dmenuback_default_kb);
+			return (dmenu_default_kb);
 	}
 	return (undefined);
 }
 
-function dmenuback_handle_kb()
+function dmenu_handle_kb()
 {
 	var x_limit = 1;
     if (dmenu_state == "flag_categories" || (dmenu_state == "globals_changer" && dvertical_index == 0)) //TODO CHANGE FOR REAL

@@ -1,7 +1,5 @@
 function dmenu_interact_givertab()
 {
-	dremove_false_history();
-
 	var real_index = dgiver_infos.item_id;
 	var item_name = dgiver_infos.item_name;
 	var item_type = dgiver_infos.item_type;

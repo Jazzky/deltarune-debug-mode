@@ -52,7 +52,6 @@ function dmenu_interact_dsave_save()
 
 function dmenu_interact_dsave_delete()
 {
-	dremove_false_history();
 	var target_path = global.debug_selected_save_section;
 	
 	var cmd = "dsave_delete \"" + string(target_path) + "\"";
@@ -89,14 +88,6 @@ function dmenu_interact_dsave_update_metadata()
 
 function dmenu_interact_dsave_update_metadata_confirm()
 {
-	dremove_false_history();
-	if (dvertical_index == 0)
-	{
-		dmenu_skip_reindexing = true;
-		dutils_toggle_kb(true);
-		dmenu_state_update();
-		exit;
-	}
 	if (dvertical_index == 1 && dhorizontal_index == 0)
 	{
 		var target_path = global.debug_selected_save_section;
@@ -121,7 +112,5 @@ function dmenu_interact_dsave_update_metadata_confirm()
 		if (dmenu_state == "dsave_edit_name" && final_text != "")
 			global.debug_selected_save_name = final_text;
 	}
-	dremove_false_history();
-	dutils_toggle_kb(false);
 	dpop_history();
 }

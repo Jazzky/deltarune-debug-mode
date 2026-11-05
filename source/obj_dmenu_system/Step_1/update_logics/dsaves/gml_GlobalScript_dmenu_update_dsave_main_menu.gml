@@ -6,7 +6,8 @@ function dmenu_update_dsave_main_menu()
 		dmenu_makebt(dstr("Search", "Recherche"), -2)
 	];
 
-	var subs = [];
+	dmenu_set_bttype(dbuttons[1], "keyboard");
+
 	var save_substr = dkeyboard_texts[0];
 	if (dutils_reading_kb() || save_substr != "")
 	{
@@ -15,6 +16,7 @@ function dmenu_update_dsave_main_menu()
 		dbuttons[1].text += save_substr;
 	}
 	
+	var subs = [];
 	for (var i = 0; i < array_length(debug_save_names); i++)
 	{
 		var s_chap = debug_save_chapters[i];

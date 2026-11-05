@@ -9,24 +9,21 @@ function dmenu_update_dsave_load()
 		dmenu_makebt(dstr("Delete", "Supprimer"), -2)
 	];
 
-	var subs = array_create(array_length(dbuttons), 0);
-	subs[2] = [
+	var subs = [
 			dstr("Debug mode save", "Sauvegarde mode debug"),
 			dstr("Default Deltarune save", "Sauvegarde Deltarune par défaut")
 	];
+	dmenu_create_category(2, subs);
 
-	subs[3] = [
+	subs = [
 			dstr("Rename", "Renommer"),
 			dstr("Edit description", "Modifier description"),
 			dstr("Change category", "Changer catégorie")
 	];
+	dmenu_create_category(3, subs);
 
-	dmenu_dsave_process_submenus(subs, "");
-	if (!variable_global_exists("dload_cur_inv"))
-		global.dload_cur_inv = 0;
-	
 	var load_options = [" (Normal)", dstr("  (Current inventory)", "  (Inventaire actuel)")];
-	dbuttons[0].text += load_options[global.dload_cur_inv];
+	dbuttons[0].text += load_options[dload_options.target_keep_inv];
 
 	dmenu_box = 1;
 	dbutton_layout = 1;

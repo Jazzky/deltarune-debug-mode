@@ -1,12 +1,11 @@
 function dmenu_xmove_dsave_options()
 {
-	var new_setting = -1;
+	var keep_inv;
 	
-	if (left_pressed && global.dload_cur_inv != 0)
-		new_setting = 0;
-	else if (right_pressed && global.dload_cur_inv != 1)
-		new_setting = 1;
+	if (left_pressed)
+		keep_inv = false;
+	else
+		keep_inv = true;
 	
-	if (new_setting != -1)
-		global.dload_cur_inv = new_setting;
+	dload_options.target_keep_inv = keep_inv;
 }

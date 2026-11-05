@@ -6,15 +6,6 @@ function dmenu_interact_dsave_main_menu()
 		exit;
 	}
 	
-	if (dvertical_index == 1)
-	{
-		dremove_false_history();
-		dmenu_skip_reindexing = true;
-		dutils_toggle_kb(true);
-		dmenu_state_update();
-		exit;
-	}
-	
 	if (dmenu_dsave_interact_submenus(selected_name))
 		exit;
 	
