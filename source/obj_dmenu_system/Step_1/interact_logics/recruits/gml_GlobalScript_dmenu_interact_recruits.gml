@@ -1,13 +1,13 @@
 function dmenu_interact_recruits()
 {
-	if (dvertical_index == 0)
+	if (btn_data == "preset")
 		dmenu_state = "recruit_presets";
 }
 
 function dmenu_interact_recruits_presets()
 {
 	var cmd = "recruitchap";
-	var losemode = (dvertical_index == 1);
+	var losemode = (btn_data == "lose");
 
 	if (dhorizontal_page == 0)
 		cmd = (!losemode) ? "recruitall" : "loseall";

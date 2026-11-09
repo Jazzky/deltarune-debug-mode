@@ -8,6 +8,7 @@ function dmenu_kb_warp_options()
 		return (-1);
 
 	var plot_text = dkeyboard_texts[0];
+	scr_debug_print("Reading |" + plot_text + "|");
 	if (!dutils_isnum(plot_text, true)) {
 		snd_play(299);
 		return (1);

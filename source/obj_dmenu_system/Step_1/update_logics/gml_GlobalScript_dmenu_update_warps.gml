@@ -39,13 +39,18 @@ function dmenu_update_warp_options()
 
 	dmenu_title = dstr("Warp Options", "Options du saut");
 	dbuttons = [
-			dmenu_makebt(dstr("Cancel", "Annuler")),
-			dmenu_makebt(dstr("Is Darkworld: ", "Est un Darkworld : "), -1, [0, 1]),
-			dmenu_makebt(dstr("Plot Value: ", "Valeur de plot : ")),
-			dmenu_makebt(dstr("Teammate 2:  ", "Équipier 2 :  "), -1, [0, teammates_max_index]),
-			dmenu_makebt(dstr("Teammate 3:  ", "Équipier 3 :  "), -1, [0, teammates_max_index]),
-			dmenu_makebt(dstr("Warp", "Sauter"))
+			dmenu_makebt(dstr("Cancel", "Annuler"), "cancel"),
+			dmenu_makebt(dstr("Is Darkworld: ", "Est un Darkworld : "), "darkworld"),
+			dmenu_makebt(dstr("Plot Value: ", "Valeur de plot : "), "plot"),
+			dmenu_makebt(dstr("Teammate 2:  ", "Équipier 2 :  "), "teammate 2", [0, teammates_max_index]),
+			dmenu_makebt(dstr("Teammate 3:  ", "Équipier 3 :  "), "teammate 3", [0, teammates_max_index]),
+			dmenu_makebt(dstr("Warp", "Sauter"), "warp")
 	];
+
+	var test = [
+		"val1", "val2"
+	];
+	dmenu_create_category(0, test);
 
 	dbuttons[1].text += drooms_options.target_is_darkzone ? dstr("Yes", "Oui") : dstr("No", "Non");
 	

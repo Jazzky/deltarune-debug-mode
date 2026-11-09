@@ -1,13 +1,12 @@
 function dmenu_interact_globals()
 {
 	var cmd = "setg";
-	cmd += " " + dkeyboard_texts[0];
+	cmd += " " + cur_btn.data;
 
 	var reading_double_flag = (dvertical_index == 0);
-	if (reading_double_flag)
-		cmd += " " + dkeyboard_texts[1];
+	cmd += " " + dkeyboard_texts[reading_double_flag];
 
 	dconsole_exec(cmd);
-	if (dvertical_index == 0)
+	if (reading_double_flag)
 		dhorizontal_index = 0;
 }

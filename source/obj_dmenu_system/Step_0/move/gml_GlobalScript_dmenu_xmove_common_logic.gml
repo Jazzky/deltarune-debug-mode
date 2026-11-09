@@ -1,5 +1,14 @@
 function dmenu_xmove_default_logic()
 {
+	if (cur_btn.category != undefined) {
+		var expand = true;
+		if (left_pressed)
+			expand = false;
+
+		dmenu_toggle_category(dvertical_index, expand);
+		dmenu_set_reindex(true);
+		return (2);
+	}
 	var left_limit = cur_btn.xranges[0];
 	var right_limit = cur_btn.xranges[1];
 

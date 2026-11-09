@@ -1,8 +1,5 @@
 function dmenu_interact_warp_setup()
 {
-	if (dvertical_index == 1)
-		exit;
-
 	drooms_options.target_room = -1;
 	if (dvertical_index != 0)
 		drooms_options.target_room = dbuttons[dvertical_index].data;
@@ -16,13 +13,13 @@ function dmenu_interact_warp_setup()
 
 function dmenu_interact_warp()
 {
-	if (dvertical_index == 0)
+	if (btn_data == "cancel")
 		dmenu_state = "warp";
 
-	else if (dvertical_index == 1)
+	else if (btn_data == "darkworld")
 		drooms_options.target_is_darkzone ^= 1;
 
-	else if (dvertical_index == 5)
+	else if (btn_data == "warp")
 	{
 		new_room = drooms_options.target_room;
 		

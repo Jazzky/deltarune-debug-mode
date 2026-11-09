@@ -1,9 +1,8 @@
-dmenu_reset_menu();
+dmenu_active = false;
 
-dmenu_start_index = 0;
+dmenu_update_history("init");
+
 dbutton_max_visible = 5;
-dmenu_arrow_timer = 0;
-
 dhinter_text = "";
 
 dgiver_infos = {
@@ -24,6 +23,7 @@ dmenu_init_dsaves();
 
 dkeyboard_texts = ["", "", "", "", ""];
 
+dcategories_holder = [];
 dkeys_helper = 0;
 dkeys_data = [];
 

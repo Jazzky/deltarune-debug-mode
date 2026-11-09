@@ -5,6 +5,7 @@ function dmenu_state_update(arg0 = dmenu_state)
 
 	dhinter_text = "";
 	dmenu_parent_state = "";
+	dcategories_holder = [];
     switch (state)
     {
         case "debug":
@@ -77,6 +78,7 @@ function dmenu_state_update(arg0 = dmenu_state)
             dmenu_box = 0;
             dbutton_layout = 0;
     }
+	dmenu_add_categories();
 }
 
 function dmenu_state_interact(arg0 = dmenu_state)

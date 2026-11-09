@@ -4,6 +4,7 @@ function dmenu_update_keyboard()
 	if (dutils_cur_kb_key() == undefined)
 		exit;
 
+	dmenu_set_reindex(true);
 	dmenu_handle_kb();
 
 	var keyboard_func = dmenu_get_keyboard_func();
@@ -24,7 +25,7 @@ function dmenu_update_keyboard()
 
 	if (kill_method == 1) // an error occured
 	{
-		snd_play(error_snd);
+		snd_play(snd_error);
 		dmenu_reset_kb();
 	}
 

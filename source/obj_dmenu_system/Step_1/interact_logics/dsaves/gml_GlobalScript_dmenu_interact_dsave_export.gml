@@ -76,13 +76,13 @@ function dmenu_interact_dsave_load()
 
 function dmenu_interact_dsave_update_metadata()
 {
-	if (selected_name == "- " + dstr("Rename", "Renommer"))
+	if (btn_data == "rename")
 		dmenu_state = "dsave_edit_name";
 
-	else if (selected_name == "- " + dstr("Edit description", "Modifier description"))
+	else if (btn_data == "desc")
 		dmenu_state = "dsave_edit_desc";
 	
-	else if (selected_name == "- " + dstr("Change category", "Changer description"))
+	else if (btn_data == "cate")
 		dmenu_state = "dsave_edit_cat";
 }
 

@@ -14,7 +14,7 @@ function dmenu_interact_set_itemgiver_type()
 function dmenu_setup_dgiver_infos()
 {
 	var item_type = dmenu_state;
-	var item_id = dbuttons[dvertical_index].data;
+	var item_id = btn_data;
 
 	switch (dgiver_infos.item_type)
 	{

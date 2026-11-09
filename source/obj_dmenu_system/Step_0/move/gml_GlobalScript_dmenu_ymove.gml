@@ -1,6 +1,13 @@
 function dmenu_get_ymove_callfunc(arg0=dmenu_state)
 {
 	var state = arg0;
+
+	switch (state)
+	{
+		case "recruits":
+		case "flag_misc":
+			return (dmenu_state_update);
+	}
 	return (undefined);
 }
 

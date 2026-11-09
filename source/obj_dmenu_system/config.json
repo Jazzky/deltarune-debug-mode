@@ -5,6 +5,7 @@
 	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
 	"utils/gml_GlobalScript_dmenu_fix_start_index.gml": {},
 	"utils/gml_GlobalScript_dmenu_dsave_utils.gml": {},
+	"utils/gml_GlobalScript_dmenu_step_setters.gml": {},
 	"utils/history/gml_GlobalScript_dpop_history.gml": {},
 
 
@@ -16,6 +17,10 @@
 
 
 	"Step_0/actions/gml_GlobalScript_dmenu_confirm.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_cancel.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_check_misc_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_main_menu_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_dsaves_keys.gml": {},
 
 	"Step_0/keyboard/gml_GlobalScript_dmenu_default_kb.gml": {},
 	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_flag_categories.gml": {},
@@ -40,6 +45,7 @@
 	"Step_0/dhinter/gml_GlobalScript_dmenuback_update_dhinter.gml": {},
 
 	"Step_1/gml_GlobalScript_dmenu_makebt.gml": {},
+	"Step_1/gml_GlobalScript_dmenu_categories.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_new_save.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_main_menu.gml": {},
 	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_update_dsave_load.gml": {},
@@ -63,6 +69,11 @@
 	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_interact_give_item.gml": {},
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_globals.gml": {},
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_main_menu.gml": {},
+
+
+	"Draw/gml_GlobalScript_dmenu_draw_box.gml": {},
+	"Draw/gml_GlobalScript_dmenu_draw_sprite_tags.gml": {},
+	"Draw/gml_GlobalScript_dmenu_draw_key_helper.gml": {},
 
 
 	"gml_Object_obj_dmenu_system_Create_0.gml": {

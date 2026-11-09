@@ -22,7 +22,8 @@ function dmenu_update_history(arg0="add")
 		["dvertical_index", "dvertical_index_history", 0],
 		["dmenu_start_index", "dmenu_start_index_history", 0],
 		["dhorizontal_index", "dhorizontal_index_history", 0],
-		["dhorizontal_page", "dhorizontal_page_history", 0]
+		["dhorizontal_page", "dhorizontal_page_history", 0],
+		["dcollapsed_categories", "dcollapsed_categories_history", []]
 	];
 
 	var _len = array_length(historics);
@@ -35,15 +36,14 @@ function dmenu_update_history(arg0="add")
 
 		if (method == "add") {
 			array_push(historic, variable_instance_get(id, state_varname));
+			variable_instance_set(id, state_varname, default_val);
 		}
 		else if (method == "pop") {
 			variable_instance_set(id, state_varname, array_pop(historic));
 		}
 		else if (method == "init") {
-			if (i != 0)
-				variable_instance_set(id, state_varname, array_pop(historic));
-				
 			variable_instance_set(id, historic_varname, []);
+			variable_instance_set(id, state_varname, default_val);
 		}
 	}
 }

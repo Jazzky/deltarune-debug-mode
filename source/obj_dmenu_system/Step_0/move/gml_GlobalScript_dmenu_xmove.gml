@@ -37,4 +37,5 @@ function dmenu_xmove()
 		exit;
 
 	callfunc();
+	dmenu_state_update();
 }

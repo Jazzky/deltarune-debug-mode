@@ -7,7 +7,7 @@ function dmenu_update_recruits()
 		preset_string = " " + preset_string;
 
 	dbuttons = [
-		dmenu_makebt(preset_string, -1, [0, global.chapter])
+		dmenu_makebt(preset_string, "preset", [0, global.chapter])
 	]
 
 	dbutton_layout = 1;
@@ -44,8 +44,8 @@ function dmenu_update_recruits_presets()
 {
 	dmenu_title = dstr("Recruit Presets", "Préréglages des recrues");
 	dbuttons = [
-		dmenu_makebt(dstr("Recruit All", "Recruter tous")),
-		dmenu_makebt(dstr("Lose All", "Perdre tous"))
+		dmenu_makebt(dstr("Recruit All", "Recruter tous"), "recruit"),
+		dmenu_makebt(dstr("Lose All", "Perdre tous"), "lose")
 	];
 	
 	if (dhorizontal_page != 0)

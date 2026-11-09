@@ -41,7 +41,7 @@ function _dcmd_set_direct_global(arg0, arg1)
 
 	var glob_exists = variable_global_exists(global_name);
 	var glob_value = variable_global_get(global_name);
-	if (!update_global) {
+	if (!end_value == undefined) {
 		if (!glob_exists)
 			scr_debug_print("Global '" + global_name + "' doesn't exists");
 		else

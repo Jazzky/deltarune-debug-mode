@@ -52,10 +52,21 @@ function dmenu_update_flag()
 		var combined = cur_option[1] + " - " + dstr("problem lol", "problème lol");
 		option_index = find_subarray_index(cur_option[2], cur_option[3]);
 		
-		combined = cur_option[1] + " -  " + cur_option[3][option_index][0];
-		
-		if (string_length(combined) > max_len)
+		combined = cur_option[1] + " - "
+		if (option_index != 0)
+			combined += "</larrow/> "
+
+		combined += cur_option[3][option_index][0];
+
+		if (option_index != (nb_options - 1))
+			combined += "</rarrow/>";
+
+
+		if (string_length(combined) > max_len && 0)
 			combined = string_copy(combined, 1, max_len - 3) + "...";
+
+		if (i == dvertical_index)
+			dhorizontal_index = option_index;
 		
 		array_push(dbuttons, dmenu_makebt(combined, i, nb_options));
 	}
