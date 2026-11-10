@@ -19,6 +19,9 @@
 		"mode": "append"
 	},
 
-	"arrays/gml_GlobalScript_dutils_array_utils.gml": {}
+	"files/gml_GlobalScript_dutils_file_utils.gml": {},
+	"files/gml_GlobalScript_dutils_read_file.gml": {},
 
+	"arrays/gml_GlobalScript_dutils_array_utils.gml": {},
+	"arrays/gml_GlobalScript_dutils_array_copy.gml": {}
 }

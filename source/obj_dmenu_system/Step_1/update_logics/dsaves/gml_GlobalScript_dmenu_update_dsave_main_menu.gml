@@ -1,3 +1,17 @@
+function _dmenu_check_dsave_cate_id(arg0, arg1)
+{
+	var cat_name = arg0;
+	var cat_lst = arg1;
+
+	var nb_cat = array_length(cat_lst);
+	for (var i = 0; i < nb_cat; i++) {
+		if (cat_lst[i] == cat_name)
+			return (i);
+	}
+	array_push(cat_lst, cat_name);
+	return (nb_cat);
+}
+
 function dmenu_update_dsave_main_menu()
 {
 	dmenu_title = "Debug save";
@@ -9,53 +23,39 @@ function dmenu_update_dsave_main_menu()
 	dmenu_set_bttype(dbuttons[1], "keyboard");
 
 	var save_substr = dkeyboard_texts[0];
-	if (dutils_reading_kb() || save_substr != "")
+	if (save_substr != "" || dutils_reading_kb())
 	{
 		dbuttons[1].text = dstr("Contains: ", "Contient : ");
 		dbuttons[1].data = string_length(dbuttons[1].text);
 		dbuttons[1].text += save_substr;
 	}
+	var nb_base_bt = array_length(dbuttons);
 	
 	var subs = [];
-	for (var i = 0; i < array_length(debug_save_names); i++)
+	var categories = [];
+	for (var i = 0; i < array_length(debug_saves); i++)
 	{
-		var s_chap = debug_save_chapters[i];
-		
-		if (s_chap != -1 && s_chap != global.chapter)
+		var _save = debug_saves[i];
+
+		var _cate_id = _dmenu_check_dsave_cate_id(_save.cat, categories);
+		if (_cate_id == array_length(subs))
+			array_push(subs, []);
+
+		if (!string_pos(save_substr, _save.name))
 			continue;
-		
-		var s_name = debug_save_names[i];
-		var s_cat = debug_save_categories[i];
-		
-		if (s_cat != "")
-		{
-			var cat_index = -1;
-			
-			for (var j = 0; j < array_length(dbuttons); j++)
-			{
-				if (dbuttons[j].text == s_cat)
-				{
-					cat_index = j;
-					break;
-				}
-			}
-			
-			if (cat_index == -1)
-			{
-				cat_index = array_length(dbuttons);
-				array_push(dbuttons, dmenu_makebt(s_cat));
-				subs[cat_index] = [];
-				subs[cat_index + 1000] = [];
-			}
-			
-			array_push(subs[cat_index], s_name);
-			array_push(subs[cat_index + 1000], i);
-		}
-		else
-			array_push(dbuttons, dmenu_makebt(s_name, i));
+
+		var save_bt = dmenu_makebt(_save.name, _save);
+		array_push(subs[_cate_id], save_bt)
 	}
-	
-	dmenu_dsave_process_submenus(subs, save_substr);
+
+	var _dbuttons_index = nb_base_bt;
+	for (var i = 0; i < array_length(categories); i++) {
+		if (!array_length(subs[i]))
+			continue;
+
+		dbuttons[_dbuttons_index] = dmenu_makebt(categories[i]);
+		dmenu_create_category(_dbuttons_index++, subs[i]);
+	}
 	dmenu_box = 1;
 	dbutton_layout = 1;
 }

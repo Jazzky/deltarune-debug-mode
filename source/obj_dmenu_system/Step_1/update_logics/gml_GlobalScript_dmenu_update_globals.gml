@@ -10,10 +10,11 @@ function dmenu_update_globals()
 	set_derror_print(false);
 	for (var i = 0; i < array_length(dglobal_changer_options); i++)
 	{
-		name = dglobal_changer_options[i][0];
-		limit = dglobal_changer_options[i][2];
+		var name = dglobal_changer_options[i][0];
+		var limit = dglobal_changer_options[i][1];
+		var display_name = dglobal_changer_options[i][2];
 		
-		text = name;
+		var text = display_name;
 		var global_value = "";
 
 		if (i == 0 && reading_custom) {
@@ -26,8 +27,10 @@ function dmenu_update_globals()
 			if (i == dvertical_index)
 				bt_index = dhorizontal_index;
 
-			name += "[" + string(bt_index) + "]";
-			text = name;
+			var _add = "[" + string(bt_index) + "]";
+			name += _add;
+			display_name += _add;
+			text = display_name;
 		}
 
 
@@ -41,16 +44,19 @@ function dmenu_update_globals()
 		if (dutils_reading_kb() && i == dvertical_index)
 		{
 			var _keyboard_text = dkeyboard_texts[reading_custom];
-			if (_keyboard_text != "")
+			if (_keyboard_text != "" || i > 0)
 				global_value = _keyboard_text;
 		}
 		
-		text += " = |" + string(global_value) + "|";
+		text += " = |";
+		var _keyboard_textstart = string_length(text);
+		text += string(global_value) + "|";
+
 		var btlimit = [0, 0];
 		if (limit != -1)
 			btlimit = [0, limit - 1];
 
-		array_push(dbuttons, dmenu_makebt(text, name, btlimit));
+		array_push(dbuttons, dmenu_makebt(text, _keyboard_textstart, btlimit));
 		dmenu_set_bttype(dbuttons[i], "keyboard");
 	}
 	set_derror_print(true);

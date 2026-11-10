@@ -12,7 +12,6 @@ function dmenu_interact_flag_categories()
 	}
 	
 	dmenu_state = "flag_misc";
-	dhorizontal_index = find_subarray_index(dother_options[0][2], dother_options[0][3]);
 }
 
 function dmenu_interact_flags()

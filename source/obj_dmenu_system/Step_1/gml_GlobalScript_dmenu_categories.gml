@@ -12,7 +12,12 @@ function dmenu_create_category(arg0, arg1=[])
 	}
 
 	var cate_parent_btn = dbuttons[base_y];
-	var cate_id = string(cate_parent_btn.data);
+	var cate_id = cate_parent_btn.data;
+	
+	if (cate_id == undefined) {
+		cate_id = cate_parent_btn.text;
+		cate_parent_btn.data = cate_id;
+	}
 
 	cate_parent_btn.category = cate_id;
 	dmenu_set_bttype(cate_parent_btn, "category");
@@ -44,6 +49,7 @@ function dmenu_add_categories()
 			if (typeof(cate_bt) == "string")	
 				cate_bt = dmenu_makebt(cate_bt);
 
+			cate_bt.text = "- " + cate_bt.text;
 			cate_bt.category = cate_id;
 			array_insert(dbuttons, cate_y + i + 1, cate_bt);
 		}

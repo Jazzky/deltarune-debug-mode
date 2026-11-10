@@ -5,7 +5,7 @@ function scr_get_debug_save_list()
     debug_save_categories = [];
     debug_save_chapters = [];
     debug_save_descriptions = [];
-    var base_dir = "debug_save/";
+    var base_dir = "debug_save/ch" + string(global.chapter) + "/";
     
     if (!directory_exists(base_dir))
         return debug_save_sections;
@@ -37,7 +37,6 @@ function scr_get_debug_save_list()
     }
     
     var unsorted_saves = [];
-    
     for (var i = 0; i < array_length(files_to_read); i++)
     {
         var save_path = files_to_read[i];
@@ -94,18 +93,20 @@ function scr_get_debug_save_list()
                     file_text_close(out_file);
                 }
                 
-                var s_name = meta.SaveName;
-                var s_cat = meta.Category;
                 var s_chap = variable_struct_exists(meta, "Chapter") ? meta.Chapter : -1;
-                var s_desc = variable_struct_exists(meta, "Description") ? meta.Description : "No description.";
-                array_push(unsorted_saves, 
-                {
-                    path: save_path,
-                    name: s_name,
-                    cat: s_cat,
-                    chap: s_chap,
-                    desc: s_desc
-                });
+				if (s_chap == global.chapter) {
+					var s_name = meta.SaveName;
+					var s_cat = meta.Category;
+					var s_desc = variable_struct_exists(meta, "Description") ? meta.Description : "No description.";
+					array_push(unsorted_saves, 
+					{
+						path: save_path,
+						name: s_name,
+						cat: s_cat,
+						chap: s_chap,
+						desc: s_desc
+					});
+				}
             }
         }
         catch (e)
@@ -146,6 +147,9 @@ function scr_get_debug_save_list()
         return 0;
     });
     
+	debug_saves = unsorted_saves;
+	return (unsorted_saves);
+
     for (var i = 0; i < array_length(unsorted_saves); i++)
     {
         var s = unsorted_saves[i];

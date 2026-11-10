@@ -1,4 +1,4 @@
-function dmenu_makebt(arg0="", arg1=-1, arg2=undefined)
+function dmenu_makebt(arg0="", arg1=undefined, arg2=undefined)
 {
 	var res = {
 		text: arg0,

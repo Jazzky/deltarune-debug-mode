@@ -21,128 +21,22 @@ function scr_debug_sanitize_filename(arg0, arg1 = false)
 
 function scr_debug_save(arg0)
 {
-	var save_name = arg0;
-    
-	global.debug_save_category = "";
-	global.debug_save_description = dstr("No description available.", "Aucune description disponible.");
-    
+	var save_path = arg0;
+	var _newsave = dsaves_get_file_info(save_path);
+
     var temp_id = 999;
     scr_saveprocess(temp_id);
-    var raw_file_path = "";
+    var raw_file_path = "filech" + string(global.chapter) + "_" + string(temp_id);
     
-    var _route_suffix = "";
-    if (variable_global_exists("filechoice_route")) 
-    {
-        _route_suffix = string(global.filechoice_route);
-    }
+    if (!file_exists(raw_file_path)) {
+		scr_debug_print("Error, '" + raw_file_path + "' doesn't exist");
+		exit;
+	}   
 
-    if (global.debug_saving == 1)
-        raw_file_path = "debug_save/filech" + string(global.chapter) + "_" + string(temp_id) + _route_suffix;
-    else
-        raw_file_path = "filech" + string(global.chapter) + "_" + string(temp_id) + _route_suffix;
-    
-    var safe_name = scr_debug_sanitize_filename(save_name);
-    var safe_cat = scr_debug_sanitize_filename(global.debug_save_category, true);
-    var target_dir = "debug_save/ch" + string(global.chapter) + "/";
-    
-    if (!directory_exists(target_dir))
-        directory_create(target_dir);
-    
-    if (safe_cat != "")
-    {
-        target_dir += (safe_cat + "/");
-        
-        if (!directory_exists(target_dir))
-            directory_create(target_dir);
-    }
-    
-    var full_path = target_dir + safe_name + ".save";
-    json_file_path = full_path;
-    var uraboss = 0;
-    
-    if (global.chapter == 1)
-    {
-        if (global.flag[241] == 6)
-            uraboss = 1;
-        else if (global.flag[241] == 7)
-            uraboss = 2;
-    }
-    else if (global.chapter == 2)
-    {
-        if (global.flag[571] == 1)
-            uraboss = 1;
-        else if (global.flag[571] == 2)
-            uraboss = 2;
-    }
-    else
-    {
-        uraboss = scr_get_secret_boss_result(global.chapter);
-    }
-    
-    var save_content = "";
-    
-    if (file_exists(raw_file_path))
-    {
-        var file_id = file_text_open_read(raw_file_path);
-        
-        while (!file_text_eof(file_id))
-        {
-            save_content += (file_text_read_string(file_id) + "\n");
-            file_text_readln(file_id);
-        }
-        
-        file_text_close(file_id);
-        file_delete(raw_file_path);
-    }
-    
-    var current_version = "Unknown";
-    
-    if (variable_global_exists("versionno"))
-        current_version = string(global.versionno);
-    else if (variable_global_exists("version"))
-        current_version = string(global.version);
-    
-    var export_data = 
-    {
-        metadata: 
-        {
-            SaveName: save_name,
-            Category: global.debug_save_category,
-            Chapter: global.chapter,
-            Plot: global.plot,
-            Description: global.debug_save_description,
-            Name: global.truename,
-            Level: global.lv,
-            Love: global.llv,
-            Room: scr_get_id_by_room_index(room),
-            Time: global.time,
-            UraBoss: uraboss,
-            Date: date_current_datetime(),
-            InitLang: global.flag[912],
-            Version: current_version,
-            FilechoiceRoute: variable_global_exists("filechoice_route") ? string(global.filechoice_route) : ""
-        },
-        save_file: save_content
-    };
-    var out_file = file_text_open_write(full_path);
-    file_text_write_string(out_file, json_stringify(export_data, true));
-    file_text_close(out_file);
-    scr_store_ura_result(global.chapter, 999, uraboss);
-    ossafe_ini_open("keyconfig_debug.ini");
-    
-    for (var i = 0; i < 10; i += 1)
-        ini_write_real("KEYBOARD_CONTROLS", string(i), global.input_k[i]);
-    
-    for (var i = 0; i < 10; i += 1)
-        ini_write_real("GAMEPAD_CONTROLS", string(i), global.input_g[i]);
-    
-    ini_write_real("SHOULDERLB_REASSIGN", "SHOULDERLB_REASSIGN", obj_gamecontroller.gamepad_shoulderlb_reassign);
-    ossafe_ini_close();
-    ossafe_savedata_save();
-    global.debug_save_name = -1;
-    global.debug_save_category = "";
-    global.debug_overwrite_section = "";
-    global.debug_saving = 0;
+	var save_content = dutils_read_file(raw_file_path);
+	_newsave.save_name = save_content;
+
+	dutils_write_file(save_path, json_stringify(_newsave));
 }
 
 function scr_debug_cleanup_folder(arg0)

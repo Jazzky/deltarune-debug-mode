@@ -63,7 +63,7 @@ if (!dutils_reading_kb())
 	if (changed_x || changed_page)
 		dmenu_set_reindex(true);
 
-	dmenuback_update_dhinter();
+	//dmenuback_update_dhinter();
 
     if (button1_p())
 		dmenu_confirm();

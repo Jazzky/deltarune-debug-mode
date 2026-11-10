@@ -74,3 +74,20 @@ function dmenu_update_flag()
 	dmenu_box = 2;
 	dbutton_layout = 1;
 }
+
+function find_subarray_index(arg0, arg1)
+{
+    value = global.flag[arg0];
+    lst = arg1;
+    prev = 0;
+    
+    for (i = 0; i < array_length(lst); i++)
+    {
+        if (lst[i][1] > value)
+            break;
+        
+        prev = i;
+    }
+    
+    return prev;
+};

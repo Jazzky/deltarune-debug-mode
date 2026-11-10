@@ -1,58 +1,15 @@
 function dmenu_interact_dsave_save()
 {
-	var target_path = global.debug_selected_save_section;
-	var target_name = global.debug_selected_save_name;
+	var target_path = dload_options.target_path;
 	var cmd = "dsave_save \"" + target_path + "\"";
 
-	global.debug_save_category = "";
-	global.debug_save_name = target_name;
-	global.debug_save_description = dstr("No description available.", "Aucune description disponible.");
-	
-	/*if (file_exists(target_path))
-	{
-		var file_id = file_text_open_read(target_path);
-		var file_content = "";
-		
-		while (!file_text_eof(file_id))
-		{
-			file_content += file_text_read_string(file_id);
-			file_text_readln(file_id);
-		}
-		
-		file_text_close(file_id);
-		
-		try
-		{
-			var parsed_struct = json_parse(file_content);
-			
-			if (is_struct(parsed_struct) && variable_struct_exists(parsed_struct, "metadata"))
-			{
-				var meta = parsed_struct.metadata;
-				
-				if (variable_struct_exists(meta, "Category"))
-					global.debug_save_category = meta.Category;
-				
-				if (variable_struct_exists(meta, "Description"))
-					global.debug_save_description = meta.Description;
-			}
-		}
-		catch (e)
-		{
-		}
-	}*/
-	//TODO add functions to easily get debug saves infos
-	
-	
-	var cmd = "dsave_save \"" + target_name + "\"";
-	global.debug_overwrite_section = target_path;
 	dconsole_exec(cmd);
-
 	dmenu_reset_menu();
 }
 
 function dmenu_interact_dsave_delete()
 {
-	var target_path = global.debug_selected_save_section;
+	var target_path = dload_options.target_path;
 	
 	var cmd = "dsave_delete \"" + string(target_path) + "\"";
 	var res = dmode_parse_cmd(cmd);
@@ -67,7 +24,7 @@ function dmenu_interact_dsave_delete()
 
 function dmenu_interact_dsave_load()
 {
-	var target_path = global.debug_selected_save_section;
+	var target_path = dload_options.target_path;
 	var res = dconsole_exec("dsave_load \"" + string(target_path) + "\"");
 	
 	if (res == 0)
@@ -88,29 +45,27 @@ function dmenu_interact_dsave_update_metadata()
 
 function dmenu_interact_dsave_update_metadata_confirm()
 {
-	if (dvertical_index == 1 && dhorizontal_index == 0)
-	{
-		var target_path = global.debug_selected_save_section;
-		var final_text = dkeyboard_texts[0];
-		var cmd_arg = "";
-		var ini_key = "";
-		
-		if (dmenu_state == "dsave_edit_name")
-			cmd_arg = "savename";
-		else if (dmenu_state == "dsave_edit_desc")
-			cmd_arg = "description";
-		else if (dmenu_state == "dsave_edit_cat")
-			cmd_arg = "category";
+	var target_path = dload_options.target_section;
+	var final_text = dkeyboard_texts[0];
+	var cmd_arg = "";
+	var ini_key = "";
+	
+	if (dmenu_state == "dsave_edit_name")
+		cmd_arg = "savename";
+	else if (dmenu_state == "dsave_edit_desc")
+		cmd_arg = "description";
+	else if (dmenu_state == "dsave_edit_cat")
+		cmd_arg = "category";
 
-		cmd_arg = "--" + cmd_arg + "=\"" + final_text + "\"";
-		var cmd = "dsave_update \"" + string(target_path) + "\" " + cmd_arg;
-		var res = dconsole_exec(cmd);
+	cmd_arg = "--" + cmd_arg + "=\"" + final_text + "\"";
+	var cmd = "dsave_update \"" + string(target_path) + "\" " + cmd_arg;
+	var res = dconsole_exec(cmd);
 
-		if (typeof(res) == "string")
-			global.debug_selected_save_section = res;
+	if (typeof(res) == "string")
+		global.debug_selected_save_section = res;
 
-		if (dmenu_state == "dsave_edit_name" && final_text != "")
-			global.debug_selected_save_name = final_text;
-	}
+	if (dmenu_state == "dsave_edit_name" && final_text != "")
+		global.debug_selected_save_name = final_text;
+
 	dpop_history();
 }

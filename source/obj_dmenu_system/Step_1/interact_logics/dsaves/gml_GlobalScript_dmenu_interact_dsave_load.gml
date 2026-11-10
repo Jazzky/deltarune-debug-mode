@@ -1,12 +1,5 @@
-function dmenu_interact_dsave_load()
+function dmenu_interact_dsave_load_menu()
 {
-	var check_name = selected_name;
-	if (dmenu_dsave_interact_submenus(check_name))
-		exit;
-
-	var target_sec = global.debug_selected_save_section;
-	var target_name = global.debug_selected_save_name;
-	
 	if (btn_data == "save")
 		dmenu_interact_dsave_save();
 

@@ -84,8 +84,27 @@
     "mode": "replace",
     "gml_name": "gml_GlobalScript_scr_debug_save"
   },
+
+  ".override_scr_load": {
+    "gml_name": "gml_GlobalScript_scr_load",
+	"actions": [
+		{
+			"find_replace": {
+				"find": "function scr_load()",
+				"replace": "function scr_load(arg0=undefined)"
+			}
+		},
+		{
+			"find_replace": {
+				"find": "myfileid = ossafe_file_text_open_read(file);",
+				"replace": "myfileid = ossafe_file_text_open_read((arg0 == undefined) ? file : arg0);"
+			}
+		}
+	]
+  },
   "debug_load": {
     "mode": "replace",
     "gml_name": "gml_GlobalScript_scr_debug_load"
   }
+
 }

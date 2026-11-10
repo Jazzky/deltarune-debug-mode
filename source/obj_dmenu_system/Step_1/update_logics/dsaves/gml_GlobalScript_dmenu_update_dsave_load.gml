@@ -1,11 +1,11 @@
 function dmenu_update_dsave_load()
 {
-	dmenu_title = dstr("Options: ", "Options : ") + string(global.debug_selected_save_name);
+	dmenu_title = dstr("Options: ", "Options : ") + string(dload_options.target_name);
 	dbuttons = [
 			dmenu_makebt(dstr("Load", "Charger"), "load", [0, 1]),
 			dmenu_makebt(dstr("Save", "Sauver"), "save"),
-			dmenu_makebt(dstr("Export", "Exporter"), -1),
-			dmenu_makebt(dstr("Save management", "Gestion sauvegardes"), -1),
+			dmenu_makebt(dstr("Export", "Exporter")),
+			dmenu_makebt(dstr("Save management", "Gestion sauvegardes")),
 			dmenu_makebt(dstr("Delete", "Supprimer"), "delete")
 	];
 
@@ -22,8 +22,14 @@ function dmenu_update_dsave_load()
 	];
 	dmenu_create_category(3, subs);
 
-	var load_options = [" (Normal)", dstr("  (Current inventory)", "  (Inventaire actuel)")];
-	dbuttons[0].text += load_options[dload_options.target_keep_inv];
+	var load_options = ["(Normal)", dstr("(Current inventory)", "(Inventaire actuel)")];
+	var load_text = load_options[dload_options.target_keep_inv];
+	if (dload_options.target_keep_inv)
+		load_text = "</larrow/> " + load_text;
+	else
+		load_text += "</rarrow/>";
+
+	dbuttons[0].text += " " + load_text;
 
 	dmenu_box = 1;
 	dbutton_layout = 1;

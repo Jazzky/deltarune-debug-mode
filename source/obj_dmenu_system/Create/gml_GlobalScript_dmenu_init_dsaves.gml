@@ -2,7 +2,9 @@ function dmenu_init_dsaves()
 {
 	dload_options = 
 	{
-		target_save: -1,
+		target_name: "",
+		target_path: "",
+		target_section: "",
 		target_keep_inv: false
 	};
 

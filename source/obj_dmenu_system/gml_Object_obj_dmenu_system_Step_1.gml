@@ -108,7 +108,7 @@ function dmenu_state_interact(arg0 = dmenu_state)
             break;
         
         case "debug_save_options":
-			dmenu_interact_dsave_load(check_name);
+			dmenu_interact_dsave_load_menu();
             break;
         
         case "dsave_edit_name":

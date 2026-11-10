@@ -34,53 +34,54 @@ function _dcmd_get_global_string(arg0)
 	return ("");
 }
 
-function _dcmd_set_direct_global(arg0, arg1)
+function _dcmd_check_access_lst(arg0, arg1)
 {
-	var global_name = arg0;
-	var end_value = arg1;
+	var lst = arg0;
+	var len = arg1;
 
-	var glob_exists = variable_global_exists(global_name);
-	var glob_value = variable_global_get(global_name);
-	if (!end_value == undefined) {
-		if (!glob_exists)
-			scr_debug_print("Global '" + global_name + "' doesn't exists");
-		else
-			scr_debug_print("Global '" + global_name + "' = " + string(glob_value));
+	for (var i = 1; i < len; i++) {
+		if (!dutils_isuint(lst[i]))
+			return (undefined);
+
+		lst[i] = real(lst[i]);
 	}
-	else {
-		variable_global_set(global_name, end_value)
-		if (!glob_exists)
-			scr_debug_print("Global '" + global_name + "' created!");
-		else
-			scr_debug_print("Global '" + global_name + "' updated!");
-	}
-	return (0);
+	return (lst);
 }
 
-function _dcmd_set_array_global(arg0, arg1, arg2)
+function _dcmd_set_global(arg0, arg1, arg2) // screw you gms2
 {
-	var global_name = arg0;
-	var access_list = arg1;
+	var access_lst = arg0;
+	var access_lst_len = arg1;
 	var end_value = arg2;
 
-	var glob_exists = variable_global_exists(global_name);
-	var glob_value = variable_global_get(global_name);
-	var access_len = darray_length(access_list);
+	access_lst = _dcmd_check_access_lst(access_lst, access_lst_len);
+	if (access_lst == undefined)
+		return (1);
 
-	for (var i = 1; i < access_len; i++) {
-		var access_index_str = access_list[i];
-		if (!dutils_isuint(access_index_str)) {
-			scr_debug_print("Error: invalid number '" + access_index_str + "'");
-			return (1);
-		}
+	var glob_name = access_lst[0];
+	var glob_value = variable_global_get(glob_name);
 
-		var access_index = real(access_index_str);
-		if (i == (access_len - 1))
-			glob_value[access_index] = end_value;
-
-		else
-			glob_value = glob_value[access_index];
+	var lst = access_lst;
+	if (access_lst_len == 1) {
+		glob_value = end_value;
 	}
+	else if (access_lst_len == 2) {
+		glob_value[lst[1]] = end_value;
+	}
+	else if (access_list_len == 3) {
+		glob_value[lst[1]][lst[2]] = end_value;
+	}
+	else if (access_list_len == 4) {
+		glob_value[lst[1]][lst[2]][lst[3]] = end_value;
+	}
+	else if (access_list_len == 5) {
+		glob_value[lst[1]][lst[2]][lst[3]][lst[4]] = end_value;
+	}
+	else if (access_list_len == 6) {
+		glob_value[lst[1]][lst[2]][lst[3]][lst[4]][lst[5]] = end_value;
+	}
+
+	variable_global_set(glob_name, glob_value);
 	return (0);
 }
 
@@ -101,11 +102,7 @@ function dcmd_set_global(argc, argv, flags)
 
 	var access_list_len = darray_length(access_list);
 	var global_name = access_list[0];
-	var res;
-	if (access_list_len == 1)
-		res = _dcmd_set_direct_global(global_name, end_value);
-	else
-		res = _dcmd_set_array_global(global_name, access_list, end_value);
 
+	var res = _dcmd_set_global(access_list, access_list_len, end_value);
 	return (res);
 }

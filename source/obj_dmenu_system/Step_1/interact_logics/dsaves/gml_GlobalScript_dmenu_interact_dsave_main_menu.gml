@@ -2,20 +2,14 @@ function dmenu_interact_dsave_main_menu()
 {
 	if (dvertical_index == 0)
 	{
-		dmenu_state = "new_debug_save";
+		dpop_history();
 		exit;
 	}
 	
-	if (dmenu_dsave_interact_submenus(selected_name))
-		exit;
-	
-	var real_index = dbuttons[dvertical_index].data;
-	
-	if (real_index >= 0)
-	{
-		global.debug_selected_save_section = debug_save_sections[real_index];
-		global.debug_selected_save_name = debug_save_names[real_index];
-		dmenu_state = "debug_save_options";
-		dmenu_state_update();
-	}
+	var _save = dbuttons[dvertical_index].data;
+	dload_options.target_name = _save.name;
+	dload_options.target_path = _save.path;
+	dload_options.target_section = _save.cat;
+
+	dmenu_state = "debug_save_options";
 }
