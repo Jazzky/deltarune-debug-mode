@@ -12,9 +12,7 @@ function dmenu_interact_dsave_delete()
 	var target_path = dload_options.target_path;
 	
 	var cmd = "dsave_delete \"" + string(target_path) + "\"";
-	var res = dmode_parse_cmd(cmd);
-	if (res == 0)
-		scr_get_debug_save_list();
+	var res = dconsole_exec(cmd);
 
 	dpop_history();
 	dvertical_index = 0;
@@ -45,7 +43,12 @@ function dmenu_interact_dsave_update_metadata()
 
 function dmenu_interact_dsave_update_metadata_confirm()
 {
-	var target_path = dload_options.target_section;
+	if (!(dvertical_index == 1 && dhorizontal_index == 0)) {
+		dpop_history();
+		exit;
+	}
+
+	var target_path = dload_options.target_path;
 	var final_text = dkeyboard_texts[0];
 	var cmd_arg = "";
 	var ini_key = "";

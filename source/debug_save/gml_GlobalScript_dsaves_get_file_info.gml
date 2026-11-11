@@ -28,6 +28,7 @@ function dsaves_get_file_info(arg0=undefined)
 	var filepath = filename_path(path);
 	var res_json =
 	{
+		// keys = SaveName, Category, Chapter, Description
 		metadata:
 		{
 			SaveName: _dsaves_fetch_json_info(_metadata, "SaveName", dutils_remove_file_extension(filename)),

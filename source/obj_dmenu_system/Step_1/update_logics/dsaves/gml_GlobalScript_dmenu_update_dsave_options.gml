@@ -11,7 +11,7 @@ function dmenu_update_dsave_metadata()
 	
 	dbuttons_2d = [
 		[
-			dmenu_makebt("")
+			dmenu_makebt("", 1)
 		],
 		[
 			dmenu_makebt(dstr("Save", "Sauver")),
@@ -34,21 +34,6 @@ function dmenu_update_dsave_metadata()
 		default_text = dstr("Enter category", "Entrer catégorie");
 	
 
-	for (var i = 0; i < array_length(debug_save_sections); i++)
-	{
-		if (debug_save_sections[i] == target_path)
-		{
-			if (dmenu_state == "dsave_edit_name")
-				default_text = debug_save_names[i];
-			else if (dmenu_state == "dsave_edit_desc")
-				default_text = debug_save_descriptions[i];
-			else if (dmenu_state == "dsave_edit_cat")
-				default_text = debug_save_categories[i];
-			
-			break;
-		}
-	}
-	
 	var cur_btn = dkeyboard_texts[0];
 	if (cur_btn == "")
 		cur_btn = default_text;

@@ -2,7 +2,7 @@ function dmenu_interact_dsave_main_menu()
 {
 	if (dvertical_index == 0)
 	{
-		dpop_history();
+		dmenu_state = "new_debug_save";
 		exit;
 	}
 	

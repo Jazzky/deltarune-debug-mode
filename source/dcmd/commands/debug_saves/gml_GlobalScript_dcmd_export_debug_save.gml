@@ -13,7 +13,7 @@ function dcmd_export_debug_save(argc, argv, flags)
 
 	var export_mode = "normal";
 	if (dcmd_flag_used(flags, "mode"))
-		export_mode = dcmd_flags_get_value(flags, "mode");
+		export_mode = dcmd_get_flag(flags, "mode");
 
 
 	if (export_mode == "normal")
@@ -51,14 +51,15 @@ function _dcmd_export_normal(arg0)
 	var _save = dsaves_get_file_info(source_file);
 	dsave_export_savedata(_save, export_path)
 
-	scr_debug_print("'" + string("TODO") + "' exporté avec succès !");
+	scr_debug_print("'" + _save.SaveName + "' exporté avec succès !");
 	snd_play(snd_shineselect);
 }
 
 function _dcmd_export_debug(arg0)
 {
 	var source_file = arg0;
-	var export_path = get_save_filename("Debug save (*.save)|*.save", string("TODO") + ".save");
+	var filename = filename_name(source_file);
+	var export_path = get_save_filename("Debug save (*.save)|*.save", filename);
 
 	if (file_exists(export_path))
 		file_delete(export_path);

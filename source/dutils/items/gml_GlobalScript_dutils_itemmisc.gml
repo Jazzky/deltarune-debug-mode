@@ -1,7 +1,7 @@
 function dutils_get_simplify_itemtype(arg0)
 {
 	var lookup_type = arg0;
-	var res = arg0;
+	var res = undefined;
 
 	switch (lookup_type) {
 		case "item":

@@ -51,9 +51,6 @@ function dmenu_ymove_common_2d()
 
 function dmenu_ymove_textbox_type()
 {
-	if (dvertical_index == 0)
-		exit;
-
 	if (up_pressed || down_pressed)
 		dvertical_index ^= 1;
 }

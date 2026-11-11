@@ -1,10 +1,5 @@
 function scr_get_debug_save_list()
 {
-    debug_save_sections = [];
-    debug_save_names = [];
-    debug_save_categories = [];
-    debug_save_chapters = [];
-    debug_save_descriptions = [];
     var base_dir = "debug_save/ch" + string(global.chapter) + "/";
     
     if (!directory_exists(base_dir))
@@ -40,79 +35,17 @@ function scr_get_debug_save_list()
     for (var i = 0; i < array_length(files_to_read); i++)
     {
         var save_path = files_to_read[i];
-        var file_id = file_text_open_read(save_path);
-        var file_content = "";
-        
-        while (!file_text_eof(file_id))
-        {
-            file_content += file_text_read_string(file_id);
-            file_text_readln(file_id);
-            
-            if (!file_text_eof(file_id))
-                file_content += "\n";
-        }
-        
-        file_text_close(file_id);
-        
-        try
-        {
-            var save_struct = json_parse(file_content);
-            
-            if (is_struct(save_struct) && variable_struct_exists(save_struct, "metadata"))
-            {
-                var meta = save_struct.metadata;
-                var clean_path = string_replace_all(save_path, "\\", "/");
-                var actual_file = filename_name(clean_path);
-                var actual_name = string_replace(actual_file, ".save", "");
-                var parent_dir = filename_dir(clean_path);
-                var actual_cat_folder = filename_name(parent_dir);
-                var actual_cat = "";
-                var is_chapter_folder = string_length(actual_cat_folder) >= 3 && string_copy(actual_cat_folder, 1, 2) == "ch" && string_digits(actual_cat_folder) != "";
-                
-                if (!is_chapter_folder && actual_cat_folder != "debug_save")
-                    actual_cat = actual_cat_folder;
-                
-                var needs_healing = false;
-                
-                if (!variable_struct_exists(meta, "SaveName") || meta.SaveName != actual_name)
-                {
-                    meta.SaveName = actual_name;
-                    needs_healing = true;
-                }
-                
-                if (!variable_struct_exists(meta, "Category") || meta.Category != actual_cat)
-                {
-                    meta.Category = actual_cat;
-                    needs_healing = true;
-                }
-                
-                if (needs_healing)
-                {
-                    var out_file = file_text_open_write(save_path);
-                    file_text_write_string(out_file, json_stringify(save_struct, true));
-                    file_text_close(out_file);
-                }
-                
-                var s_chap = variable_struct_exists(meta, "Chapter") ? meta.Chapter : -1;
-				if (s_chap == global.chapter) {
-					var s_name = meta.SaveName;
-					var s_cat = meta.Category;
-					var s_desc = variable_struct_exists(meta, "Description") ? meta.Description : "No description.";
-					array_push(unsorted_saves, 
-					{
-						path: save_path,
-						name: s_name,
-						cat: s_cat,
-						chap: s_chap,
-						desc: s_desc
-					});
-				}
-            }
-        }
-        catch (e)
-        {
-            scr_debug_print(dstr("Error parsing save file: ", "Erreur lors de l'analyse du fichier de sauvegarde : ") + filename_name(save_path));
-        }
+		var _json = dsaves_get_file_info(save_path);
+		var _meta = _json.metadata;
+
+		array_push(unsorted_saves, 
+		{
+			path: save_path,
+			name: _meta.SaveName,
+			cat: _meta.Category,
+			chap: _meta.Chapter,
+			desc: _meta.Description
+		});
     }
     
     array_sort(unsorted_saves, function(arg0, arg1)

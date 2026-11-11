@@ -78,6 +78,7 @@ function dconsole_fetch_function(arg0)
 		case "del_dsave":
 		case "dsave_del":
 		case "delete_dsave":
+		case "dsave_delete":
 			return (dcmd_delete_debug_save);
 
 		case "savedsave":

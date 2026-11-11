@@ -5,6 +5,11 @@ function dcmd_give_item(argc, argv, flags)
 	var item_type;
 	var quantity;
 
+	if (argc == 1) {
+		scr_derror_print("Error, not enough arguments");
+		return (1);
+	}
+
 	if (argc >= 4) {
 		item_type = argv[1];
 		item_name = argv[2];
@@ -12,9 +17,9 @@ function dcmd_give_item(argc, argv, flags)
 	}
 
 	if (argc == 3) {
-		var _valid_cate = _dcmd_fetch_item_category(argv[1]);
-		if (_valid_cate) {
-			item_type = argv[1];
+		var _valid_cate_name = dutils_get_simplify_itemtype(argv[1]);
+		if (_valid_cate_name != undefined) {
+			item_type = _valid_cate_name;
 			item_name = argv[2];
 			quantity = 1;
 		}
@@ -101,6 +106,6 @@ function _dcmd_fetch_item_from_name(arg0, arg1=undefined)
 		if (attempt_id != undefined)
 			return ([cur_type, attempt_id]);
 	}
-	scr_derror_print("Error: no item found with name '" + argv[1] + "'");
+	scr_derror_print("Error: no item found with name '" + itemname + "'");
 	return (undefined);
 }

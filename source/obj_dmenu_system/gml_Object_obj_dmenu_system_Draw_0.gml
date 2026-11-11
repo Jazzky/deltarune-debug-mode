@@ -347,7 +347,7 @@ if (dbutton_layout == 3)
 	inputbox = function(arg0, arg1, arg2, arg3)
 	{
 		var border = 1 * d;
-		draw_set_color((dvertical_index == 0 && !reading_kb) ? c_yellow : c_white);
+		draw_set_color((dvertical_index == 0 && !dutils_reading_kb()) ? c_yellow : c_white);
 		
 		for (var i = 0; i < border; i++)
 			draw_rectangle((arg0 - border) + i, (arg1 - border) + i, (arg2 + border) - i, (arg3 + border) - i, true);
@@ -356,7 +356,7 @@ if (dbutton_layout == 3)
 	inputbox(x_start + xx, text_y, box_right_edge, dynamic_bottom_y);
 	var color = c_gray;
         
-	if (dvertical_index == 0 && dreading_kb)
+	if (dvertical_index == 0 && reading_kb)
 		color = c_yellow;
 	else if (dkeyboard_texts[0] != "")
 		color = c_white;

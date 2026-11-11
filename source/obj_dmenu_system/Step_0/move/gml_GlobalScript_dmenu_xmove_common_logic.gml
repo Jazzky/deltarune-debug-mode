@@ -66,27 +66,18 @@ function dmenu_xmove_common_2d()
 
 function dmenu_xmove_textbox_type()
 {
-	if (dvertical_index == 0)
+	if (!left_pressed && !right_pressed)
 		exit;
 
-	if (left_pressed)
-	{
-		dhorizontal_index--;
-		
-		if (dhorizontal_index == -1)
-		{
-			var TODO = "change this to a proper array_len later";
-			dhorizontal_index = 1;
-		}
-	}
-	
-	else if (right_pressed)
-	{
-		dhorizontal_index++;
-		
-		if (dhorizontal_index == 2)
-			dhorizontal_index = 0;
-	}
+	var row_len = array_length(dbuttons_2d[dvertical_index]);
+	var to_add = (left_pressed) ? -1 : 1;
+
+	dhorizontal_index += to_add;
+
+	if (dhorizontal_index == -1)
+		dhorizontal_index = row_len - 1;
+	else if (dhorizontal_index == row_len)
+		dhorizontal_index = 0;
 }
 
 function dmenu_xmove_common_logic()

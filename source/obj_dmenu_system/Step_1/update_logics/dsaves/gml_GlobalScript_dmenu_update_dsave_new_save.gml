@@ -3,7 +3,7 @@ function dmenu_update_dsave_new_save()
 	dmenu_title = "New debug save";
 	dbuttons_2d = [
 		[
-			dmenu_makebt(dstr("Enter save name", "Entrer nom de sauvegarde"))
+			dmenu_makebt(dstr("Enter save name", "Entrer nom de sauvegarde"), 1)
 		],
 		[
 			dmenu_makebt(dstr("Save", "Sauver")),
@@ -13,14 +13,11 @@ function dmenu_update_dsave_new_save()
 
 	dmenu_set_bttype(dbuttons_2d[0][0], "keyboard");
 
-	var cur_btn = dstr("Enter save name", "Entrer nom de sauvegarde");
-	if (dutils_reading_kb())
-	{
-		cur_btn = dkeyboard_texts[0];
-		dbuttons_2d[0][0].text = cur_btn;
-	}
+	var ipt_text = dkeyboard_texts[0];
+	if (ipt_text != "")
+		dbuttons_2d[0][0].text = ipt_text;;
 	
-	var mono_spacing = (global.darkzone == 1) ? 15 : 8;
+	/*var mono_spacing = (global.darkzone == 1) ? 15 : 8;
 	var text_x = x_start + x_padding + xx;
 	var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
 	var max_width = box_right_edge - text_x;
@@ -35,7 +32,9 @@ function dmenu_update_dsave_new_save()
 			is_multiline = true;
 	}
 
-	is_multiline |= (max_width > 0 && (cursor_x + (str_len * mono_spacing) - text_x) > max_width);
+	if (max_width != -1)
+		is_multiline |= ((cursor_x + (str_len * mono_spacing) - text_x) > max_width);*/
+	var is_multiline = 1;
 	dmenu_box = is_multiline ? 1 : 0;
 	dbutton_layout = 3;
 }

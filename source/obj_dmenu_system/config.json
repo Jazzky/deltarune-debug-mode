@@ -16,6 +16,7 @@
 	"Create/gml_GlobalScript_dmenu_init_dsaves.gml": {},
 
 
+	"Step_0/gml_GlobalScript_dmenu_get_curbtn.gml": {},
 	"Step_0/actions/gml_GlobalScript_dmenu_confirm.gml": {},
 	"Step_0/actions/gml_GlobalScript_dmenu_cancel.gml": {},
 	"Step_0/actions/gml_GlobalScript_dmenu_check_misc_keys.gml": {},
