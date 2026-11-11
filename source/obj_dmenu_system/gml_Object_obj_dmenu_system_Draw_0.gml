@@ -185,6 +185,8 @@ if (dbutton_layout == 1)
 	for (var i = 0; i < nb_option_to_draw; i++)
 	{
 		var button_index = option_start_index + i;
+		if (button_index < 0 || button_index >= button_count)
+			continue;
 		
 		is_cur_line = dvertical_index == button_index;
 		var text_color = is_cur_line ? c_yellow : c_white;

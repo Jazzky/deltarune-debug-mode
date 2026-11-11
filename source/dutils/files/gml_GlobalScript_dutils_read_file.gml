@@ -7,7 +7,7 @@ function dutils_read_file(arg0)
 
 	var file = file_text_open_read(path);
 	var file_content = "";
-	while (!file_text_eof(file_id))
+	while (!file_text_eof(file))
 	{
 		file_content += file_text_readln(file);
 	}
@@ -22,6 +22,6 @@ function dutils_write_file(arg0, arg1)
 	var content = arg1;
 
 	var file = file_text_open_write(filepath);
-	file_text_write_string(content);
+	file_text_write_string(file, content);
 	file_text_close(file);
 }

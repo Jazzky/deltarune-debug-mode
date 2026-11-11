@@ -3,6 +3,12 @@ function scr_debug_load(arg0, arg1=false)
     var file = string(arg0);
 	var keep_inv = arg1;
 
+	if (string_ends_with(file, ".save")) {
+		var output_file = ".temp";
+		dsave_export_savedata(file, output_file);
+		file = output_file;
+	}
+
 	var option_flags = [8, 11, 15, 16, 17, 25, 1391];
 	var nb_cached_options = array_length(option_flags);
 	var cache_option_flags = [];

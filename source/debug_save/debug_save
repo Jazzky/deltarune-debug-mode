@@ -34,9 +34,22 @@ function scr_debug_save(arg0)
 	}   
 
 	var save_content = dutils_read_file(raw_file_path);
-	_newsave.save_name = save_content;
+	file_delete(raw_file_path);
 
+	_newsave.save_file = save_content;
 	dutils_write_file(save_path, json_stringify(_newsave));
+}
+
+function dsave_export_savedata(arg0, arg1=".temp")
+{
+	var dsave_path = arg0;
+	var output_path = arg1;
+
+	if (!file_exists(dsave_path))
+		exit;
+
+	var _content = json_parse(dutils_read_file(dsave_path));
+	dutils_write_file(output_path, _content.save_file);
 }
 
 function scr_debug_cleanup_folder(arg0)

@@ -1,7 +1,7 @@
 function dmenu_fix_start_index()
 {
 	var y_limit = array_length(dbuttons);
-	var drawn_elements = min(5, y_limit); //TODO check if a variable exist
+	var drawn_elements = min(dbutton_max_visible, y_limit);
 	var middle_elements = drawn_elements / 2;
 	var ceiled_mid = ceil(middle_elements)
 

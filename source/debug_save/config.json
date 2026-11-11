@@ -1,4 +1,5 @@
 {
+  "gml_GlobalScript_dsaves_get_file_info.gml": {},
   "savemenu_step_append": {
     "chapters": [-1],
     "mode": "append",
@@ -24,42 +25,6 @@
         "find_replace": {
           "find_file": "draw_event_find",
           "replace_file": "draw_event_replace"
-        }
-      }
-    ]
-  },
-  ".saveprocess_ch5+": {
-    "chapters": [5],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech\" + string(global.chapter) + \"_\" + string(arg0) + global.filechoice_route;",
-          "replace_file": "saveprocess_replace_ch5+"
-        }
-      }
-    ]
-  },
-  ".saveprocess_ch2-4": {
-    "chapters": [2, 3, 4],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech\" + string(global.chapter) + \"_\" + string(arg0);",
-          "replace_file": "saveprocess_replace_ch2-4"
-        }
-      }
-    ]
-  },
-  ".saveprocess_ch1": {
-    "chapters": [1],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech1_\" + string(arg0);",
-          "replace_file": "saveprocess_ch1_replace"
         }
       }
     ]

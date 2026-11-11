@@ -15,12 +15,10 @@ function dmenu_toggle_category(arg0=dvertical_index, arg1=undefined)
 	var new_state = arg1;
 
 	while (parent_y > 0) {
-		scr_debug_print("button " + string(parent_y) + " cat = " + string(dbuttons[parent_y].category));
 		if (dbuttons[parent_y].type == "category")
 			break;
 		parent_y--;
 	}
-	scr_debug_print("Parent y found at " + string(parent_y));
 
 	var cate_id = dbuttons[parent_y].category;
 	var nb_collapsed = array_length(dcollapsed_categories);
@@ -48,8 +46,7 @@ function dmenu_toggle_category(arg0=dvertical_index, arg1=undefined)
 	else if (expand)
 		array_delete(dcollapsed_categories, collapsed_id, 1);
 
-	scr_debug_print("Trying to set from " + string(dvertical_index) + " to " + string(parent_y));
-	//dvertical_index = parent_y;
+	dvertical_index = parent_y;
 }
 
 function dmenu_confirm()

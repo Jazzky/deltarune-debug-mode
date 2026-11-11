@@ -1,15 +1,27 @@
+function _dsaves_fetch_json_info(arg0, arg1, arg2)
+{
+	var _json = arg0;
+	var _field = arg1;
+	var default_value = arg2;
+
+	if (_json == undefined)
+		return (default_value);
+
+	if (!variable_struct_exists(_json, _field))
+		return (default_value);
+
+	return (variable_struct_get(_json, _field));	
+}
+
 function dsaves_get_file_info(arg0=undefined)
 {
 	var path = arg0;
-	var _new = false;
 
 	var _path_content = dutils_read_file(path);
+	var _metadata = undefined;
 	if (_path_content != undefined) {
-		var _content = json_stringify(_path_content);
+		var _content = json_parse(_path_content);
 		var _metadata = _content.metadata;
-	}
-	else {
-		_new = true;
 	}
 
 	var filename = filename_name(path);
@@ -18,14 +30,12 @@ function dsaves_get_file_info(arg0=undefined)
 	{
 		metadata:
 		{
-			SaveName: dutils_remove_file_extension(filename),
-			Category: filename_name(flepath),
-			Chapter: (!_new) ? _metadata.Chapter : global.chapter,
-			Plot: (!_new) ? _metadata.Plot : global.plot;
-			Description: (!_new) ? _metadata.Description : "A save file",
-			Room: (!_new) ? _metadata.Room : scr_get_id_by_room_index(room),
+			SaveName: _dsaves_fetch_json_info(_metadata, "SaveName", dutils_remove_file_extension(filename)),
+			Category: _dsaves_fetch_json_info(_metadata, "Category", filename_name(filepath)),
+			Chapter: _dsaves_fetch_json_info(_metadata, "Chapter", global.chapter),
+			Description: _dsaves_fetch_json_info(_metadata, "Description", "A save file"),
 		},
-		save_file: (!_new) ? _content.save_file : ""
+		save_file: (_metadata != undefined) ? _content.save_file : ""
 	};
 
 	return (res_json);

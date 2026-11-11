@@ -21,7 +21,7 @@ function dmenu_update_dsave_metadata()
 
 	dmenu_set_bttype(dbuttons_2d[0][0], "keyboard");
 
-	var target_path = global.debug_selected_save_section;
+	var target_path = dload_options.target_path;
 	var default_text = "";
 	
 	if (dmenu_state == "dsave_edit_name")

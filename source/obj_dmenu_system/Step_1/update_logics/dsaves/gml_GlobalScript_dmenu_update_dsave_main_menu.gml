@@ -29,7 +29,6 @@ function dmenu_update_dsave_main_menu()
 		dbuttons[1].data = string_length(dbuttons[1].text);
 		dbuttons[1].text += save_substr;
 	}
-	var nb_base_bt = array_length(dbuttons);
 	
 	var subs = [];
 	var categories = [];
@@ -45,12 +44,16 @@ function dmenu_update_dsave_main_menu()
 			continue;
 
 		var save_bt = dmenu_makebt(_save.name, _save);
-		array_push(subs[_cate_id], save_bt)
+		if (_save.cat == "")
+			array_push(dbuttons, save_bt);
+		else
+			array_push(subs[_cate_id], save_bt)
 	}
 
+	var nb_base_bt = array_length(dbuttons);
 	var _dbuttons_index = nb_base_bt;
 	for (var i = 0; i < array_length(categories); i++) {
-		if (!array_length(subs[i]))
+		if (!array_length(subs[i]) || categories[i] == "")
 			continue;
 
 		dbuttons[_dbuttons_index] = dmenu_makebt(categories[i]);

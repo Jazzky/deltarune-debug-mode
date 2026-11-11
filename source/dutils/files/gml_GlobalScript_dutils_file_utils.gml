@@ -5,7 +5,7 @@ function dutils_get_filepath(arg0)
 		return (undefined);
 
 	var path_tries = [
-		"./", working_dir + "/", working_dir + "/../"
+		"./", working_directory + "/", working_directory + "/../"
 	];
 
 	var path;

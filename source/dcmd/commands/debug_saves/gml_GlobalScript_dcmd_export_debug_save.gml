@@ -12,7 +12,7 @@ function dcmd_export_debug_save(argc, argv, flags)
 	}
 
 	var export_mode = "normal";
-	if (dcmd_flags_flag_used(flags, "mode"))
+	if (dcmd_flag_used(flags, "mode"))
 		export_mode = dcmd_flags_get_value(flags, "mode");
 
 
@@ -48,46 +48,9 @@ function _dcmd_export_normal(arg0)
 		exit;
 	}
 
-	if (file_exists(export_path))
-		file_delete(export_path);
+	var _save = dsaves_get_file_info(source_file);
+	dsave_export_savedata(_save, export_path)
 
-	if (!(string_copy(source_file, string_length(source_file) - 4, 5) == ".save"))
-	{
-		file_copy(source_file, export_path);
-	}
-	else
-	{
-		var file_id = file_text_open_read(source_file);
-		var json_string = "";
-
-		while (!file_text_eof(file_id))
-		{
-			json_string += file_text_read_string(file_id);
-			file_text_readln(file_id);
-
-			if (!file_text_eof(file_id))
-				json_string += "\n";
-		}
-
-		file_text_close(file_id);
-		var parsed_data = -1;
-
-		try
-		{
-			parsed_data = json_parse(json_string);
-		}
-		catch (e)
-		{
-		}
-
-		if (is_struct(parsed_data) && variable_struct_exists(parsed_data, "save_file"))
-		{
-			var raw_content = parsed_data.save_file;
-			var out_file = file_text_open_write(export_path);
-			file_text_write_string(out_file, raw_content);
-			file_text_close(out_file);
-		}
-	}
 	scr_debug_print("'" + string("TODO") + "' exporté avec succès !");
 	snd_play(snd_shineselect);
 }

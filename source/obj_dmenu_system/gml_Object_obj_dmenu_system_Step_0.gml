@@ -51,7 +51,6 @@ if (!dutils_reading_kb())
 	dmenu_check_misc_keys();
 	dmenu_xmove();
 	dmenu_ymove();
-	dmenu_fix_start_index();
 
 	var changed_x = original_x != dhorizontal_index;
 	var changed_y = original_y != dvertical_index;
@@ -79,3 +78,4 @@ if (dmenu_set_reindex() == true)
 {
 	dmenu_state_update();
 }
+dmenu_fix_start_index();
