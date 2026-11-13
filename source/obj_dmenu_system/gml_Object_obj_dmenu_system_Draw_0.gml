@@ -248,6 +248,7 @@ if (dbutton_layout == 2)
 	switch (given_type)
 	{
 		case "items":
+		case "litems":
 			item_cate_name = dstr("ITEMs: ", "OBJETs : ");
 			break;
 

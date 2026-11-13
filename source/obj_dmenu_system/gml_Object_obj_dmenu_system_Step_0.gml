@@ -51,7 +51,7 @@ if (!dutils_reading_kb())
 	if (changed_x || changed_y || changed_page)
 		snd_play(snd_menumove);
 
-	if (changed_x || changed_page)
+	if (dbutton_layout != 2 && (changed_x || changed_page))
 		dmenu_set_reindex(true);
 
 	//dmenuback_update_dhinter();

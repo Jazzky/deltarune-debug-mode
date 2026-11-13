@@ -37,7 +37,7 @@ function dcmd_give_item(argc, argv, flags)
 	}
 
 
-	item_name = string_replace(string_lower(item_name), " ", "");
+	item_name = dutils_normalize_id(item_name);
 	var item_infos = _dcmd_fetch_item_from_name(item_name, item_type);
 	if (item_infos == undefined) {
 		scr_derror_print("Error: couldn't find infos for item '" + item_name + "'");
@@ -78,7 +78,7 @@ function _dcmd_fetch_item_from_name(arg0, arg1=undefined)
 
 	var lookup_order = [];
 	if (lookup_type == undefined)
-		lookup_order = ["item", "armor", "weapon", "key"];
+		lookup_order = ["item", "armor", "weapon", "key", "litem"];
 
 	else {
 		var itemtype = dutils_get_simplify_itemtype(lookup_type);

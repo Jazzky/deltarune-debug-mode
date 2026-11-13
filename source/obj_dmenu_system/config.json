@@ -4,7 +4,6 @@
 	"utils/gml_GlobalScript_dmenu_launch_menu.gml": {},
 	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
 	"utils/gml_GlobalScript_dmenu_fix_start_index.gml": {},
-	"utils/gml_GlobalScript_dmenu_dsave_utils.gml": {},
 	"utils/gml_GlobalScript_dmenu_step_setters.gml": {},
 	"utils/history/gml_GlobalScript_dpop_history.gml": {},
 
@@ -21,6 +20,7 @@
 	"Step_0/actions/gml_GlobalScript_dmenu_cancel.gml": {},
 	"Step_0/actions/gml_GlobalScript_dmenu_check_misc_keys.gml": {},
 	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_main_menu_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_itemtab_keys.gml": {},
 	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_dsaves_keys.gml": {},
 
 	"Step_0/keyboard/gml_GlobalScript_dmenu_default_kb.gml": {},

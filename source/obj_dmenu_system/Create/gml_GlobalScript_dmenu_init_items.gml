@@ -9,7 +9,6 @@ function _dmenu_init_lw_item_data()
 	];
 
 	dlight_objects = [
-		[0, ""],
 		[1, dstr("Hot Chocolate", "Chocolat Chaud")],
 		[2, dstr("Pencil", "Crayon")],
 		[3, dstr("Bandage", "Pansement")],

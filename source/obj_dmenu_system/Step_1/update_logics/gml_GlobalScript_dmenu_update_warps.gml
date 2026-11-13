@@ -42,15 +42,7 @@ function dmenu_update_warp_options()
 			dmenu_makebt(dstr("Cancel", "Annuler"), "cancel"),
 			dmenu_makebt(dstr("Is Darkworld: ", "Est un Darkworld : "), "darkworld"),
 			dmenu_makebt(dstr("Plot Value: ", "Valeur de plot : "), "plot"),
-			dmenu_makebt(dstr("Teammate 2:  ", "Équipier 2 :  "), "teammate 2", [0, teammates_max_index]),
-			dmenu_makebt(dstr("Teammate 3:  ", "Équipier 3 :  "), "teammate 3", [0, teammates_max_index]),
-			dmenu_makebt(dstr("Warp", "Sauter"), "warp")
 	];
-
-	var test = [
-		"val1", "val2"
-	];
-	dmenu_create_category(0, test);
 
 	dbuttons[1].text += drooms_options.target_is_darkzone ? dstr("Yes", "Oui") : dstr("No", "Non");
 	
@@ -59,11 +51,24 @@ function dmenu_update_warp_options()
 	dbuttons[2].text += dutils_reading_kb() ? plot_string : string(drooms_options.target_plot);
 	dmenu_set_bttype(dbuttons[2], "keyboard");
 	
-	dbuttons[3].text += teammates[drooms_options.target_member_2];
-	if (dvertical_index == 3)
-		dhorizontal_index = drooms_options.target_member_2;
+	var _nb_teammates = 2;
+	var _bt_count = array_length(dbuttons);
+	for (var i = 0; i < _nb_teammates; i++) {
+		var _index = (i == 0) ? drooms_options.target_member_2 : drooms_options.target_member_3;
+		var _team_id = string(i + 2);
 
-	dbuttons[4].text += teammates[drooms_options.target_member_3];
-	if (dvertical_index == 4)
-		dhorizontal_index = drooms_options.target_member_3;
+		var teamtext = dstr("Teammate ", "Équipier ") + _team_id + dstr(": ", " : ");
+		if (_index != 0)
+			teamtext += "</larrow/>";
+
+		teamtext += " " + teammates[_index];
+
+		if (_index != teammates_max_index)
+			teamtext += "</rarrow/>";
+
+		array_push(dbuttons, dmenu_makebt(teamtext, "teammate " + _team_id, [0, teammates_max_index]));
+		if (dvertical_index == (_bt_count + i))
+			dhorizontal_index = _index
+	}
+	array_push(dbuttons, dmenu_makebt(dstr("Warp", "Sauter"), "warp"));
 }

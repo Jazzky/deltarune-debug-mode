@@ -6,6 +6,7 @@ function dmode_init_item_id_map()
 	ds_map_add(res_map, "armor",	_dmode_init_item_id_map("armor"));
 	ds_map_add(res_map, "weapon",	_dmode_init_item_id_map("weapon"));
 	ds_map_add(res_map, "key",		_dmode_init_item_id_map("key"));
+	ds_map_add(res_map, "litem",	_dmode_init_litem_id_map());
 
 	return (res_map);
 }
@@ -53,9 +54,33 @@ function _dmode_init_item_id_map(arg0)
 		if (itemname == "" || itemname == " ")
 			continue;
 		
-		var simple_itemname = string_replace(string_lower(itemname), " ", "");
+		var simple_itemname = dutils_normalize_id(itemname);
 		ds_map_add(res_map, itemname, _id);
 		ds_map_add(res_map, simple_itemname, _id);
 	}
+	return (res_map);
+}
+
+function _dmode_init_litem_id_map()
+{
+	var res_map = ds_map_create();
+	var _old = global.litem[0];
+	var _limit = 50;
+
+	for (var _id = 0; _id < _limit; _id++) {
+		global.litem[0] = _id;
+		scr_litemname();
+		
+		var _name = global.litemname[0];
+		if (_name == "" || _name == " ")
+			continue;
+
+		var simple_itemname = dutils_normalize_id(_name);
+		ds_map_add(res_map, _name, _id);
+		ds_map_add(res_map, simple_itemname, _id);
+	}
+
+	global.litem[0] = _old;
+	scr_litemname();
 	return (res_map);
 }

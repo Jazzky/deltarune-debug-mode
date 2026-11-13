@@ -20,6 +20,7 @@ function dmenu_update_givertab()
 	if (dgiver_infos.storage_space == 0)
 		dhorizontal_index = 0;
 
+	scr_debug_print("[" + string(-dgiver_infos.owned_amt) + ", " + string(dgiver_infos.storage_space) + "]");
 	dbuttons = [
 		dmenu_makebt("", -1, [-dgiver_infos.owned_amt, dgiver_infos.storage_space])
 	];

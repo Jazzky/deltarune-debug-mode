@@ -3,6 +3,9 @@ function _dutils_get_item_datavarname(arg0, arg1)
 	var item_type = dutils_get_simplify_itemtype(arg0);
 	var varname_type = arg1;
 
+	if (item_type == "litem")
+		return (varname_type);
+
 	switch (item_type) {
 		case "item":
 			switch (varname_type) {
@@ -57,6 +60,9 @@ function dutils_get_item_datavar(arg0, arg1, arg2)
 	if (item_type == undefined)
 		return ("[ERROR]");
 
+	if (item_type == "litem")
+		return (dutils_get_litemvar(item_id, varname));
+
 	switch (item_type) {
 		case "item":
 			scr_iteminfo(item_id);
@@ -80,6 +86,30 @@ function dutils_get_item_datavar(arg0, arg1, arg2)
 
 	var res = variable_instance_get(id, varname);
 	return (res)
+}
+
+function dutils_get_litemvar(arg0, arg1)
+{
+	var item_id = arg0;
+	var varname = arg1;
+
+	var res = undefined;
+	switch (varname) {
+		case "name":
+			var _old = global.litem[0];
+			global.litem[0] = item_id;
+
+			scr_litemname();
+
+			global.litem[0] = _old;
+			res = global.litemname[0];
+			break;
+
+		case "desc":
+			res = "Lightworld Item";
+			break;
+	}
+	return (res);
 }
 
 function dutils_get_itemname(arg0, arg1="items")

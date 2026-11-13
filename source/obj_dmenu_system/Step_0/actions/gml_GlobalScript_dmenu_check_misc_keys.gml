@@ -11,6 +11,12 @@ function dmenu_check_misc_keys()
 		case "debug_save":
 			callfunc = dmenu_action_dsaves_keys;
 			break;
+
+		case "items":
+		case "armors":
+		case "weapons":
+			callfunc = dmenu_action_itemtab_keys;
+			break;
 	}
 
 	if (callfunc == undefined)

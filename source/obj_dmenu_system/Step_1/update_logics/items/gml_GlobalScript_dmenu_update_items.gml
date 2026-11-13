@@ -1,7 +1,10 @@
-function dmenu_update_dw_items(arg0)
+function dmenu_update_dw_items()
 {
-	var _dmenu_state = arg0;
-	var select_range = dmenu_get_item_index_data(ditem_chap, _dmenu_state);
+	var select_range = dmenu_get_item_index_data(ditem_chap, dmenu_state);
+
+	dbuttons = [
+		dmenu_makebt(dstr("Chapter: ", "Chapitre : ") + string(ditem_chap))
+	];
 
 	var max_len = 33;
 	var range_len = array_length(select_range)
@@ -25,13 +28,11 @@ function dmenu_update_dw_items(arg0)
 
 function dmenu_update_lw_items(arg0)
 {
-	var _dmenu_state = arg0;
-
 	var dlight_lst;
 	var cur_selected;
-	var is_item = (_dmenu_state == "items");
+	var is_item = (dmenu_state == "items");
 
-	switch (_dmenu_state) {
+	switch (dmenu_state) {
 		case "items":
 			dlight_lst = dlight_objects;
 			break;
@@ -47,8 +48,8 @@ function dmenu_update_lw_items(arg0)
 			break;
 	}
 
-	var dlight_lst_len = array_delete(dlight_lst);
-	array_delete(dbuttons, 0, 1);
+	dbuttons = [];
+	var dlight_lst_len = array_length(dlight_lst);
 	for (var i = 0; i < dlight_lst_len; i++)
 	{
 		var item_id = dlight_lst[i][0];
@@ -57,8 +58,8 @@ function dmenu_update_lw_items(arg0)
 		if (!is_item && cur_selected == item_id)
 			combined += " (" + dstr("Equipped", "Équipé") + ")";
 		else if (is_item) {
-			scr_litemcheck(item_id);
-			combined += " - " + string(itemcount) + " " + dstr("held", "possédé(s)");
+			var _owned = dutils_get_itemcount(item_id, "litem");
+			combined += " - " + string(_owned) + " " + dstr("held", "possédé(s)");
 		}
 		
 		array_push(dbuttons, dmenu_makebt(combined, item_id));
@@ -87,14 +88,12 @@ function dmenu_update_items()
 			break;
 	}
 
-	dbuttons = [
-		dmenu_makebt(dstr("Chapter: ", "Chapitre : ") + string(ditem_chap))
-	];
-
-	if (dhorizontal_page == 0)
-		dmenu_update_dw_items(dmenu_state);
-	else
-		dmenu_update_lw_items(dmenu_state);
+	if (dhorizontal_page == 0) {
+		dmenu_update_dw_items();
+	}
+	else {
+		dmenu_update_lw_items();
+	}
 
 	dmenu_box = 2;
 	dbutton_layout = 1;

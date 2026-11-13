@@ -28,6 +28,12 @@ function dutils_get_simplify_itemtype(arg0)
 			res = "key";
 			break;
 
+		case "lw":
+		case "litem":
+		case "litems":
+			res = "litem";
+			break;
+
 		default:
 			scr_debug_print("Unknown item type '" + string(lookup_type) + "'");
 			break;
@@ -53,6 +59,10 @@ function dutils_get_storage_space(arg0)
 
 		case "key":
 			res = 12;
+			break;
+
+		case "litem":
+			res = 8;
 			break;
 	}
 	return (res);
@@ -81,6 +91,10 @@ function dutils_get_itemcount(arg0, arg1)
 
 		case "key":
 			item_list = global.keyitem;
+			break;
+
+		case "litem":
+			item_list = global.litem;
 			break;
 	}
 
