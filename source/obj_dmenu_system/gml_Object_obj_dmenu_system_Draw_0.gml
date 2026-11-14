@@ -83,28 +83,8 @@ var myfnt = (global.darkzone) ? fnt_mainbig : fnt_main;
 draw_set_font(myfnt);
 draw_set_color(c_white);
 
-draw_text(x_start + xx, (((ycenter - (menu_height / 2)) + 8) * d) + yy, string(dmenu_title));
-
-if (dmenu_state == "debug")
-{
-	draw_set_halign(fa_right);
-	draw_set_font(fnt_main);
-	var text_scale = (global.darkzone == 1) ? 1 : 0.5;
-	draw_set_color(c_gray);
-	
-	var key_text = string(dstr("M - Keys", "M - Touches"));
-	var lang_text = string(dstr("F - French", "F - Anglais"));
-	
-	var draw_x = (((xcenter + (menu_width / 2)) - 10) * d) + xx;
-	var key_draw_y = (((ycenter + (menu_height / 2)) - 15) * d) + yy;
-	var lang_draw_y = (((ycenter - (menu_height / 2)) + 8) * d) + yy;
-	
-	draw_text_transformed(draw_x, key_draw_y, key_text, text_scale, text_scale, 0);
-	draw_text_transformed(draw_x, lang_draw_y, lang_text, text_scale, text_scale, 0);
-	
-	draw_set_font(myfnt);
-	draw_set_halign(fa_left);
-}
+title_y = (((ycenter - (menu_height / 2)) + 8) * d) + yy;
+draw_text(x_start + xx, title_y, string(dmenu_title));
 
 if (reading_kb)
 {
@@ -138,6 +118,7 @@ if (reading_kb)
 	draw_rectangle(left_x - cursor_padding, base_y, right_x + cursor_padding, base_y + thickness, false);
 }
 
+dmenu_draw_state_specific();
 if (dbutton_layout == 0)
 {
 	var draw_y = y_start;
@@ -201,33 +182,6 @@ if (dbutton_layout == 1)
 	{
 		draw_sprite_ext(spr_morearrow, 0, _dx, _dy - dmenu_arrow_yoffset, darrow_scale, darrow_scale, 0, c_white, 1);
 	}
-}
-
-if (dmenu_state == "recruits" || dmenu_parent_state == "item")
-{
-	draw_set_halign(fa_right);
-	var draw_y = (((ycenter - (menu_height / 2)) + 8) * d) + yy;
-	var draw_x = x_start + (200 * d) + xx;
-	
-	if (dmenu_state == "recruits")
-	{
-		if (dhorizontal_page != 0)
-			draw_text(draw_x, draw_y, "(" + string(dstr("chap")) + " " + string(dhorizontal_page) + ")");
-		else
-			draw_text(draw_x, draw_y, string(dstr("(all chap)", "(tout chap)")));
-	}
-	else if (dhorizontal_page == 0)
-	{
-		draw_text(draw_x + 30 + (global.darkzone * 30), draw_y, string(dstr("(Darkworld)")));
-		draw_sprite_ext(spr_morearrow, 0, draw_x + 35 + (global.darkzone * 35) + dmenu_arrow_yoffset, draw_y + side_arrows_mult[1], darrow_scale, -darrow_scale, 270, c_white, 1);
-	}
-	else
-	{
-		draw_text(draw_x + 30 + (global.darkzone * 30), draw_y, string(dstr("(Lightworld)")));
-		draw_sprite_ext(spr_morearrow, 0, draw_x + -55 + (global.darkzone * -55) + dmenu_arrow_yoffset, draw_y + side_arrows_mult[0], darrow_scale, -darrow_scale, 90, c_white, 1);
-	}
-	
-	draw_set_halign(fa_left);
 }
 
 if (dbutton_layout == 2)
@@ -342,20 +296,5 @@ if (dkeys_helper == 1)
 enum e__VW
 {
     XView,
-    YView,
-    WView,
-    HView,
-    Angle,
-    HBorder,
-    VBorder,
-    HSpeed,
-    VSpeed,
-    Object,
-    Visible,
-    XPort,
-    YPort,
-    WPort,
-    HPort,
-    Camera,
-    SurfaceID
+    YView
 }

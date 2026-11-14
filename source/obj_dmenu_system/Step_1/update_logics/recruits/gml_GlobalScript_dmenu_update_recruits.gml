@@ -4,7 +4,9 @@ function dmenu_update_recruits()
 
 	var preset_string = dstr("Presets", "Préréglages");
 	if (dhorizontal_page != 0)
-		preset_string = " " + preset_string;
+		preset_string = "</larrow/> " + preset_string;
+	if (dhorizontal_page != global.chapter)
+		preset_string += "</rarrow/>";
 
 	dbuttons = [
 		dmenu_makebt(preset_string, "preset", [0, global.chapter])

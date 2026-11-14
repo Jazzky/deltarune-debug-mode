@@ -72,9 +72,13 @@
 	"Step_1/interact_logics/gml_GlobalScript_dmenu_interact_main_menu.gml": {},
 
 
-	"Draw/gml_GlobalScript_dmenu_draw_box.gml": {},
-	"Draw/gml_GlobalScript_dmenu_draw_sprite_tags.gml": {},
-	"Draw/gml_GlobalScript_dmenu_draw_key_helper.gml": {},
+	"Draw/utils/gml_GlobalScript_dmenu_draw_sprite_tags.gml": {},
+	"Draw/utils/gml_GlobalScript_dmenu_draw_key_helper.gml": {},
+
+	"Draw/gml_GlobalScript_dmenu_draw_state_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_main_menu_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_recruits_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_items_specific.gml": {},
 
 
 	"gml_Object_obj_dmenu_system_Create_0.gml": {
