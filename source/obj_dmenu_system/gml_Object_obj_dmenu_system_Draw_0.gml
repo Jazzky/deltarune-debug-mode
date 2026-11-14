@@ -276,64 +276,10 @@ if (dbutton_layout == 2)
 
 if (dbutton_layout == 3)
 {
-	var cur_text = string(dbuttons_2d[0][0].text);
 	var text_x = x_start + x_padding + xx;
 	var text_y = y_start + yy;
-	var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
-	var max_width = box_right_edge - text_x;
-	var line_spacing = 16 * d;
-	var cursor_x = text_x;
-	var line_count = 1;
-	var current_word = "";
-	var str_len = string_length(cur_text);
-	
-	for (var i = 1; i <= str_len; i++)
-	{
-		var _char = string_char_at(cur_text, i);
-		
-		if (_char != " " && _char != "\n")
-			current_word += _char;
-		
-		if (_char == " " || _char == "\n" || i == str_len)
-		{
-			var _word_width = string_length(current_word) * mono_spacing;
-			
-			if (max_width > 0 && ((cursor_x + _word_width) - text_x) > max_width)
-			{
-				if (cursor_x != text_x)
-				{
-					cursor_x = text_x;
-					line_count++;
-				}
-			}
-			
-			for (var w = 1; w <= string_length(current_word); w++)
-			{
-				if (max_width > 0 && ((cursor_x + mono_spacing) - text_x) > max_width)
-				{
-					cursor_x = text_x;
-					line_count++;
-				}
-				
-				cursor_x += mono_spacing;
-			}
-			
-			current_word = "";
-			
-			if (_char == " ")
-			{
-				cursor_x += mono_spacing;
-			}
-			else if (_char == "\n")
-			{
-				cursor_x = text_x;
-				line_count++;
-			}
-		}
-	}
-	
-	var extra_height = (line_count - 1) * line_spacing;
-	var dynamic_bottom_y = text_y + (19 * d) + extra_height;
+	var cur_text = string(dbuttons_2d[0][0].text);
+
 	var is_multiline = dmenu_box == 1;
 	var buttons_y = yy + (is_multiline ? (185 * d) : (125 * d));
 	
@@ -344,6 +290,11 @@ if (dbutton_layout == 3)
 		draw_set_color(text_is_yellow ? c_yellow : c_white);
 		draw_text(x_start + (12 * power(10, i) * d) + xx, buttons_y, bottom_btn_str);
 	}
+
+	var line_count = string_count("\n", cur_text);
+	var line_spacing = 16 * d;
+	var extra_height = line_count * line_spacing;
+	var dynamic_bottom_y = text_y + (19 * d) + extra_height;
 	
 	inputbox = function(arg0, arg1, arg2, arg3)
 	{
@@ -354,16 +305,17 @@ if (dbutton_layout == 3)
 			draw_rectangle((arg0 - border) + i, (arg1 - border) + i, (arg2 + border) - i, (arg3 + border) - i, true);
 	};
 	
+	var box_right_edge = (((xcenter + (menu_width / 2)) * d) - x_padding) + xx;
 	inputbox(x_start + xx, text_y, box_right_edge, dynamic_bottom_y);
+
 	var color = c_gray;
-        
 	if (dvertical_index == 0 && reading_kb)
 		color = c_yellow;
 	else if (dkeyboard_texts[0] != "")
 		color = c_white;
 	
 	draw_set_color(color);
-	dutils_draw_monospace_ext(text_x, text_y, cur_text, line_spacing, max_width);
+	dutils_draw_monospace(text_x, text_y, cur_text);
 	var heartsprite = (d == 2) ? spr_heart : spr_heartsmall;
 	
 	if (dvertical_index != 0)

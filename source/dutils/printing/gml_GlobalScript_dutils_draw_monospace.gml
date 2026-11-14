@@ -60,5 +60,25 @@ function dutils_draw_monospace_ext(arg0, arg1, arg2, arg3=0, arg4=-1)
 
 function dutils_draw_monospace(arg0, arg1, arg2)
 {
-	dutils_draw_monospace_ext(arg0, arg1, arg2, 0, -1);
+	var _base_draw_x = arg0;
+	var _base_draw_y = arg1;
+	var str = arg2;
+
+	var str_len = string_length(str);
+    var _char_sep = (global.darkzone == 1) ? 15 : 8;
+    var _line_sep = (global.darkzone == 1) ? 32 : 16;
+
+	var _draw_x = _base_draw_x;
+	var _draw_y = _base_draw_y;
+	for (var i = 1; i <= str_len; i++) {
+		var mychar = string_char_at(str, i);
+
+		if (mychar == "\n") {
+			_draw_y += _line_sep;
+			_draw_x = _base_draw_x;
+			continue;
+		}
+		draw_text(_draw_x, _draw_y, mychar);
+		_draw_x += _char_sep;
+	}
 }

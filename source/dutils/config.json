@@ -5,6 +5,7 @@
 
 	"strings/gml_GlobalScript_dutils_parse_strvar.gml": {},
 	"strings/gml_GlobalScript_dutils_normalize_id.gml": {},
+	"strings/gml_GlobalScript_dutils_boxbound_string.gml": {},
 	"strings/gml_GlobalScript_dutils_strstart_with.gml": {},
 
 	"printing/gml_GlobalScript_dutils_draw_monospace.gml": {},
