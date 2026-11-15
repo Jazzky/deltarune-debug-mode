@@ -9,68 +9,68 @@ function dmenu_state_update(arg0 = dmenu_state)
     switch (state)
     {
         case "debug":
-			dmenu_update_main_menu();
+			dmenu_state_update_main_menu();
             break;
         
         case "debug_save":
-			dmenu_update_dsave_main_menu();
+			dmenu_state_update_dsave_main_menu();
             break;
         
         case "debug_save_options":
-			dmenu_update_dsave_load();
+			dmenu_state_update_dsave_load();
             break;
         
         case "dsave_edit_name":
         case "dsave_edit_desc":
         case "dsave_edit_cat":
-			dmenu_update_dsave_metadata();
+			dmenu_state_update_dsave_metadata();
             break;
         
         case "new_debug_save":
-			dmenu_update_dsave_new_save();
+			dmenu_state_update_dsave_new_save();
             break;
         
         case "warp":
-			dmenu_update_warp();
+			dmenu_state_update_warp();
             break;
         
         case "warp_options":
-			dmenu_update_warp_options();
+			dmenu_state_update_warp_options();
             break;
         
         case "give":
-			dmenu_update_items_main_menu();
+			dmenu_state_update_items_main_menu();
             break;
         
         case "items":
         case "armors":
         case "weapons":
         case "keyitems":
-			dmenu_update_items();
+			dmenu_state_update_items();
 			break;
         
         case "givertab":
-			dmenu_update_givertab();
+			dmenu_state_update_givertab();
             break;
         
         case "recruits":
-			dmenu_update_recruits();
+			dmenu_state_update_recruits();
             break;
         
         case "recruit_presets":
-			dmenu_update_recruits_presets();
+			dmenu_state_update_recruits_presets();
             break;
         
         case "flag_categories":
-			dmenu_update_flag_categories();
+			dmenu_state_update_flag_categories();
             break;
         
         case "flag_misc":
-			dmenu_update_flag();
+			dmenu_state_update_flag();
             break;
         
         case "globals_changer":
-			dmenu_update_globals();
+			dmenu_state_update_globals();
             break;
         
         default:
@@ -100,68 +100,68 @@ function dmenu_state_interact(arg0 = dmenu_state)
     switch (state)
     {
         case "debug":
-			dmenu_interact_main_menu();
+			dmenu_state_interact_main_menu();
             break;
         
         case "debug_save":
-			dmenu_interact_dsave_main_menu();
+			dmenu_state_interact_dsave_main_menu();
             break;
         
         case "debug_save_options":
-			dmenu_interact_dsave_load_menu();
+			dmenu_state_interact_dsave_load_menu();
             break;
         
         case "dsave_edit_name":
         case "dsave_edit_desc":
         case "dsave_edit_cat":
-			dmenu_interact_dsave_update_metadata_confirm();
+			dmenu_state_interact_dsave_update_metadata_confirm();
 			break;
         
         case "new_debug_save":
-			dmenu_interact_new_dsave();
+			dmenu_state_interact_new_dsave();
             break;
         
         case "warp":
-			dmenu_interact_warp_setup();
+			dmenu_state_interact_warp_setup();
             break;
         
         case "warp_options":
-			dmenu_interact_warp();
+			dmenu_state_interact_warp();
             break;
         
         case "give":
-			dmenu_interact_set_itemgiver_type();
+			dmenu_state_interact_set_itemgiver_type();
             break;
         
         case "items":
         case "armors":
         case "weapons":
         case "keyitems":
-			dmenu_interact_setup_givertab();
+			dmenu_state_interact_setup_givertab();
             break;
         
         case "givertab":
-			dmenu_interact_givertab();
+			dmenu_state_interact_givertab();
             break;
         
         case "flag_categories":
-			dmenu_interact_flag_categories();
+			dmenu_state_interact_flag_categories();
             break;
         
         case "flag_misc":
-			dmenu_interact_flags();
+			dmenu_state_interact_flags();
             break;
         
         case "recruits":
-			dmenu_interact_recruits();
+			dmenu_state_interact_recruits();
             break;
         
         case "recruit_presets":
-			dmenu_interact_recruits_presets();
+			dmenu_state_interact_recruits_presets();
             break;
         
         case "globals_changer":
-			dmenu_interact_globals();
+			dmenu_state_interact_globals();
             break;
         
         default:

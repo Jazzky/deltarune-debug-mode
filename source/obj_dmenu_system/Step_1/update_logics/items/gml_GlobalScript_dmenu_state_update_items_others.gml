@@ -1,4 +1,4 @@
-function dmenu_update_items_main_menu()
+function dmenu_state_update_items_main_menu()
 {
 	dmenu_title = dstr("Item Type", "Type d'items");
 	dbuttons_2d = [
@@ -13,7 +13,7 @@ function dmenu_update_items_main_menu()
 	dbutton_layout = 0;
 }
 
-function dmenu_update_givertab()
+function dmenu_state_update_givertab()
 {
 	dmenu_title = dstr("Add how many to inventory?", "Ajouter combien à l'inventaire ?");
 	dhorizontal_index = 1;

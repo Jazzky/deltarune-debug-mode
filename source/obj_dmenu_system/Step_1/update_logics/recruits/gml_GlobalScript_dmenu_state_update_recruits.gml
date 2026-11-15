@@ -1,4 +1,4 @@
-function dmenu_update_recruits()
+function dmenu_state_update_recruits()
 {
 	dmenu_title = dstr("Recruit List", "Liste des recrues");
 
@@ -42,7 +42,7 @@ function dmenu_update_recruits()
 	dmenu_box = 1;
 }
 
-function dmenu_update_recruits_presets()
+function dmenu_state_update_recruits_presets()
 {
 	dmenu_title = dstr("Recruit Presets", "Préréglages des recrues");
 	dbuttons = [

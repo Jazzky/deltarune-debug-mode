@@ -2,7 +2,7 @@ if (!dutils_reading_kb() && keyboard_check_pressed(ord("D")))
 {
 	dmenu_active = !dmenu_active;
 	if (dmenu_state == "")
-		dmenu_update_main_menu();
+		dmenu_state_update_main_menu();
 	
 	if (dmenu_active)
 		snd_play(snd_egg);

@@ -1,10 +1,10 @@
-function dmenu_interact_recruits()
+function dmenu_state_interact_recruits()
 {
 	if (btn_data == "preset")
 		dmenu_state = "recruit_presets";
 }
 
-function dmenu_interact_recruits_presets()
+function dmenu_state_interact_recruits_presets()
 {
 	var cmd = "recruitchap";
 	var losemode = (btn_data == "lose");

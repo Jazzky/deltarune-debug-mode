@@ -1,4 +1,4 @@
-function dmenu_interact_warp_setup()
+function dmenu_state_interact_warp_setup()
 {
 	drooms_options.target_room = -1;
 	if (dvertical_index != 0)
@@ -11,7 +11,7 @@ function dmenu_interact_warp_setup()
 	dmenu_state = "warp_options";
 }
 
-function dmenu_interact_warp()
+function dmenu_state_interact_warp()
 {
 	if (btn_data == "cancel")
 		dmenu_state = "warp";

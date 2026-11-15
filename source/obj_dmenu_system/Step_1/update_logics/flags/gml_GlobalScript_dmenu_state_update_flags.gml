@@ -1,4 +1,4 @@
-function dmenu_update_flag_categories()
+function dmenu_state_update_flag_categories()
 {
 	dmenu_title = dstr("Flags");
 	dbuttons = [
@@ -35,7 +35,7 @@ function dmenu_update_flag_categories()
 	dbutton_layout = 1;
 }
 
-function dmenu_update_flag()
+function dmenu_state_update_flag()
 {
 	dmenu_title = dstr("Flags");
 	dbuttons = [];
@@ -50,7 +50,7 @@ function dmenu_update_flag()
 		var nb_options = array_length(cur_option[3]);
 
 		var combined = cur_option[1] + " - " + dstr("problem lol", "problème lol");
-		option_index = find_subarray_index(cur_option[2], cur_option[3]);
+		option_index = _dmenu_find_subarray_index(cur_option[2], cur_option[3]);
 		
 		combined = cur_option[1] + " - "
 		if (option_index != 0)
@@ -75,7 +75,7 @@ function dmenu_update_flag()
 	dbutton_layout = 1;
 }
 
-function find_subarray_index(arg0, arg1)
+function _dmenu_find_subarray_index(arg0, arg1)
 {
     value = global.flag[arg0];
     lst = arg1;

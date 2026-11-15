@@ -12,7 +12,7 @@ function _dmenu_check_dsave_cate_id(arg0, arg1)
 	return (nb_cat);
 }
 
-function dmenu_update_dsave_main_menu()
+function dmenu_state_update_dsave_main_menu()
 {
 	dmenu_title = "Debug save";
 	dbuttons = [

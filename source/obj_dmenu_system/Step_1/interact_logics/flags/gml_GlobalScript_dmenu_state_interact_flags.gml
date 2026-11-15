@@ -1,4 +1,4 @@
-function dmenu_interact_flag_categories()
+function dmenu_state_interact_flag_categories()
 {
 	dother_options = [];
 	var real_index = dbuttons[dvertical_index].data;
@@ -14,7 +14,7 @@ function dmenu_interact_flag_categories()
 	dmenu_state = "flag_misc";
 }
 
-function dmenu_interact_flags()
+function dmenu_state_interact_flags()
 {
 	exit;
 }

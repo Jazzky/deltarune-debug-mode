@@ -1,4 +1,4 @@
-function dmenu_interact_globals()
+function dmenu_state_interact_globals()
 {
 	var cmd = "setg";
 	var reading_double_flag = (dvertical_index == 0);

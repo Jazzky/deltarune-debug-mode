@@ -1,4 +1,4 @@
-function dmenu_interact_dsave_main_menu()
+function dmenu_state_interact_dsave_main_menu()
 {
 	if (dvertical_index == 0)
 	{

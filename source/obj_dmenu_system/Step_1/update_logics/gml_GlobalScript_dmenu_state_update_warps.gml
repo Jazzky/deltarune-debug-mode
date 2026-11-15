@@ -1,4 +1,4 @@
-function dmenu_update_warp()
+function dmenu_state_update_warp()
 {
 	dmenu_title = dstr("Room List", "Liste des salles");
 	dbuttons = [
@@ -32,7 +32,7 @@ function dmenu_update_warp()
 	dmenu_box = 1;
 }
 
-function dmenu_update_warp_options()
+function dmenu_state_update_warp_options()
 {
 	var teammates = [dstr("Nobody", "Personne"), "Kris", "Susie", "Ralsei", dstr("Noelle", "Noëlle")];
 	var teammates_max_index = array_length(teammates) - 1;

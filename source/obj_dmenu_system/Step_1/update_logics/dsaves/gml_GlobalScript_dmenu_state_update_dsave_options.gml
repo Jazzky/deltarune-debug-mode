@@ -1,4 +1,4 @@
-function dmenu_update_dsave_metadata()
+function dmenu_state_update_dsave_metadata()
 {
 	if (dmenu_state == "dsave_edit_name")
 		dmenu_title = dstr("Rename save", "Renommer sauvegarde");

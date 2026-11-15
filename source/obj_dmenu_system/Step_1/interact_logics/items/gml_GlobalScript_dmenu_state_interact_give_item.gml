@@ -1,4 +1,4 @@
-function dmenu_interact_set_itemgiver_type()
+function dmenu_state_interact_set_itemgiver_type()
 {
 	dmenu_state = cur_btn.data;
 
@@ -24,10 +24,9 @@ function dmenu_setup_dgiver_infos()
 	dgiver_infos.item_name = dutils_get_itemname(item_id, item_type);
 	dgiver_infos.owned_amt = dutils_get_itemcount(item_id, item_type);
 	dgiver_infos.storage_space = dutils_get_storage_left(item_type);
-	scr_debug_print("Infos = " + string(dgiver_infos));
 }
 
-function dmenu_interact_setup_givertab()
+function dmenu_state_interact_setup_givertab()
 {
 	dmenu_setup_dgiver_infos();
 	

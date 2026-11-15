@@ -1,4 +1,4 @@
-function dmenu_update_dsave_new_save()
+function dmenu_state_update_dsave_new_save()
 {
 	dmenu_title = "New debug save";
 	dbuttons_2d = [

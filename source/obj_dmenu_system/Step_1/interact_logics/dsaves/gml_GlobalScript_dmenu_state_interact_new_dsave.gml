@@ -1,4 +1,4 @@
-function dmenu_interact_new_dsave()
+function dmenu_state_interact_new_dsave()
 {
 	var _created = (dvertical_index == 1 && dhorizontal_index == 0);
 	if (!_created) {

@@ -1,4 +1,4 @@
-function dmenu_update_main_menu()
+function dmenu_state_update_main_menu()
 {
 	dmenu_title = dstr("Debug Menu", "Menu Debug");
 

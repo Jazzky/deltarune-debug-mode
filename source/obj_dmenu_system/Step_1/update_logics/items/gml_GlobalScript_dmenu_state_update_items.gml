@@ -1,4 +1,4 @@
-function dmenu_update_dw_items()
+function dmenu_state_update_dw_items()
 {
 	var select_range = dmenu_get_item_index_data(ditem_chap, dmenu_state);
 
@@ -26,7 +26,7 @@ function dmenu_update_dw_items()
 	}
 }
 
-function dmenu_update_lw_items(arg0)
+function dmenu_state_update_lw_items(arg0)
 {
 	var dlight_lst;
 	var cur_selected;
@@ -66,7 +66,7 @@ function dmenu_update_lw_items(arg0)
 	}
 }
 
-function dmenu_update_items()
+function dmenu_state_update_items()
 {
 	dmenu_parent_state = "items";
 	switch (dmenu_state)
@@ -89,10 +89,10 @@ function dmenu_update_items()
 	}
 
 	if (dhorizontal_page == 0) {
-		dmenu_update_dw_items();
+		dmenu_state_update_dw_items();
 	}
 	else {
-		dmenu_update_lw_items();
+		dmenu_state_update_lw_items();
 	}
 
 	dmenu_box = 2;

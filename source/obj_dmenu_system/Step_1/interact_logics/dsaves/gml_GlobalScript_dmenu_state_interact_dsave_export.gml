@@ -1,4 +1,4 @@
-function dmenu_interact_dsave_save()
+function dmenu_state_interact_dsave_save()
 {
 	var target_path = dload_options.target_path;
 	var cmd = "dsave_save \"" + target_path + "\"";
@@ -7,7 +7,7 @@ function dmenu_interact_dsave_save()
 	dmenu_reset_menu();
 }
 
-function dmenu_interact_dsave_delete()
+function dmenu_state_interact_dsave_delete()
 {
 	var target_path = dload_options.target_path;
 	
@@ -20,7 +20,7 @@ function dmenu_interact_dsave_delete()
 	dmenu_start_index = 0;
 }
 
-function dmenu_interact_dsave_load()
+function dmenu_state_interact_dsave_load()
 {
 	var target_path = dload_options.target_path;
 	var res = dconsole_exec("dsave_load \"" + string(target_path) + "\"");
@@ -29,7 +29,7 @@ function dmenu_interact_dsave_load()
 		dmenu_reset_menu();
 }
 
-function dmenu_interact_dsave_update_metadata()
+function dmenu_state_interact_dsave_update_metadata()
 {
 	if (btn_data == "rename")
 		dmenu_state = "dsave_edit_name";
@@ -41,7 +41,7 @@ function dmenu_interact_dsave_update_metadata()
 		dmenu_state = "dsave_edit_cat";
 }
 
-function dmenu_interact_dsave_update_metadata_confirm()
+function dmenu_state_interact_dsave_update_metadata_confirm()
 {
 	if (!(dvertical_index == 1 && dhorizontal_index == 0)) {
 		dpop_history();

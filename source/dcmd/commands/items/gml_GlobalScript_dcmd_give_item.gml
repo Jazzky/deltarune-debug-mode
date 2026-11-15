@@ -65,8 +65,14 @@ function _dcmd_give_item(arg0, arg1, arg2=1)
 	if (quantity == 0)
 		return (0);
 
-	var callfunc = (quantity >= 0) ? scr_itemget_anytype : scr_itemremove_anytype;
+	if (item_type == "litem") {
+		var callfunc = (quantity >= 0) ? scr_litemget : scr_litemremove;
+		for (var i = 0; i < abs(quantity); i++)
+			callfunc(item_id);
+		exit;
+	}
 
+	var callfunc = (quantity >= 0) ? scr_itemget_anytype : scr_itemremove_anytype;
 	for (var i = 0; i < abs(quantity); i++)
 		callfunc(item_id, item_type);
 }

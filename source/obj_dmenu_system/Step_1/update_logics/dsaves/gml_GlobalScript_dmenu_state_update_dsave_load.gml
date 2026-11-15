@@ -1,4 +1,4 @@
-function dmenu_update_dsave_load()
+function dmenu_state_update_dsave_load()
 {
 	dmenu_title = dstr("Options: ", "Options : ") + string(dload_options.target_name);
 	dbuttons = [

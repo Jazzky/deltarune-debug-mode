@@ -1,4 +1,4 @@
-function dmenu_update_globals()
+function dmenu_state_update_globals()
 {
 	dmenu_title = dstr("Global changer", "Changeur de global");
 	dbuttons = [];
