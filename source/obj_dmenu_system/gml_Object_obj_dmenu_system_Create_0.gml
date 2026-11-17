@@ -21,9 +21,9 @@ dmenu_init_items();
 dmenu_init_flags();
 dmenu_init_global_changer();
 dmenu_init_dsaves();
+dmenu_init_fight_menu();
 
 dkeyboard_texts = ["", "", "", "", ""];
 
 dcategories_holder = [];
 dkeys_helper = 0;
-dkeys_data = [];

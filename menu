@@ -1,0 +1,25 @@
+Menu A1 :
+Enemy List: [No enemy selected] | [nom 1, nom 2, nom 3, ... nom N] (default on last enemy)
+										   |
+										 Menu C1
+Add enemy -> Menu B1
+encounter id : ||
+(party members ?)
+Fight | (Must be in a Darkworld) | (No enemy selected)
+
+
+
+Menu B1 :
+Contains:
+Enemy 1
+Enemy 2
+Enemy 3
+...
+Enemy N
+
+
+
+Menu C1 :
+Remove enemy
+Modify enemy -> Menu B1
+Duplicate enemy

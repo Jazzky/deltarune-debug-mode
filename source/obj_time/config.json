@@ -16,6 +16,17 @@
 			}
 		]
 	},
+	".150fps_chap2": {
+		"chapters": [2],
+		"gml_name": "gml_Object_obj_time_Step_1",
+		"actions": [
+			{
+				"append": {
+					"content_file": "chap2_150fps.gml"
+				}
+			}
+		]
+	},
 	".remove_gif_frames": {
 		"chapters": [-1, -2],
 		"gml_name": "gml_Object_obj_time_Draw_77",

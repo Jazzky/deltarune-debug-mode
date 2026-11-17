@@ -17,9 +17,12 @@ function dmenu_state_update_globals()
 		var text = display_name;
 		var global_value = "";
 
+		var _keyboard_textstart = -1;
 		if (i == 0 && reading_custom) {
 			name = dkeyboard_texts[0];
 			text = "global." + name;
+			if (dhorizontal_index == 0)
+				_keyboard_textstart = string_length("global.");
 		}
 
 		else if (i > 0 && limit != -1) {
@@ -49,9 +52,10 @@ function dmenu_state_update_globals()
 		}
 		
 		text += " = |";
-		var _keyboard_textstart = string_length(text);
+		_keyboard_textstart = string_length(text);
 		text += string(global_value) + "|";
 
+		if (_keyboard_textstart == -1)
 		var btlimit = [0, 0];
 		if (limit != -1)
 			btlimit = [0, limit - 1];

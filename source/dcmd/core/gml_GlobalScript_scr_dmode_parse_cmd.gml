@@ -4,6 +4,12 @@ function dconsole_fetch_function(arg0)
 
 	switch (cmd)
 	{
+		// DEBUG COMMANDS
+		case "resetkb":
+		case "reset_kb":
+			return (dcmd_reset_kb);
+
+
 		// WARPING COMMANDS
 		case "warp":
 			return (dcmd_warp);
@@ -93,6 +99,11 @@ function dconsole_fetch_function(arg0)
 		case "update_dsave":
 		case "dsave_update":
 			return (dcmd_update_debug_save);
+
+		// Fight commands
+		case "fight":
+		case "battle":
+			return (dcmd_fight);
 	}
 	return (undefined);
 }

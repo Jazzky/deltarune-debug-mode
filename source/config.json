@@ -1,5 +1,6 @@
 {
     "order": [
+		"csx_fixes",
         "scr_debug_print",
         "obj_debug_gui",
         "scr_gamestart",
@@ -11,6 +12,7 @@
         "scr_dstr",
         "scr_debug",
         "debug_save",
+		"obj_dkeyboard_system",
 		"dcmd",
         "obj_time",
 		"obj_darkcontroller",

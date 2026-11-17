@@ -1,0 +1,8 @@
+{
+	"mode": "replace",
+	"gml_Object_obj_dkeyboard_system_Create_0.gml": {
+		"create_new": true
+	},
+	"gml_Object_obj_dkeyboard_system_Step_1.gml": {},
+	"commands/gml_GlobalScript_dkeyboard_shortcuts.gml": {}
+}

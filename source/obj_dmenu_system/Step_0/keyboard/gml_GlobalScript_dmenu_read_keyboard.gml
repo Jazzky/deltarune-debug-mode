@@ -1,6 +1,5 @@
 function dmenu_update_keyboard()
 {
-	dutils_read_kb();
 	if (dutils_cur_kb_key() == undefined)
 		exit;
 
@@ -58,9 +57,9 @@ function dmenu_get_keyboard_func(arg0=dmenu_state)
 
 function dmenu_handle_kb()
 {
-	var x_limit = 1;
+	var x_limit = 0;
     if (dmenu_state == "flag_categories" || (dmenu_state == "globals_changer" && dvertical_index == 0)) //TODO CHANGE FOR REAL
-		x_limit = 2;
+		x_limit = 1;
 
 	var old_horizontal = dhorizontal_index;
 	if (left_held && dhorizontal_index != 0)

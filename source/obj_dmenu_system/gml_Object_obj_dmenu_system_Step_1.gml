@@ -8,10 +8,14 @@ function dmenu_state_update(arg0 = dmenu_state)
 	dcategories_holder = [];
     switch (state)
     {
+		// Main menu
         case "debug":
 			dmenu_state_update_main_menu();
             break;
-        
+
+
+
+		// Debug Saves
         case "debug_save":
 			dmenu_state_update_dsave_main_menu();
             break;
@@ -30,6 +34,9 @@ function dmenu_state_update(arg0 = dmenu_state)
 			dmenu_state_update_dsave_new_save();
             break;
         
+
+
+		// Warp
         case "warp":
 			dmenu_state_update_warp();
             break;
@@ -38,6 +45,9 @@ function dmenu_state_update(arg0 = dmenu_state)
 			dmenu_state_update_warp_options();
             break;
         
+
+
+		// Items
         case "give":
 			dmenu_state_update_items_main_menu();
             break;
@@ -53,6 +63,9 @@ function dmenu_state_update(arg0 = dmenu_state)
 			dmenu_state_update_givertab();
             break;
         
+
+
+		// Recruits
         case "recruits":
 			dmenu_state_update_recruits();
             break;
@@ -61,6 +74,9 @@ function dmenu_state_update(arg0 = dmenu_state)
 			dmenu_state_update_recruits_presets();
             break;
         
+
+
+		// Flags
         case "flag_categories":
 			dmenu_state_update_flag_categories();
             break;
@@ -68,7 +84,25 @@ function dmenu_state_update(arg0 = dmenu_state)
         case "flag_misc":
 			dmenu_state_update_flag();
             break;
+
+
+
+		// Fight menu
+		case "fight_menu":
+			dmenu_state_update_fight_menu();
+            break;
         
+		case "add_enemy":
+			dmenu_state_update_add_enemy();
+            break;
+        
+		case "modify_enemy":
+			dmenu_state_update_modify_enemy();
+			break;
+
+
+
+		// Misc
         case "globals_changer":
 			dmenu_state_update_globals();
             break;
@@ -99,10 +133,14 @@ function dmenu_state_interact(arg0 = dmenu_state)
     
     switch (state)
     {
+		// Main menu
         case "debug":
 			dmenu_state_interact_main_menu();
             break;
         
+
+
+		// Debug Saves
         case "debug_save":
 			dmenu_state_interact_dsave_main_menu();
             break;
@@ -121,6 +159,9 @@ function dmenu_state_interact(arg0 = dmenu_state)
 			dmenu_state_interact_new_dsave();
             break;
         
+
+
+		// Warp
         case "warp":
 			dmenu_state_interact_warp_setup();
             break;
@@ -129,6 +170,9 @@ function dmenu_state_interact(arg0 = dmenu_state)
 			dmenu_state_interact_warp();
             break;
         
+
+
+		// Items
         case "give":
 			dmenu_state_interact_set_itemgiver_type();
             break;
@@ -144,6 +188,9 @@ function dmenu_state_interact(arg0 = dmenu_state)
 			dmenu_state_interact_givertab();
             break;
         
+
+
+		// Flags
         case "flag_categories":
 			dmenu_state_interact_flag_categories();
             break;
@@ -152,6 +199,9 @@ function dmenu_state_interact(arg0 = dmenu_state)
 			dmenu_state_interact_flags();
             break;
         
+
+
+		// Recruits
         case "recruits":
 			dmenu_state_interact_recruits();
             break;
@@ -159,7 +209,25 @@ function dmenu_state_interact(arg0 = dmenu_state)
         case "recruit_presets":
 			dmenu_state_interact_recruits_presets();
             break;
-        
+
+
+
+		// Fight menu
+		case "fight_menu":
+			dmenu_state_interact_fight_menu();
+            break;
+
+		case "add_enemy":
+			dmenu_state_interact_add_enemy();
+            break;
+
+		case "modify_enemy":
+			dmenu_state_interact_modify_enemy();
+			break;
+
+
+
+		// Other
         case "globals_changer":
 			dmenu_state_interact_globals();
             break;

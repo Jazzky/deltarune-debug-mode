@@ -7,6 +7,25 @@ from patcher_modules import register
 from patcher_modules.utils import update_cwd, get_file_pos, set_double_quote
 from patcher_modules.config_parser import init_basic_json, execute_actions, get_command_variable
 
+def add_gml_element(config, declared_elements, csx_lines):
+    if config['obj_name'] not in declared_elements:
+        create_new = config.get('create_new', False)
+        declared_elements.append(config['obj_name'])
+        if create_new:
+            if config['element_type'] == 'obj':
+                obj_options = [str(config['visible']).lower(), str(config['persistent']).lower(), str(config['awake']).lower()]
+                csx_lines.append(register.ADD_OBJECT.replace("FILE_NAME", config['obj_name']).format(*obj_options))
+
+    elem_identifier, queue_op = get_command_variable(config)
+
+    if config['keyname'][0] != '.':
+        content = set_double_quote(config["content"])
+        csx_lines.append(f'importGroup.{queue_op}({elem_identifier},\n@"{content}");')
+
+def add_csx_element(config, csx_lines):
+    csx_lines.append(config["content"])
+    
+
 def parse_folder(current_chapter=1):
     csx_lines = []
     master_config_path = "config.json"
@@ -44,28 +63,21 @@ def parse_folder(current_chapter=1):
         for filename, config in folder_config.items():
             real_filename = filename.split('|')[0]
             
+            config['content'] = ""
             if real_filename[0] != '.':
                 with open(real_filename, 'r', encoding='utf-8') as f:
-                    gml_code = set_double_quote(f.read())
+                    config['content'] = f.read()
             
             if current_chapter not in config['chapters']:
                 continue
                 
             csx_lines.append("\n")
-            create_new = config.get('create_new', False)
             execute_actions(config['pre_actions'], config, csx_lines)
             
-            if config['obj_name'] not in declared_elements:
-                declared_elements.append(config['obj_name'])
-                if create_new:
-                    if config['element_type'] == 'obj':
-                        obj_options = [str(config['visible']).lower(), str(config['persistent']).lower(), str(config['awake']).lower()]
-                        csx_lines.append(register.ADD_OBJECT.replace("FILE_NAME", config['obj_name']).format(*obj_options))
-
-            elem_identifier, queue_op = get_command_variable(config)
-
-            if real_filename[0] != '.':
-                csx_lines.append(f'importGroup.{queue_op}({elem_identifier},\n@"{gml_code}");')
+            if config['filetype'] == "gml":
+                add_gml_element(config, declared_elements, csx_lines)
+            elif config['filetype'] == "csx":
+                add_csx_element(config, csx_lines)
 
             execute_actions(config['actions'], config, csx_lines)
 

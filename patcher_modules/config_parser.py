@@ -17,18 +17,11 @@ def init_basic_json(foldername, json_name):
             print(f"Error: Malformed config.json in `{Context.CWD}'.", file=sys.stderr)
             return {}
 
-    flattened_data = {}
-    for key, value in data.items():
-        if isinstance(value, list) and len(value) > 0 and isinstance(value[0], dict):
-            for i, sub_value in enumerate(value):
-                flattened_data[f"{key}|{i}"] = sub_value
-        else:
-            flattened_data[key] = value
-    data = flattened_data
-
     res = {}
     defaults = {
         'mode': 'append',
+        'filetype': 'gml',
+        'keyname': '',
         'chapters': ALL_CHAPTERS.copy(),
         'pre_actions': [],
         'actions': [],
@@ -49,7 +42,7 @@ def init_basic_json(foldername, json_name):
     defaults['chapters'] = parse_chapter_config(defaults['chapters'])
     
     for filepath, file_config in data.items():
-        real_filepath = filepath.split('|')[0]
+        real_filepath = filepath
         
         if defaults.get(filepath) is not None:
             continue
@@ -61,6 +54,7 @@ def init_basic_json(foldername, json_name):
         for key, value in defaults.items():
             file_config[key] = file_config.get(key, value)
 
+        file_config['keyname'] = real_filepath
         file_config['chapters'] = parse_chapter_config(file_config['chapters'])
 
         filename = os.path.basename(real_filepath)
@@ -72,6 +66,11 @@ def init_basic_json(foldername, json_name):
         ]
 
         gml_predic = ""
+        if filename.endswith(".csx"):
+            file_config['filetype'] = "csx"
+            res[filepath] = file_config
+            continue
+
         if filename.startswith("gml_"):
             gml_predic = filename
         else:
@@ -116,6 +115,18 @@ def init_basic_json(foldername, json_name):
 
     return res
 
+def get_action_newline(method, call_name, variables):
+    if (method == "csx"):
+        return (variables[0])
+
+    newline = f"importGroup.{call_name}("
+    for i in range(len(variables)):
+        if (i != 0):
+            newline += ",\n"
+        newline += f'@"{set_double_quote(variables[i])}"'
+    newline += "\n);"
+    return (newline)
+
 def execute_actions(action_list, config, csx_lines):
     file_suffix = "_file"
     for action in action_list:
@@ -144,12 +155,11 @@ def execute_actions(action_list, config, csx_lines):
                 call_name = "QueueReplace"
                 call_variables = [gml_name, params["content"]]
 
-            newline = f"importGroup.{call_name}("
-            for i in range(len(call_variables)):
-                if (i != 0):
-                    newline += ",\n"
-                newline += f'@"{set_double_quote(call_variables[i])}"'
-            newline += "\n);"
+            elif method == "csx":
+                call_name = ""
+                call_variables = [params["content"]]
+
+            newline = get_action_newline(method, call_name, call_variables)
             csx_lines.append(newline)
 
 

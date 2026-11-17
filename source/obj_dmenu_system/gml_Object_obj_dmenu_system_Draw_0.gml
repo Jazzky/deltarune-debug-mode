@@ -121,7 +121,7 @@ if (reading_kb)
 dmenu_draw_state_specific();
 if (dbutton_layout == 0)
 {
-	var draw_y = y_start;
+	var draw_y = y_start + yy;
 	
 	for (var j = 0; j < array_length(dbuttons_2d); j++)
 	{
