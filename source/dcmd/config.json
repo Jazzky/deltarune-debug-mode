@@ -18,6 +18,9 @@
 	"commands/variables/gml_GlobalScript_dcmd_set_global.gml": {},
 
 	"commands/fights/gml_GlobalScript_dcmd_fight.gml": {},
+	"commands/fights/gml_GlobalScript_scr_monster_add.gml": {
+		"mode": "replace"
+	},
 	"commands/fights/fix_textbox_timing.csx": {},
 
 	"commands/items/gml_GlobalScript_dcmd_give_item.gml": {},

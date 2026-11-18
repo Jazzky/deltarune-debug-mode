@@ -89,10 +89,10 @@ function dmode_init_enemies_id_map()
 
 	for (var i = 0; i < nb_enemies; i++) {
 		var _enemy = all_enemies[i];
-		var _enemy_name = _enemy.enemey_name;
+		var _enemy_name = _enemy.enemy_name;
 
-		ds_map_add(emap, _enemy_name, _enemy);
-		ds_map_add(emap, dutils_normalize_id(_enemy_name), _enemy);
+		var key_name = dutils_normalize_id(_enemy_name) + ":" + string(_enemy.enemy_id);
+		ds_map_add(emap, key_name, _enemy);
 	}
 
 	return (emap);

@@ -18,6 +18,11 @@ importGroup.QueueFindReplace("gml_GlobalScript_scr_enemyblcon",
 if (arg2 == 0)
 ");
 
+importGroup.QueueFindReplace("gml_GlobalScript_scr_blconskip",
+"global.mnfight = 2;",
+"scr_end_monsterdial();"
+);
+
 importGroup.QueueAppend("gml_GlobalScript_scr_blconskip",
 @"function scr_end_monsterdial()
 {
@@ -31,10 +36,5 @@ importGroup.QueueAppend("gml_GlobalScript_scr_blconskip",
 	global.mnfight = 2;
 }
 ");
-
-importGroup.QueueFindReplace("gml_GlobalScript_scr_blconskip",
-"global.mnfight = 2;",
-"scr_end_monsterdial();"
-);
 
 }

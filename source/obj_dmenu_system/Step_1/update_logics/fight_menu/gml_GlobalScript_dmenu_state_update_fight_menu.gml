@@ -8,6 +8,9 @@ function dmenu_state_update_fight_menu()
 		dmenu_makebt(dstr("Fight", "Combattre"), "fight")
 	];
 
+	if (dfight_menu.selected_enemy == -1)
+		dfight_menu.selected_enemy = dfight_menu.nb_enemies - 1;
+
 	var no_enemy_text = dstr("No enemy selected", "Aucun ennemi sélectionné");
 	if (dfight_menu.nb_enemies == 0) {
 		dbuttons[0].text += "|" + no_enemy_text + "|";

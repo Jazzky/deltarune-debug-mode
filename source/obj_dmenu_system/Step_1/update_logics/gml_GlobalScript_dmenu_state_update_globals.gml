@@ -52,10 +52,10 @@ function dmenu_state_update_globals()
 		}
 		
 		text += " = |";
-		_keyboard_textstart = string_length(text);
+		if (_keyboard_textstart == -1)
+			_keyboard_textstart = string_length(text);
 		text += string(global_value) + "|";
 
-		if (_keyboard_textstart == -1)
 		var btlimit = [0, 0];
 		if (limit != -1)
 			btlimit = [0, limit - 1];

@@ -48,7 +48,12 @@ function dmenu_state_interact_fight_menu()
 	var _id = cur_btn.data;
 
 	if (_id == "fight") {
-		scr_debug_print("Wahoo big fight");
+		var cmd = "fight";
+		for (var i = 0; i < dfight_menu.nb_enemies; i++)
+			cmd += " \"" + string(dfight_menu.enemies[i].enemy_id) + "\"";
+
+		dmenu_reset_menu();
+		dconsole_exec(cmd);
 		exit;
 	}
 
