@@ -47,19 +47,8 @@ function scr_debug_save_scan_imports()
     for (var f = 0; f < array_length(files_to_import); f++)
     {
         var target_path = files_to_import[f];
-        var file_id = file_text_open_read(target_path);
-        var file_content = "";
+        var file_content = dutils_read_file(target_path);
         
-        while (!file_text_eof(file_id))
-        {
-            file_content += file_text_read_string(file_id);
-            file_text_readln(file_id);
-            
-            if (!file_text_eof(file_id))
-                file_content += "\n";
-        }
-        
-        file_text_close(file_id);
         var is_structured = false;
         var import_data = -1;
         
@@ -155,14 +144,7 @@ function scr_debug_save_scan_imports()
             meta.SaveName = ext_name;
             meta.Category = ext_cat;
             meta.Chapter = chapter_num;
-            meta.Plot = 0;
             meta.Description = "Raw save imported from folder structure.";
-            meta.Name = "Unknown";
-            meta.Level = 1;
-            meta.Love = 1;
-            meta.Room = 0;
-            meta.Time = 0;
-            meta.UraBoss = 0;
             save_content = file_content;
         }
         

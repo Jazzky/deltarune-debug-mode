@@ -26,19 +26,7 @@ function scr_debug_save_import()
         }
     }
     
-    var file_id = file_text_open_read(import_path);
-    var file_content = "";
-    
-    while (!file_text_eof(file_id))
-    {
-        file_content += file_text_read_string(file_id);
-        file_text_readln(file_id);
-        
-        if (!file_text_eof(file_id))
-            file_content += "\n";
-    }
-    
-    file_text_close(file_id);
+	var file_content = dutils_read_file(import_path);
     var is_structured = false;
     var import_data = -1;
     
@@ -76,14 +64,7 @@ function scr_debug_save_import()
         meta.SaveName = file_only_name;
         meta.Category = "Imported";
         meta.Chapter = chapter_num;
-        meta.Plot = 0;
         meta.Description = "Raw save file imported directly.";
-        meta.Name = "Unknown";
-        meta.Level = 1;
-        meta.Love = 1;
-        meta.Room = 0;
-        meta.Time = 0;
-        meta.UraBoss = 0;
         save_content_out = file_content;
     }
     
@@ -111,9 +92,7 @@ function scr_debug_save_import()
         metadata: meta,
         save_file: save_content_out
     };
-    var out_file = file_text_open_write(new_file_path);
-    file_text_write_string(out_file, json_stringify(export_data, true));
-    file_text_close(out_file);
+	dutils_write_file(new_file_path, json_stringify(export_data, true));
     scr_debug_print(dstr("Save file '", "Sauvegarde '") + file_only_name + dstr("' imported successfully!", "' importée avec succès !"));
     snd_play(snd_shineselect);
 }

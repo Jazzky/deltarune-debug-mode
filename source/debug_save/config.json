@@ -1,4 +1,5 @@
 {
+  "gml_GlobalScript_dsaves_get_file_info.gml": {},
   "savemenu_step_append": {
     "chapters": [-1],
     "mode": "append",
@@ -28,42 +29,6 @@
       }
     ]
   },
-  ".saveprocess_ch5+": {
-    "chapters": [5],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech\" + string(global.chapter) + \"_\" + string(arg0) + global.filechoice_route;",
-          "replace_file": "saveprocess_replace_ch5+"
-        }
-      }
-    ]
-  },
-  ".saveprocess_ch2-4": {
-    "chapters": [2, 3, 4],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech\" + string(global.chapter) + \"_\" + string(arg0);",
-          "replace_file": "saveprocess_replace_ch2-4"
-        }
-      }
-    ]
-  },
-  ".saveprocess_ch1": {
-    "chapters": [1],
-    "gml_name": "gml_GlobalScript_scr_saveprocess",
-    "actions": [
-      {
-        "find_replace": {
-          "find": "file = \"filech1_\" + string(arg0);",
-          "replace_file": "saveprocess_ch1_replace"
-        }
-      }
-    ]
-  },
   "get_debug_save_list": {
     "mode": "replace",
     "gml_name": "gml_GlobalScript_scr_get_debug_save_list"
@@ -84,8 +49,27 @@
     "mode": "replace",
     "gml_name": "gml_GlobalScript_scr_debug_save"
   },
+
+  ".override_scr_load": {
+    "gml_name": "gml_GlobalScript_scr_load",
+	"actions": [
+		{
+			"find_replace": {
+				"find": "function scr_load()",
+				"replace": "function scr_load(arg0=undefined)"
+			}
+		},
+		{
+			"find_replace": {
+				"find": "myfileid = ossafe_file_text_open_read(file);",
+				"replace": "myfileid = ossafe_file_text_open_read((arg0 == undefined) ? file : arg0);"
+			}
+		}
+	]
+  },
   "debug_load": {
     "mode": "replace",
     "gml_name": "gml_GlobalScript_scr_debug_load"
   }
+
 }

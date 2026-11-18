@@ -1,5 +1,7 @@
 function scr_dconsole_command(arg0)
 {
+	dconsole_exec(arg0);
+	exit;
     static _commands = 
     {
         help: function(arg0, arg1, arg2)

@@ -47,6 +47,8 @@ if (isDemo)
     Data.GameObjects.Add(CREATE_obj_debug_gui);
 }
 
+int chapter = CHAPTER_NUMBER;
+
 // SEPARATION
 importGroup.Import();
 

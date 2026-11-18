@@ -1,0 +1,19 @@
+recruit -> usage
+
+recruit --all/chap=X [liste de nom] valeur
+
+recruit rubine -> juste rubine
+recruit --all -> tout le monde
+recruit rubine ponman -> recrute rubine et ponman
+recruit rubine 25%
+recruit rubine X -> met rubine a clamp(X, 0, _max);
+recruit rubine -1 -> perd rubine
+
+
+recruit --all -> s'applique a chaques recrues
+recruit --chap=[1-global.chapter] -> s'applique a chaques recrues du chapitre
+
+recruit rub -> recrute rubine
+
+recruit all N -> 
+recruit rub -1 -> perd la recrues

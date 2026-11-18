@@ -24,6 +24,8 @@ UndertaleModLib.Compiler.CodeImportGroup importGroup = new(Data, globalDecompile
     ThrowOnNoOpFindReplace = true
 };
 
+int chapter = CHAPTER_NUMBER;
+
 // SEPARATION
 importGroup.Import();
 

@@ -1,74 +1,31 @@
-function scr_debug_save_modify_info(arg0, arg1, arg2)
+function scr_debug_save_modify_info(arg0, arg1)
 {
-    if (!file_exists(arg0))
+	var _file = arg0;
+	var update_lst = arg1;
+
+    if (!file_exists(_file))
     {
-        scr_debug_print(dstr("Error: Save file not found on disk.", "Erreur : Fichier de sauvegarde introuvable"));
+        scr_debug_print(dstr(
+			"Error: Save file not found on disk.",
+			"Erreur : Fichier de sauvegarde introuvable"
+		));
         return "";
     }
     
-    var file_id = file_text_open_read(arg0);
-    var json_string = "";
+	var _json = dsaves_get_file_info(_file);
     
-    while (!file_text_eof(file_id))
-    {
-        json_string += file_text_read_string(file_id);
-        file_text_readln(file_id);
-        
-        if (!file_text_eof(file_id))
-            json_string += "\n";
-    }
-    
-    file_text_close(file_id);
-    var parsed_data = -1;
-    
-    try
-    {
-        parsed_data = json_parse(json_string);
-    }
-    catch (e)
-    {
-        scr_debug_print(dstr("Error: JSON is corrupted", "Erreur : JSON corrompu"));
-        return "";
-    }
-    
-    if (!is_struct(parsed_data) || !variable_struct_exists(parsed_data, "metadata"))
-    {
-        scr_debug_print(dstr("Error: Invalid save structure", "Erreur : Structure de sauvegarde invalide"));
-        return "";
-    }
-    
-    variable_struct_set(parsed_data.metadata, arg1, arg2);
-    var meta = parsed_data.metadata;
-    var safe_name = scr_debug_sanitize_filename(variable_struct_exists(meta, "SaveName") ? meta.SaveName : "Untitled");
-    var safe_cat = scr_debug_sanitize_filename(variable_struct_exists(meta, "Category") ? meta.Category : "", true);
-    var chapter_num = variable_struct_exists(meta, "Chapter") ? meta.Chapter : global.chapter;
-    var base_dir = "debug_save/ch" + string(chapter_num) + "/";
-    
-    if (!directory_exists(base_dir))
-        directory_create(base_dir);
-    
-    var cat_dir = base_dir;
-    
-    if (safe_cat != "")
-    {
-        cat_dir += (safe_cat + "/");
-        
-        if (!directory_exists(cat_dir))
-            directory_create(cat_dir);
-    }
-    
-    var new_path = cat_dir + safe_name + ".save";
-    var out_file = file_text_open_write(new_path);
-    file_text_write_string(out_file, json_stringify(parsed_data, true));
-    file_text_close(out_file);
-    
-    if (arg0 != new_path)
-    {
-        file_delete(arg0);
-        scr_debug_cleanup_folder(arg0);
-    }
-    
+	for (var i = 0; i < array_length(update_lst); i++)
+	{
+		var ini_key = update_lst[i][0];
+		var ini_value = update_lst[i][1];
+
+		variable_struct_set(_json.metadata, ini_key, ini_value);
+		scr_debug_print(
+			dstr("Updated ", "Mise à jour de ") + ini_key +
+			dstr(" to: ", " à : ") + string(ini_value)
+		);
+	}
+
+	dutils_write_file(_file, json_stringify(_json));
     snd_play(snd_save);
-    scr_debug_print(dstr("Updated ", "Mise à jour de ") + arg1 + dstr(" to: ", " à : ") + string(arg2));
-    return new_path;
 }

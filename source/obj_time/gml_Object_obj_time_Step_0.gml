@@ -8,7 +8,7 @@ if (keyboard_check_pressed(vk_f10))
         scr_debug_print(dstr("Debug Mode deactivated!", "Mode Debug désactivé !"), true);
 }
 
-if (scr_debug() && (!instance_number(obj_dmenu_system) || !global.dreading_custom_flag))
+if (scr_debug() && !dutils_reading_kb())
 {
     if (keyboard_check_pressed(ord("G")))
     {
@@ -64,3 +64,5 @@ if (scr_debug() && (!instance_number(obj_dmenu_system) || !global.dreading_custo
         }
     }
 }
+
+dutils_update_kb_timer();

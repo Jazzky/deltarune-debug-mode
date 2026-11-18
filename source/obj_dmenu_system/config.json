@@ -1,5 +1,86 @@
 {
 	"mode": "replace",
+	"utils/gml_GlobalScript_dmenu_reset_menu.gml": {},
+	"utils/gml_GlobalScript_dmenu_launch_menu.gml": {},
+	"utils/gml_GlobalScript_dmenu_reset_kb.gml": {},
+	"utils/gml_GlobalScript_dmenu_fix_start_index.gml": {},
+	"utils/gml_GlobalScript_dmenu_step_setters.gml": {},
+	"utils/history/gml_GlobalScript_dpop_history.gml": {},
+
+
+	"Create/gml_GlobalScript_dmenu_init_warps.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_items.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_flags.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_global_changer.gml": {},
+	"Create/gml_GlobalScript_dmenu_init_dsaves.gml": {},
+
+
+	"Step_0/gml_GlobalScript_dmenu_get_curbtn.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_confirm.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_cancel.gml": {},
+	"Step_0/actions/gml_GlobalScript_dmenu_check_misc_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_main_menu_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_itemtab_keys.gml": {},
+	"Step_0/actions/keys/gml_GlobalScript_dmenu_action_dsaves_keys.gml": {},
+
+	"Step_0/keyboard/gml_GlobalScript_dmenu_default_kb.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_flag_categories.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_global_changer.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_kb_warp_options.gml": {},
+	"Step_0/keyboard/gml_GlobalScript_dmenu_read_keyboard.gml": {},
+
+	"Step_0/move/gml_GlobalScript_dmenu_xmove.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_ymove.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_xmove_common_logic.gml": {},
+	"Step_0/move/gml_GlobalScript_dmenu_ymove_common_logic.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_items.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_flag_misc.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_recruits.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_warp_options.gml": {},
+	"Step_0/move/xmove/gml_GlobalScript_dmenu_xmove_dsave_options.gml": {},
+
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_items.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_warp_options.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_dsaves_main_menu.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenu_dhinter_dsaves_options.gml": {},
+	"Step_0/dhinter/gml_GlobalScript_dmenuback_update_dhinter.gml": {},
+
+	"Step_1/gml_GlobalScript_dmenu_makebt.gml": {},
+	"Step_1/gml_GlobalScript_dmenu_categories.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_state_update_dsave_new_save.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_state_update_dsave_main_menu.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_state_update_dsave_load.gml": {},
+	"Step_1/update_logics/dsaves/gml_GlobalScript_dmenu_state_update_dsave_options.gml": {},
+	"Step_1/update_logics/flags/gml_GlobalScript_dmenu_state_update_flags.gml": {},
+	"Step_1/update_logics/recruits/gml_GlobalScript_dmenu_state_update_recruits.gml": {},
+	"Step_1/update_logics/items/gml_GlobalScript_dmenu_state_update_items.gml": {},
+	"Step_1/update_logics/items/gml_GlobalScript_dmenu_state_update_items_others.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_state_update_globals.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_state_update_warps.gml": {},
+	"Step_1/update_logics/gml_GlobalScript_dmenu_state_update_main_menu.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_state_interact_dsave_export.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_state_interact_new_dsave.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_state_interact_dsave_load.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_state_interact_dsave_options.gml": {},
+	"Step_1/interact_logics/dsaves/gml_GlobalScript_dmenu_state_interact_dsave_main_menu.gml": {},
+	"Step_1/interact_logics/flags/gml_GlobalScript_dmenu_state_interact_flags.gml": {},
+	"Step_1/interact_logics/recruits/gml_GlobalScript_dmenu_state_interact_recruits.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_state_interact_warp.gml": {},
+	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_state_interact_givertab.gml": {},
+	"Step_1/interact_logics/items/gml_GlobalScript_dmenu_state_interact_give_item.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_state_interact_globals.gml": {},
+	"Step_1/interact_logics/gml_GlobalScript_dmenu_state_interact_main_menu.gml": {},
+
+
+	"Draw/utils/gml_GlobalScript_dmenu_draw_sprite_tags.gml": {},
+	"Draw/utils/gml_GlobalScript_dmenu_draw_key_helper.gml": {},
+
+	"Draw/gml_GlobalScript_dmenu_draw_state_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_main_menu_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_recruits_specific.gml": {},
+	"Draw/state_specific/gml_GlobalScript_dmenu_draw_items_specific.gml": {},
+
+
 	"gml_Object_obj_dmenu_system_Create_0.gml": {
 		"create_new": true
 	},

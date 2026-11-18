@@ -1,0 +1,17 @@
+function dmenu_state_interact_new_dsave()
+{
+	var _created = (dvertical_index == 1 && dhorizontal_index == 0);
+	if (!_created) {
+		dpop_history();
+		exit;
+	}
+
+	var entered_text = dkeyboard_texts[0];
+	var target_name = dstr("Untitled", "Sans titre");
+	if (entered_text != "")
+		target_name = entered_text;
+
+	var cmd = "save_dsave \"" + target_name + "\"";
+	dconsole_exec(cmd);
+	dpop_history();
+}

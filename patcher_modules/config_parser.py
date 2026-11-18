@@ -48,14 +48,14 @@ def init_basic_json(foldername, json_name):
     
     defaults['chapters'] = parse_chapter_config(defaults['chapters'])
     
-    for filename, file_config in data.items():
-        real_filename = filename.split('|')[0]
+    for filepath, file_config in data.items():
+        real_filepath = filepath.split('|')[0]
         
-        if defaults.get(filename) is not None:
+        if defaults.get(filepath) is not None:
             continue
         
-        if real_filename[0] != '.' and not os.path.exists(real_filename):
-            print(f"Error: `{real_filename}' doesn't exist in {Context.CWD}, skipping", file=sys.stderr)
+        if real_filepath[0] != '.' and not os.path.exists(real_filepath):
+            print(f"Error: `{real_filepath}' doesn't exist in {Context.CWD}, skipping", file=sys.stderr)
             continue
 
         for key, value in defaults.items():
@@ -63,6 +63,7 @@ def init_basic_json(foldername, json_name):
 
         file_config['chapters'] = parse_chapter_config(file_config['chapters'])
 
+        filename = os.path.basename(real_filepath)
         type_predic = ""
         gml_types = [
             ['gml_GlobalScript_', 'scr'],
@@ -71,12 +72,12 @@ def init_basic_json(foldername, json_name):
         ]
 
         gml_predic = ""
-        if real_filename.startswith("gml_"):
-            gml_predic = real_filename
+        if filename.startswith("gml_"):
+            gml_predic = filename
         else:
             for elem, g_type in gml_types:
-                if real_filename.startswith(g_type):
-                    gml_predic = elem + real_filename
+                if filename.startswith(g_type):
+                    gml_predic = elem + filename
 
         file_config['gml_name'] = file_config.get("gml_name", gml_predic)
 
@@ -91,7 +92,7 @@ def init_basic_json(foldername, json_name):
 
         file_config['element_type'] = file_config.get('element_type', type_predic)
         if file_config['element_type'] not in [obj[1] for obj in gml_types]:
-            print(f"Error: unknown element type `{file_config['element_type']}' for file `{real_filename}' in `{get_file_pos(json_name)}'")
+            print(f"Error: unknown element type `{file_config['element_type']}' for file `{filename}' in `{get_file_pos(json_name)}'")
             continue
 
         left_index = 2
@@ -111,7 +112,7 @@ def init_basic_json(foldername, json_name):
             file_config['variable_type'] = "UndertaleGameObject"
             file_config['class_id'] = "GameObjects"
 
-        res[filename] = file_config
+        res[filepath] = file_config
 
     return res
 
