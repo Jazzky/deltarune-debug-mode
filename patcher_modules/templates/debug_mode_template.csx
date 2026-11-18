@@ -92,6 +92,8 @@ var importGroup = PatcherUtils.importGroup;
 
 int chapter = CHAPTER_NUMBER;
 
+int chapter = CHAPTER_NUMBER;
+
 // SEPARATION
 importGroup.Import();
 
