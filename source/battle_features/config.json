@@ -3,17 +3,6 @@
 		"mode": "append",
 		"gml_name": "gml_Object_obj_battlecontroller_Step_0"
 	},
-	".chap3_fix": {
-		"chapters": [3],
-		"gml_name": "gml_Object_obj_battlecontroller_Create_0",
-		"actions": [
-			{
-				"append": {
-					"content": "caster = 0;"
-				}
-			}
-		]
-	},
 	".replace_scr_debug": {
 		"chapters": [-1],
 		"gml_name": "gml_Object_obj_battlecontroller_Step_0",

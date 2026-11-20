@@ -2,61 +2,44 @@ function _dmenu_init_lw_item_data()
 {
 	var dnumber_litems = [0, 11, 14, 14, 18, 23];
 
+	var all_litem = ds_map_find_value(global.item_id_map, "litem");
+
+	dlight_objects = [];
+	for (var i = 0; i < array_length(all_litem); i++) {
+		if (i > dnumber_litems[global.chapter])
+			break;
+
+		var _cur_item = all_litem[i];
+		if (_cur_item == undefined)
+			continue;
+
+		array_push(dlight_objects, _cur_item);
+	}
+
 	dlight_weapons = [];
-	dlight_armors = [
-		[3, dstr("Bandage", "Pansement")],
-		[14, dstr("Wristwatch", "Montre")]
-	];
-
-	dlight_objects = [
-		[1, dstr("Hot Chocolate", "Chocolat Chaud")],
-		[2, dstr("Pencil", "Crayon")],
-		[3, dstr("Bandage", "Pansement")],
-		[4, dstr("Bouquet")],
-		[5, dstr("Ball of Junk", "Boule de Trucs")],
-		[6, dstr("Halloween Pencil", "Crayon Halloween")],
-		[7, dstr("Lucky Pencil", "Crayon Fétiche")],
-		[8, dstr("Egg", "Œuf")],
-		[9, dstr("Cards", "Cartes")],
-		[10, dstr("Box of Heart Candy", "Boîte de ChocoCœurs")],
-		[11, dstr("Glass", "Verre")],
-		[12, dstr("Eraser", "Gomme")],
-		[13, dstr("Mech. Pencil", "Critérium")],
-		[14, dstr("Wristwatch", "Montre")],
-		[15, dstr("Holiday Pencil", "Crayon de Noël")],
-		[16, dstr("CactusNeedle", "Épine de Cactus")],
-		[17, dstr("BlackShard", "ÉclatNoir")],
-		[18, dstr("QuillPen", "Stylo-Plume")],
-		[19, dstr("Honey Toast", "Tartine de Miel")],
-		[20, dstr("Bread", "Pain")],
-		[21, dstr("Seeds", "Graines")],
-		[22, dstr("Pencil2", "Crayon2")],
-		[23, dstr("Petal", "Pétale")]
-	];
-
 	if (global.chapter >= 4)
 	{
 		var dtemp_lst = get_lw_dw_weapon_list();
 		
 		for (i = 0; i < array_length(dtemp_lst); i++)
-			array_push(dlight_weapons, dlight_objects[dtemp_lst[i].lw_id]);
+			array_push(dlight_weapons, all_litem[dtemp_lst[i].lw_id - 1]);
 	}
 	else
 	{
 		dlight_weapons = [
-			[2, dstr("Pencil", "Crayon")],
-			[6, dstr("Halloween Pencil", "Crayon Halloween")],
-			[7, dstr("Lucky Pencil", "Crayon Fétiche")],
-			[12, dstr("Eraser", "Gomme")],
-			[13, dstr("Mech. Pencil", "Critérium")]
+			all_litem[2],
+			all_litem[6],
+			all_litem[7],
+			all_litem[12],
+			all_litem[13]
 		];
 	}
 
-	for (i = 0; i < array_length(dlight_objects); i++)
-	{
-		if (dlight_objects[i][0] > dnumber_litems[global.chapter])
-			array_delete(dlight_objects, i--, 1);
-	}
+	dlight_armors = [
+		all_litem[3],
+		all_litem[14]
+	];
+
 
 	if (global.chapter == 1)
 	{

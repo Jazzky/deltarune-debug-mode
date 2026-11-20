@@ -1,26 +1,17 @@
 function dcmd_fight(argc, argv, flags)
 {
-	if (argc == 1 && 0)
+	if (argc == 1)
 		return (0);
 
-	var enemy_lst;
-
-	enemy_lst = [
-		{
-			enemy_id: 50,
-			object_id: obj_spamton_neo_enemy
-		},
-		{
-			enemy_id: 48,
-			object_id: obj_queen_enemy
-		}
-	];
-
-	if (argc != 1) {
-		enemy_lst = _dcmd_fight_fetch_enemies(argc, argv);	
-		if (enemy_lst == undefined)
-			return (1);
+	for (var i = 0; i < array_length(global.monstertype); i++) {
+		global.monster[i] = 0;
+		global.monstertype[i] = 0;
+		global.monsterinstancetype[i] = 0;
 	}
+
+	var enemy_lst = _dcmd_fight_fetch_enemies(argc, argv);	
+	if (enemy_lst == undefined)
+		return (1);
 
 	var nb_enemies = array_length(enemy_lst);
 
@@ -29,50 +20,35 @@ function dcmd_fight(argc, argv, flags)
 
 	var _lower_y_bound = _camy + 40;
 	var _upper_y_bound = _camy + 260;
-	var _even_x_pos = _camx + 470;
-	var _odd_x_pos = _camx + 420;
+	var _even_x_pos = _camx + 510;
+	var _odd_x_pos = _camx + 460;
 
-	var _enemy_y = _upper_y_bound;
+	var _enemy_y = _lower_y_bound;
 	var _enemy_y_step = ((_upper_y_bound - _lower_y_bound) / nb_enemies);
 	if (nb_enemies == 1)
-		_enemy_y = _enemy_y_step / 2;
+		_enemy_y += _enemy_y_step / 2;
 
-	scr_battle(0, 0, 0, 0, 0);
-	for (i = 0; i < nb_enemies; i++) {
-		var _cur_enemy = enemy_lst[i];
+	_dcmd_start_battle_back();
+	for (myself = 0; myself < nb_enemies; myself++) {
+		var _cur_enemy = enemy_lst[myself];
 		var _enemy_id = _cur_enemy.enemy_id;
 		var _enemy_obj = _cur_enemy.object_id;
 
-		myself = i;
-		if (i < 3) {
-			global.monstertype[myself] = _enemy_id;
-			global.monsterinstancetype[myself] = _enemy_obj;
-		}
-
-		else {
-			scr_monster_add(_enemy_id, _enemy_obj);
-		}
+		global.monstertype[myself] = _enemy_id;
+		global.monsterinstance[myself] = _enemy_obj;
+		global.monsterinstancetype[myself] = _enemy_obj;
 
 		var _new_x = _odd_x_pos;
-		if (i % 2)
+		if (myself % 2)
 			_new_x = _even_x_pos;
 
 		var _new_y = _enemy_y;
-		_enemy_y -= _enemy_y_step;
+		_enemy_y += _enemy_y_step;
+
+		_new_y -= sprite_get_height(object_get_sprite(_enemy_obj)) / 2;
 
 		global.monstermakex[myself] = _new_x;
 		global.monstermakey[myself] = _new_y;
-
-		if (i < 3)
-			continue;
-
-		var _monster_ref = global.monsterinstance[myself];
-		_monster_ref.x = camerax() + 800;
-		_monster_ref.y = _new_y;
-		with (_monster_ref)
-		{
-			scr_move_to_point_over_time(_new_x, _new_y, 10);
-		}
 	}
 	global.interact = 1;
 	return (0);
@@ -125,6 +101,22 @@ function _dcmd_fight_fetch_enemies(argc, argv)
 		array_push(res_lst, _new_enemy);
 	}
 	return (res_lst);
+}
+
+function _dcmd_start_battle_back()
+{
+	if (global.chapter > 1)
+	{
+		scr_battle(0, 0, 0, 0, 0);
+	}
+	else
+	{
+		global.batmusic[0] = snd_init("joker.ogg");
+		instance_create(0, 0, obj_encounterbasic);
+		for (var i = 0; i < 3; i++) {
+			global.monstertype[i] = 0;
+		}
+	}
 }
 
 enum e__VW

@@ -1,0 +1,25 @@
+{
+    "chapters": [3],
+    ".cold_place_fix": {
+        "gml_name": "gml_Object_obj_ch3_PTB02_Create_0",
+        "actions": [
+            {
+                "find_replace": {
+                    "find": "if (scr_debug())",
+                    "replace": "if (1)"
+                }
+            }
+        ]
+    },
+	".heal_caster_fix": {
+		"chapters": [3],
+		"gml_name": "gml_Object_obj_darkcontroller_Create_0",
+		"actions": [
+			{
+				"append": {
+					"content": "caster = 0;"
+				}
+			}
+		]
+	}
+}

@@ -19,6 +19,7 @@ function dmode_init_recruits_id_map()
 
 function dmode_init_get_all_enemies()
 {
+	_dmode_global_fixes();
 	var enemy_lst = [];
 
 	var _lower_bound = 2;
@@ -96,4 +97,9 @@ function dmode_init_enemies_id_map()
 	}
 
 	return (emap);
+}
+
+function _dmode_global_fixes()
+{
+	global.tempflag[100] = 0;
 }

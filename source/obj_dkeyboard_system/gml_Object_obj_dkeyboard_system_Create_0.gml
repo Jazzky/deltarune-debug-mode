@@ -261,8 +261,8 @@ get_selected_text = function()
 	if (!is_selecting)
 		return ("");
 
-	var _selec_start = selected_ranges[0];
-	var _selec_end = selected_ranges[1];
+	var _selec_start = selected_ranges[0] + 1;
+	var _selec_end = selected_ranges[1] + 1;
 	return (string_copy(text, _selec_start, _selec_end - _selec_start));
 };
 

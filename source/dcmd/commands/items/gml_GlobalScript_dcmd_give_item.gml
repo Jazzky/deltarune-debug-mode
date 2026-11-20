@@ -79,7 +79,7 @@ function _dcmd_give_item(arg0, arg1, arg2=1)
 
 function _dcmd_fetch_item_from_name(arg0, arg1=undefined)
 {
-	var itemname = arg0;
+	var target_name = arg0;
 	var lookup_type = arg1;
 
 	var lookup_order = [];
@@ -93,25 +93,30 @@ function _dcmd_fetch_item_from_name(arg0, arg1=undefined)
 		lookup_order = [itemtype];
 	}
 
-	var name_is_id = dutils_isuint(itemname);
+	var name_is_id = dutils_isuint(target_name);
 	if (name_is_id) {
 		if (lookup_type == undefined) {
 			scr_derror_print("Error: cannot fetch item from id without type specification");
 			return (undefined);
 		}
-		return ([lookup_order[0], real(itemname)]);
+		return ([lookup_order[0], real(target_name)]);
 	}
 
 	for (var i = 0; i < array_length(lookup_order); i++) {
 		var cur_type = lookup_order[i];
-		var itemtype_map = ds_map_find_value(global.item_id_map, cur_type);
-		if (itemtype_map == undefined)
+		var itemtype_lst = ds_map_find_value(global.item_id_map, cur_type);
+		if (itemtype_lst == undefined)
 			continue;
 
-		var attempt_id = ds_map_find_value(itemtype_map, itemname);
-		if (attempt_id != undefined)
-			return ([cur_type, attempt_id]);
+		for (var j = 0; j < array_length(itemtype_lst); j++) {
+			var _item = itemtype_lst[j];
+			if (_item == undefined)
+				continue;
+
+			if (_item.item_id_name == target_name)
+				return ([cur_type, _item.item_id]);
+		}
 	}
-	scr_derror_print("Error: no item found with name '" + itemname + "'");
+	scr_derror_print("Error: no item found with name '" + target_name + "'");
 	return (undefined);
 }

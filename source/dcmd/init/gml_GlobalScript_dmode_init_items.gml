@@ -15,7 +15,7 @@ function _dmode_init_item_id_map(arg0)
 {
 	var item_type = arg0;
 
-	var res_map = ds_map_create();
+	var lst = [];
 	var _max_id = 150;
 
 	var callfunc = undefined;
@@ -54,16 +54,18 @@ function _dmode_init_item_id_map(arg0)
 		if (itemname == "" || itemname == " ")
 			continue;
 		
-		var simple_itemname = dutils_normalize_id(itemname);
-		ds_map_add(res_map, itemname, _id);
-		ds_map_add(res_map, simple_itemname, _id);
+		lst[_id] = {
+			item_id: _id,
+			item_name: itemname,
+			item_id_name: dutils_normalize_id(itemname)
+		};
 	}
-	return (res_map);
+	return (lst);
 }
 
 function _dmode_init_litem_id_map()
 {
-	var res_map = ds_map_create();
+	var lst = [];
 	var _old = global.litem[0];
 	var _limit = 50;
 
@@ -75,12 +77,14 @@ function _dmode_init_litem_id_map()
 		if (_name == "" || _name == " ")
 			continue;
 
-		var simple_itemname = dutils_normalize_id(_name);
-		ds_map_add(res_map, _name, _id);
-		ds_map_add(res_map, simple_itemname, _id);
+		lst[_id] = {
+			item_id: _id,
+			item_name: _name,
+			item_id_name: dutils_normalize_id(_name)
+		};
 	}
 
 	global.litem[0] = _old;
 	scr_litemname();
-	return (res_map);
+	return (lst);
 }
