@@ -1,5 +1,3 @@
-{
-
 List<string> missing_enemies = new();
 
 if (chapter == 3) {
@@ -25,10 +23,5 @@ for (int i = 0; i < missing_enemies.Count; i++) {
 	Data.GameObjects.Add(new_obj);
 }
 
-importGroup = PatcherUtils.updateImportGroup();
-
 importGroup.QueueAppend("gml_GlobalScript_scr_monstersetup", "");
 missing_enemies.Clear();
-
-
-}

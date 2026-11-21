@@ -11,6 +11,7 @@
 	"printing/gml_GlobalScript_dutils_draw_monospace.gml": {},
 	"printing/gml_GlobalScript_dutils_draw_kbtext.gml": {},
 
+	"items/gml_GlobalScript_dutils_get_item.gml": {},
 	"items/gml_GlobalScript_dutils_get_itemname.gml": {},
 	"items/gml_GlobalScript_dutils_itemmisc.gml": {},
 
@@ -19,6 +20,8 @@
 
 	"files/gml_GlobalScript_dutils_file_utils.gml": {},
 	"files/gml_GlobalScript_dutils_read_file.gml": {},
+
+	"fights/gml_GlobalScript_dutils_damage_all.gml": {},
 
 	"arrays/gml_GlobalScript_dutils_array_utils.gml": {},
 	"arrays/gml_GlobalScript_dutils_array_copy.gml": {}

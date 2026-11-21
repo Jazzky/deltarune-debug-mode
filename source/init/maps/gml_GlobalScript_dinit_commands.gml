@@ -1,4 +1,4 @@
-function dcmd_init()
+function dinit_commands()
 {
 	global.enemies_id_map = dmode_init_enemies_id_map();
 	global.recruits_id_map = dmode_init_recruits_id_map();

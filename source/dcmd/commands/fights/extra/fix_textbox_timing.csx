@@ -42,25 +42,4 @@ check_dial_func = check_dial_func.Replace("TARGET_MBFIGHT", target_mnfight);
 
 importGroup.QueueAppend("gml_GlobalScript_scr_blconskip", check_dial_func);
 
-importGroup.QueueFindReplace("gml_GlobalScript_scr_isphase",
-@"    if (arg0 == ""enemytalk"" || arg0 == ""balloon"")
-    {
-        if (global.mnfight == 1)
-        {
-            __isphase = 1;
-        }
-    }
-",
-@"    if (arg0 == ""enemytalk"" || arg0 == ""balloon"")
-    {
-		if (global.mnfight == 1)
-        {
-            __isphase = 1;
-        }
-
-		if (variable_instance_exists(id, ""talked"") && talked == 1 && !scr_everyone_talked())
-			__isphase = 0;
-    }
-");
-
 }

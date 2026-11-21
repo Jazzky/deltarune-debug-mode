@@ -60,6 +60,7 @@ function _dmode_init_item_id_map(arg0)
 			item_id_name: dutils_normalize_id(itemname)
 		};
 	}
+	lst[0] = undefined;
 	return (lst);
 }
 

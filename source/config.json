@@ -1,9 +1,9 @@
 {
     "order": [
-		"csx_fixes",
+		"register_objects",
+        "init",
         "scr_debug_print",
         "obj_debug_gui",
-        "scr_gamestart",
 		"dutils",
         "obj_debug_xy",
         "obj_debug_windows",

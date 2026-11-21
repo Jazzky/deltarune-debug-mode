@@ -8,7 +8,7 @@ from .parse_chapter_config import parse_chapter_config
 
 def parse_gml_elem(keyname, file_config):
     if (keyname[0] != "." and not os.path.isfile(keyname)):
-        print(f"Error: `{keypath}' doesn't exist in {Context.CWD}, skipping", file=sys.stderr)
+        print(f"Error: `{keyname}' doesn't exist in {Context.CWD}, skipping", file=sys.stderr)
         return (1)
 
     filename = os.path.basename(keyname)

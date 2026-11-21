@@ -2,15 +2,8 @@
 	"create_new": true,
 	"mode": "append",
 
-	"init/gml_GlobalScript_dmode_init_items.gml": {},
-	"init/fix_enemies_objvar.csx": {},
-	"init/gml_GlobalScript_dmode_init_enemies.gml": {},
-	"init/gml_GlobalScript_dcmd_init.gml": {},
-
-
-	"core/gml_GlobalScript_scr_dmode_parse_cmd.gml": {},
-	"core/gml_GlobalScript_scr_dmode_parse_flags.gml": {},
-	"core/gml_GlobalScript_scr_dmode_parse_argv_types.gml": {},
+	"parsing/gml_GlobalScript_scr_dmode_parse_flags.gml": {},
+	"parsing/gml_GlobalScript_scr_dmode_parse_argv_types.gml": {},
 
 
 	"commands/debug/gml_GlobalScript_dcmd_keyboard.gml": {},
@@ -21,9 +14,15 @@
 	"commands/fights/extra/gml_GlobalScript_scr_monster_add.gml": {
 		"mode": "replace"
 	},
-	"commands/fights/extra/allow_more_monsters.csx": {},
+	"commands/fights/extra/allow_more_monsters.csx": {
+		"chapters": [-1]
+	},
+	"commands/fights/extra/allow_more_monsters_chap1.csx": {
+		"chapters": [1]
+	},
 	"commands/fights/extra/fix_textbox_timing.csx": {},
 	"commands/fights/extra/fix_enemy_crashes.csx": {},
+	"commands/fights/options/hit_all.csx": {},
 
 	"commands/items/gml_GlobalScript_dcmd_give_item.gml": {},
 	"commands/items/gml_GlobalScript_dcmd_give_wrappers.gml": {},
@@ -32,23 +31,11 @@
 	"commands/recruit/gml_GlobalScript_dcmd_recruit.gml": {},
 	"commands/recruit/gml_GlobalScript_dcmd_lose.gml": {},
 
+	"commands/debug_saves/gml_GlobalScript_dcmd_load_debug_save.gml": {},
 	"commands/debug_saves/gml_GlobalScript_dcmd_export_debug_save.gml": {},
 	"commands/debug_saves/gml_GlobalScript_dcmd_update_debug_save.gml": {},
-	"commands/debug_saves/gml_GlobalScript_dcmd_load_debug_save.gml": {},
 	"commands/debug_saves/gml_GlobalScript_dcmd_delete_debug_save.gml": {},
 	"commands/debug_saves/gml_GlobalScript_dcmd_save_debug_save.gml": {},
 
-	".call_init": {
-		"gml_name": "gml_GlobalScript_scr_load",
-		"create_new": false,
-		"actions": [
-			{
-				"find_replace": {
-					"find": "scr_tempsave();",
-					"replace": "scr_tempsave();\n    dcmd_init();"
-				}
-			}
-		]
-	},
-	"init/gml_GlobalScript_dmode_init_enemies.gml": {}
+	"parsing/gml_GlobalScript_scr_dmode_parse_cmd.gml": {}
 }

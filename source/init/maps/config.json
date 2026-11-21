@@ -1,0 +1,7 @@
+{
+	"mode": "append",
+	"fix_enemies_objvar.csx": {},
+	"gml_GlobalScript_dmode_init_enemies.gml": {},
+	"gml_GlobalScript_dmode_init_items.gml": {},
+	"gml_GlobalScript_dinit_commands.gml": {}
+}

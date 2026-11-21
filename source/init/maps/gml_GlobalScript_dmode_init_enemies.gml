@@ -51,9 +51,7 @@ function dmode_init_get_all_enemies()
 	}
 
 
-
 	var res_lst = [];
-
 	var _enc_lower_bound = 2;
 	var _enc_upper_bound = 300;
 	for (var _id = _enc_lower_bound; _id < _enc_upper_bound; _id++)
@@ -78,6 +76,9 @@ function dmode_init_get_all_enemies()
 			enemy_lst[_enemy_id] = "";
 		}
 	}
+
+	for (var i = 0; i < 3; i++)
+		global.monstertype[i] = 0;
 
 	return (res_lst);
 }

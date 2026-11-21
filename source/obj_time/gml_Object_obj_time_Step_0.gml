@@ -8,9 +8,6 @@ if (keyboard_check_pressed(vk_f10))
         scr_debug_print(dstr("Debug Mode deactivated!", "Mode Debug désactivé !"), true);
 }
 
-if (!instance_exists(obj_dkeyboard_system))
-	instance_create(0, 0, obj_dkeyboard_system);
-
 if (scr_debug() && !dutils_reading_kb())
 {
     if (keyboard_check_pressed(ord("G")))

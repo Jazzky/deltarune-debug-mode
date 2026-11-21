@@ -24,7 +24,8 @@ function scr_monster_add(arg0, arg1)
 	global.monstertype[__returnid] = _enemy_id;
 	global.monsterinstancetype[__returnid] = _enemy_obj;
 
-	_dmode_add_monster_instances_fixes(__returnid);
+	scr_monster_makeinstance(__returnid);
+	_dmode_add_enemies_fixes(__returnid);
     return __returnid;
 }
 

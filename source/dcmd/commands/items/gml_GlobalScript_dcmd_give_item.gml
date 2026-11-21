@@ -52,29 +52,9 @@ function dcmd_give_item(argc, argv, flags)
 		return (1);
 	}
 	quantity = real(quantity);
-	scr_debug_print("Preparing, item_id = " + string(item_id) + ", quantity = " + string(quantity) + ", type = " + item_type);
-	return (_dcmd_give_item(item_id, item_type, quantity));
-}
 
-function _dcmd_give_item(arg0, arg1, arg2=1)
-{
-	var item_id = arg0;
-	var item_type = arg1;
-	var quantity = arg2;
-
-	if (quantity == 0)
-		return (0);
-
-	if (item_type == "litem") {
-		var callfunc = (quantity >= 0) ? scr_litemget : scr_litemremove;
-		for (var i = 0; i < abs(quantity); i++)
-			callfunc(item_id);
-		exit;
-	}
-
-	var callfunc = (quantity >= 0) ? scr_itemget_anytype : scr_itemremove_anytype;
-	for (var i = 0; i < abs(quantity); i++)
-		callfunc(item_id, item_type);
+	dutils_give_item(item_id, item_type, quantity);
+	return (0);
 }
 
 function _dcmd_fetch_item_from_name(arg0, arg1=undefined)
