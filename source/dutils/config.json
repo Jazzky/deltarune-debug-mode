@@ -9,20 +9,19 @@
 	"strings/gml_GlobalScript_dutils_strstart_with.gml": {},
 
 	"printing/gml_GlobalScript_dutils_draw_monospace.gml": {},
+	"printing/gml_GlobalScript_dutils_draw_kbtext.gml": {},
 
+	"items/gml_GlobalScript_dutils_get_item.gml": {},
 	"items/gml_GlobalScript_dutils_get_itemname.gml": {},
 	"items/gml_GlobalScript_dutils_itemmisc.gml": {},
 
-	"keyboard/gml_GlobalScript_dutils_read_kb.gml": {},
 	"keyboard/gml_GlobalScript_dutils_kb_setters.gml": {},
 	"keyboard/gml_GlobalScript_dutils_clear_key.gml": {},
-	"keyboard/keyboard_globals.gml": {
-		"gml_name": "gml_GlobalScript_scr_gamestart",
-		"mode": "append"
-	},
 
 	"files/gml_GlobalScript_dutils_file_utils.gml": {},
 	"files/gml_GlobalScript_dutils_read_file.gml": {},
+
+	"fights/gml_GlobalScript_dutils_damage_all.gml": {},
 
 	"arrays/gml_GlobalScript_dutils_array_utils.gml": {},
 	"arrays/gml_GlobalScript_dutils_array_copy.gml": {}

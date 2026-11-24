@@ -15,6 +15,9 @@ function dmenu_get_xmove_callfunc(arg0=dmenu_state)
 
 		case "debug_save_options":
 			return (dmenu_xmove_dsave_options);
+
+		case "fight_menu":
+			return (dmenu_xmove_fight_menu);
 	}
 	return (undefined);
 }

@@ -1,0 +1,9 @@
+{
+	"mode": "append",
+	"call_init": {
+		"gml_name": "gml_Object_obj_initializer2_Create_0"
+	},
+
+	"maps": {},
+	"gml_GlobalScript_dinit_debug_mode.gml": {}
+}

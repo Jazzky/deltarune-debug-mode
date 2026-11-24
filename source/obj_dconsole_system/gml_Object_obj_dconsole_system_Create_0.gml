@@ -1,17 +1,27 @@
 dconsole_active = false;
 dinput_text = "";
+
 dconsole_history = [];
 dconsole_log = [];
-blink_cursor = "|";
+
 dconsole_height = 200;
 dconsole_max_lines = floor((dconsole_height - 65) / 20) + 1;
+
+draw_blink = true;
 blink_timer = 0;
-dbackspace_timer = 0;
-dleft_timer = 0;
-dright_timer = 0;
-dup_timer = 0;
-ddown_timer = 0;
 sel_history_count = 0;
 dconsole_scroll = 0;
-dcursor_pos = 0;
-dselect_all = false;
+
+deactivate_menu = function(arg0=0)
+{
+	global.interact = arg0;
+	dconsole_active = false;
+	dutils_toggle_kb(false);
+	io_clear();
+}
+
+reset_blink = function()
+{
+	draw_blink = true;
+	blink_timer = 0;
+}

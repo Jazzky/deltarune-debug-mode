@@ -32,6 +32,26 @@ function dutils_ischar(arg0, arg1=false)
 	return (res);;
 }
 
+function dutils_iswhitespace(arg0, arg1=false)
+{
+	var char = arg0;
+	var print_error = arg1;
+
+	if (char == undefined)
+		return (false);
+
+	if (string_length(char) != 1) {
+		if (print_error)
+			scr_derror_print("Error: '" + char + "' isn't a whitespace because len isn't 1");
+		return (false);
+	}
+
+	var res = (char == " " || (char >= "\t" && char <= "\r"))
+	if (!res && print_error)
+		scr_derror_print("Error: '" + char + "' is an invalid char");
+	return (res);;
+}
+
 function dutils_isint(arg0, arg1=false, arg2=false)
 {
 	var str = arg0;
@@ -128,6 +148,10 @@ function dutils_istype(arg0, arg1, arg2)
 	switch (type) {
 		case "char":
 			return (dutils_ischar(variable, print_error));
+
+		case "ws":
+		case "whitespace":
+			return (dutils_iswhitespace(variable, print_error));
 
 		case "digit":
 			return (dutils_isdigit(variable, print_error));

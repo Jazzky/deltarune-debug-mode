@@ -64,5 +64,3 @@ if (scr_debug() && !dutils_reading_kb())
         }
     }
 }
-
-dutils_update_kb_timer();

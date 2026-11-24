@@ -14,8 +14,9 @@ function dmenu_state_update_main_menu()
 			dmenu_makebt(dstr("Flags"), "flag_categories")
 		],
 		[
-			dmenu_makebt(dstr("Globals"), "globals_changer"),
-			dmenu_makebt(dstr("Debug save"), "debug_save")
+			dmenu_makebt(dstr("Debug save"), "debug_save"),
+			dmenu_makebt(dstr("Fight"), "fight_menu"),
+			dmenu_makebt(dstr("Globals"), "globals_changer")
 		]
 	];
 

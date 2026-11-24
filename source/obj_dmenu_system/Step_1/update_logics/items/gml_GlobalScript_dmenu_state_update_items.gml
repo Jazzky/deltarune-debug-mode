@@ -52,8 +52,9 @@ function dmenu_state_update_lw_items(arg0)
 	var dlight_lst_len = array_length(dlight_lst);
 	for (var i = 0; i < dlight_lst_len; i++)
 	{
-		var item_id = dlight_lst[i][0];
-		var combined = dlight_lst[i][1];
+		var _cur_item = dlight_lst[i];
+		var item_id = _cur_item.item_id;
+		var combined = _cur_item.item_name;
 		
 		if (!is_item && cur_selected == item_id)
 			combined += " (" + dstr("Equipped", "Équipé") + ")";

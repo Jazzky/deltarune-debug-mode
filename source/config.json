@@ -1,8 +1,9 @@
 {
     "order": [
+		"register_objects",
+        "init",
         "scr_debug_print",
         "obj_debug_gui",
-        "scr_gamestart",
 		"dutils",
         "obj_debug_xy",
         "obj_debug_windows",
@@ -11,6 +12,7 @@
         "scr_dstr",
         "scr_debug",
         "debug_save",
+		"obj_dkeyboard_system",
 		"dcmd",
         "obj_time",
 		"obj_darkcontroller",
@@ -18,14 +20,12 @@
         "battle_features",
 		"godmode",
         "noclip",
-		"chap1_room_changer",
 		"DEVICE_CONTACT",
 		"obj_writer",
-		"scr_flag_set_ch4_fix",
         "conflict_fix",
         "rhythmgame_debug_keys",
         "battle_dialog_pause",
-        "chap5_fix",
+		"chapter_fixes",
         "obj_dconsole_system",
         "obj_dmenu_system"
     ]

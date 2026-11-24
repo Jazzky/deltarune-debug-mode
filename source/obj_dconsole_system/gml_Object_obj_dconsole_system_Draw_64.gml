@@ -10,25 +10,12 @@ draw_line(0, dconsole_height, display_get_gui_width(), dconsole_height);
 draw_set_font(fnt_dotumche);
 var _text_y = dconsole_height - 30;
 
-if (dselect_all && dinput_text != "")
-{
-    var _prefix_width = string_width("> ");
-    var _full_width = string_width(dinput_text);
-    draw_set_color(c_blue);
-    draw_set_alpha(0.6);
-    draw_rectangle(15 + _prefix_width, _text_y, 15 + _prefix_width + _full_width, _text_y + string_height("A"), false);
-}
+var _prefix = "> ";
+var _prefix_width = string_width(_prefix);
 
-draw_set_color(c_white);
-draw_set_alpha(1);
-draw_text(15, _text_y, "> " + dinput_text);
+draw_text(15, _text_y, _prefix);
+dutils_draw_kbtext(15 + _prefix_width + 2, _text_y, draw_blink);
 
-if (!dselect_all && blink_cursor == "|")
-{
-    var _text_before_cursor = string_copy(dinput_text, 1, dcursor_pos);
-    var _cursor_x = 15 + string_width("> " + _text_before_cursor);
-    draw_line(_cursor_x, _text_y + 2, _cursor_x, (_text_y + string_height("A")) - 2);
-}
 
 var _max_width = display_get_gui_width() - 30;
 var _line_spacing = string_height("A") + 6;

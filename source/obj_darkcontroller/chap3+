@@ -19,16 +19,16 @@ if (scr_debug() && !dutils_reading_kb())
             global.gold = 0;
         }
     }
-    
+
     if (keyboard_check_pressed(ord("1")) && keyboard_check(ord("M")))
     {
         global.gold += 100;
         scr_debug_print("+ 100 D$");
     }
-    
+
     if (sunkus_kb_check_pressed(ord("S")))
         instance_create(0, 0, obj_savemenu);
-    
+
     if (keyboard_check_pressed(ord("L")) && keyboard_check(vk_alt))
     {
         with (obj_dmenu_system)
@@ -36,13 +36,13 @@ if (scr_debug() && !dutils_reading_kb())
 
 		dmenu_launch_state("debug_save");
     }
-    
+
     if (sunkus_kb_check_pressed(ord("L")) && !keyboard_check(vk_alt))
         scr_load();
-    
+
     if (sunkus_kb_check_pressed(ord("R")) && sunkus_kb_check(vk_backspace))
         game_restart_true();
-    
+
     if (sunkus_kb_check_pressed(ord("R")) && !sunkus_kb_check(vk_backspace))
     {
         snd_free_all();
@@ -50,9 +50,3 @@ if (scr_debug() && !dutils_reading_kb())
         global.interact = 0;
     }
 }
-
-if (!instance_exists(obj_dmenu_system))
-    instance_create(0, 0, obj_dmenu_system);
-
-if (!instance_exists(obj_dconsole_system))
-    instance_create_depth(0, 0, -99999, obj_dconsole_system);

@@ -6,6 +6,7 @@ function dmenu_get_ymove_callfunc(arg0=dmenu_state)
 	{
 		case "recruits":
 		case "flag_misc":
+		case "fight_menu":
 		case "warp_options":
 			return (dmenu_state_update);
 	}
