@@ -1,7 +1,7 @@
 {
 
 string _encounter_gml = "gml_GlobalScript_scr_encountersetup";
-string _encounter_code = PatcherUtils.readCode(_encounter_gml);
+string _encounter_code = DPatcherUtils.readCode(_encounter_gml);
 
 string _findtype_regex = @"global.monsterinstancetype\[[0-9]] = ([a-zA-Z_][a-zA-Z0-9_]*);";
 

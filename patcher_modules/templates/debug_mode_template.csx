@@ -32,7 +32,7 @@ foreach (var str in Data.Strings)
 }
 string defaultLang = isFrenchPatch ? "fr" : "en";
 
-static public class PatcherUtils
+static public class DPatcherUtils
 {
 	public static UndertaleData Data { get; set; }
 	public static CodeImportGroup importGroup { get; set; }
@@ -86,9 +86,9 @@ static public class PatcherUtils
 	}
 }
 
-PatcherUtils.init(Data);
+DPatcherUtils.init(Data);
 
-var importGroup = PatcherUtils.importGroup;
+var importGroup = DPatcherUtils.importGroup;
 
 int chapter = CHAPTER_NUMBER;
 

@@ -1,1 +1,1 @@
-importGroup = PatcherUtils.updateImportGroup();
+importGroup = DPatcherUtils.updateImportGroup();
